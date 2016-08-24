@@ -1946,7 +1946,7 @@ classdef epanet <handle
             obj.openQualityAnalysis
             obj.initializeQualityAnalysis
             %tleft=obj.nextQualityAnalysisStep;
-            totalsteps=obj.getTimeSimulationDuration/obj.getTimeQualityStep;
+            totalsteps=obj.getTimeSimulationDuration/obj.getTimeHydraulicStep;
             initnodematrix=zeros(totalsteps, obj.getNodeCount);
             if size(varargin,2)==0
                 varargin={'time', 'quality', 'mass'};

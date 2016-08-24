@@ -1,0 +1,160 @@
+  Page 1                                    Wed Aug 24 12:18:51 2016
+
+  ******************************************************************
+  *                           E P A N E T                          *
+  *                   Hydraulic and Water Quality                  *
+  *                   Analysis for Pipe Networks                   *
+  *                         Version 2.1                            *
+  ******************************************************************
+  
+  Analysis begun Wed Aug 24 12:18:51 2016
+
+  Processing MSX input file MsxFileName_temp.msx
+  
+   
+  Hydraulic Status:
+  -----------------------------------------------------------------------
+     0:00:00: Balanced after 4 trials
+     0:00:00: Reservoir 9 is emptying
+     0:00:00: Tank 2 is filling at 120.00 ft
+   
+     1:00:00: Balanced after 2 trials
+   
+     2:00:00: Balanced after 3 trials
+   
+     3:00:00: Balanced after 2 trials
+   
+     4:00:00: Balanced after 3 trials
+   
+     5:00:00: Balanced after 2 trials
+   
+     6:00:00: Balanced after 2 trials
+   
+     7:00:00: Balanced after 1 trials
+   
+     8:00:00: Balanced after 2 trials
+   
+     9:00:00: Balanced after 2 trials
+   
+    10:00:00: Balanced after 2 trials
+   
+    11:00:00: Balanced after 2 trials
+   
+    12:00:00: Balanced after 3 trials
+   
+    12:32:34: Pump 9 changed by Tank 2 control
+    12:32:34: Balanced after 4 trials
+    12:32:34: Reservoir 9 is closed
+    12:32:34: Tank 2 is emptying at 140.00 ft
+    12:32:34: Pump 9 changed from open to closed
+   
+    13:00:00: Balanced after 1 trials
+   
+    14:00:00: Balanced after 2 trials
+   
+    15:00:00: Balanced after 1 trials
+   
+    16:00:00: Balanced after 2 trials
+   
+    17:00:00: Balanced after 1 trials
+   
+    18:00:00: Balanced after 2 trials
+   
+    19:00:00: Balanced after 1 trials
+   
+    20:00:00: Balanced after 2 trials
+   
+    21:00:00: Balanced after 1 trials
+   
+    22:00:00: Balanced after 2 trials
+   
+    22:41:30: Pump 9 changed by Tank 2 control
+    22:41:30: Balanced after 15 trials
+    22:41:30: Reservoir 9 is emptying
+    22:41:30: Tank 2 is filling at 110.00 ft
+    22:41:30: Pump 9 changed from closed to open
+   
+    23:00:00: Balanced after 2 trials
+   
+    24:00:00: Balanced after 3 trials
+   
+    25:00:00: Balanced after 2 trials
+   
+    26:00:00: Balanced after 3 trials
+   
+    27:00:00: Balanced after 2 trials
+   
+    28:00:00: Balanced after 3 trials
+   
+    29:00:00: Balanced after 2 trials
+   
+    30:00:00: Balanced after 2 trials
+   
+    31:00:00: Balanced after 2 trials
+   
+    32:00:00: Balanced after 2 trials
+   
+    33:00:00: Balanced after 2 trials
+   
+    34:00:00: Balanced after 2 trials
+   
+    35:00:00: Balanced after 2 trials
+   
+    36:00:00: Balanced after 3 trials
+   
+    37:00:00: Balanced after 2 trials
+   
+    37:49:13: Pump 9 changed by Tank 2 control
+    37:49:13: Balanced after 4 trials
+    37:49:13: Reservoir 9 is closed
+    37:49:13: Tank 2 is emptying at 140.00 ft
+    37:49:13: Pump 9 changed from open to closed
+   
+    38:00:00: Balanced after 2 trials
+   
+    39:00:00: Balanced after 1 trials
+   
+    40:00:00: Balanced after 2 trials
+   
+    41:00:00: Balanced after 1 trials
+   
+    42:00:00: Balanced after 2 trials
+   
+    43:00:00: Balanced after 1 trials
+   
+    44:00:00: Balanced after 2 trials
+   
+    45:00:00: Balanced after 1 trials
+   
+    46:00:00: Balanced after 2 trials
+   
+    47:00:00: Balanced after 1 trials
+   
+    48:00:00: Balanced after 2 trials
+   
+   
+  Hydraulic Status:
+  -----------------------------------------------------------------------
+     0:00:00: Balanced after 4 trials
+     0:00:00: Reservoir 9 is emptying
+     0:00:00: Tank 2 is filling at 120.00 ft
+   
+     1:00:00: Balanced after 2 trials
+   
+     2:00:00: Balanced after 3 trials
+   
+     3:00:00: Balanced after 2 trials
+   
+     4:00:00: Balanced after 3 trials
+   
+     5:00:00: Balanced after 2 trials
+   
+     6:00:00: Balanced after 2 trials
+   
+     7:00:00: Balanced after 1 trials
+   
+     8:00:00: Balanced after 2 trials
+   
+     9:00:00: Balanced after 2 trials
+   
+    10:00:00

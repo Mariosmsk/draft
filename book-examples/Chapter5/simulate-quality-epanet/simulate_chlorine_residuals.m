@@ -1,10 +1,38 @@
-%% Simulate Chlorine Residuals
+function [C, d] = simulate_chlorine_residuals(input)
+%SIMULATE_CHLORINE_RESIDUALS - One line description of what the function or script performs (H1 line)
+%Optional file header info (to give more details about the function than in the H1 line)
+%
+% Syntax:  [output1,output2] = function_name(input1,input2,input3)
+%
+% Inputs:
+%    input1 - Description
+%
+% Outputs:
+%    output1 - Description
+%
+% Example: 
+%    Line 1 of example
+%
+% Other m-files required: none
+% Subfunctions: none
+% MAT-files required: none
+%
+% See also: none
 
-settings.filename = which('Net1_Rossman2000.inp');
-settings.species = 'Chlorine';
-d=epanet(settings.filename);
+% Author        : Demetrios G. Eliades
+% Work address  : KIOS Research Center, University of Cyprus
+% email         : eldemet@ucy.ac.cy
+% Website       : http://www.kios.ucy.ac.cy
+% Last revision : September 2016
+
+%------------- BEGIN CODE --------------
+tmp = loadjson(input); 
+settings = tmp.settings;
+
+d = epanet(settings.filename);
 d.setQualityType(settings.species)
 d.solveCompleteHydraulics;
-chlorine_residuals = d.getComputedQualityTimeSeries;
+C = d.getComputedQualityTimeSeries('time','quality');
+d.unload
 
-
+%------------- END OF CODE --------------

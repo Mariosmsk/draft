@@ -35,10 +35,11 @@ simulationTime=48*3600; % seconds
 numberOfScenarios=100;
 numberOfNodesInj=2; 
 magnitude=[10 20];
-nodesID=''; % [d.NodeNameID(2),d.NodeNameID(3)]
-NodesResuls=[d.NodeNameID(2),d.NodeNameID(3)];
+nodesID=[d.NodeNameID(10),d.NodeNameID(3)];
+NodesResuls=[d.NodeNameID(10),d.NodeNameID(3),d.NodeNameID(6),d.NodeNameID(7)];
 
-% Create msx struct for write msx file
+% Create msx struct for write msx file 
+% Return struct msx and S where is the scenarios
 [msx,S] = CreateMsxFile(d,simulationTime,numberOfScenarios,numberOfNodesInj,nodesID,magnitude);
 d.writeMSXFile(msx)
 
@@ -49,9 +50,9 @@ d.setTimeSimulationDuration(simulationTime);
 C = createContaminationEvents(d,S,msx,NodesResuls);
 end
 %------------- END OF CODE --------------
-function C = createContaminationEvents(d,S,msx,NodesRes)
+function C = createContaminationEvents(d,S,msx,NodesResults)
 % Create Contamination Events
-NodesResIndex=d.getNodeIndex(NodesRes);
+NodesResIndex=d.getNodeIndex(NodesResults);
 for i=1:length(S)
     if i>1;  d.unloadMSX; end
     d.loadMSXFile(msx.msxFile);
@@ -63,18 +64,18 @@ for i=1:length(S)
     pat1=d.addMSXPattern([num2str(i),'p1'],p1);
     pat2=d.addMSXPattern([num2str(i),'p2'],p2);
     nodeIndex1 = d.getNodeIndex(S{i}.nodesID(1));
-    specIndex1 = 2; % suppose is index 1
+    specIndex1 = 2; % suppose is index 1 %Chlorine
     type = 0;
     level = S{i}.magnitude(1);
     d.setMSXSources(nodeIndex1, specIndex1, type, level, pat1)
     nodeIndex2 = d.getNodeIndex(S{i}.nodesID(2));
-    specIndex2 = 3;
+    specIndex2 = 3; % THMs
     level = S{i}.magnitude(2);
     d.setMSXSources(nodeIndex2, specIndex2, type, level, pat2)
 
     nn=d.getMSXComputedQualityNode;
     C{i}.Scenarios = S{i};
-    C{i}.NodesRes = NodesRes;
+    C{i}.NodesRes = NodesResults;
     for u=1:length(NodesResIndex)
         C{i}.disinfectant{u} = nn.Quality{NodesResIndex(u)}{specIndex1};
         C{i}.contaminant{u} = nn.Quality{NodesResIndex(u)}{specIndex2};

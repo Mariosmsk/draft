@@ -5,14 +5,18 @@ settings.species = 'Chlorine';
 input = savejson(settings);
 
 %% Run Module
-[C, d] = simulate_chlorine_residuals(input);
+output = simulate_chlorine_residuals(input);
+
+%% Extract output from JSON
+tmp = loadjson(output);
+results=tmp.results;
 
 %% Plot graph
 figure(1)
-plot(C.Time/3600,C.Quality)
+plot(results.Chlorine.Time/3600,results.Chlorine.Quality)
 grid on
 title('Chlorine Concentration');
 xlabel('Time (hours)')
 ylabel('Cl_2 (mg/L)')
-legend(d.NodeNameID)
+legend(results.Network.NodeNameID)
 %------------- END OF CODE --------------

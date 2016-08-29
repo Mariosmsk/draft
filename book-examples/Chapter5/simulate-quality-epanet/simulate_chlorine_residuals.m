@@ -1,4 +1,4 @@
-function [C, d] = simulate_chlorine_residuals(input)
+function output = simulate_chlorine_residuals(input)
 %SIMULATE_CHLORINE_RESIDUALS - One line description of what the function or script performs (H1 line)
 %Optional file header info (to give more details about the function than in the H1 line)
 %
@@ -34,5 +34,10 @@ d.setQualityType(settings.species)
 d.solveCompleteHydraulics;
 C = d.getComputedQualityTimeSeries('time','quality');
 d.unload
+results.Chlorine=C;
+results.Network=d;
+output = savejson(results);
+
+
 
 %------------- END OF CODE --------------

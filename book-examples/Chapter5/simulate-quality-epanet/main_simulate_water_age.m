@@ -1,3 +1,4 @@
+settings=[];
 settings.filename = which('Net1_Rossman2000.inp');
 settings.species = 'AGE';
 

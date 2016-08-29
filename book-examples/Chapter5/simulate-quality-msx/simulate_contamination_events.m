@@ -1,4 +1,4 @@
-function [C] = simulate_contamination_events(input1)
+function [C] = simulate_contamination_events(input)
 %FUNCTION_NAME - One line description of what the function or script performs (H1 line)
 %Optional file header info (to give more details about the function than in the H1 line)
 %
@@ -31,12 +31,12 @@ function [C] = simulate_contamination_events(input1)
 % Create Random Scenarios
 inpname = which('Net1_Rossman2000.inp');
 d = epanet(inpname);
-simulationTime=48*3600; % seconds
-numberOfScenarios=100;
-numberOfNodesInj=2; 
-magnitude=[10 20];
-nodesID=[d.NodeNameID(10),d.NodeNameID(3)];
-NodesResuls=[d.NodeNameID(10),d.NodeNameID(3),d.NodeNameID(6),d.NodeNameID(7)];
+settings.simulation_time=48*3600; % seconds
+settings.num_scenarios=100;
+settings.num_nodesinj=2; 
+settings.magnitude=[10 20];
+settings.nodes_id=[d.NodeNameID(10),d.NodeNameID(3)];
+settings.nodes_results=[d.NodeNameID(10),d.NodeNameID(3),d.NodeNameID(6),d.NodeNameID(7)];
 
 % Create msx struct for write msx file 
 % Return struct msx and S where is the scenarios

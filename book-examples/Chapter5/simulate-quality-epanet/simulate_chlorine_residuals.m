@@ -38,6 +38,4 @@ results.Chlorine=C;
 results.Network=d;
 output = savejson(results);
 
-
-
 %------------- END OF CODE --------------

@@ -15,25 +15,30 @@ input = savejson(settings);
 %% Run Module
 out_scenarios = create_msx_scenarios(input);
 out_msx = create_msx_file;%(input);
-d.writeMSXFile(msx)
+d.writeMSXFile(out_msx)
 d.setTimeSimulationDuration(settings.simulation_time);
 
 
 % create contamination events
-C = createContaminationEvents(d,S,msx,NodesResuls);
+settings.network=d; 
+settings.scenarios=out_scenarios;
+settings.msx_info = out_msx;
+settings.nodes_results = settings.nodes_results;
+input2 = savejson(settings);
+output2 = create_contamination_events(input2);
 
 %% Extract output from JSON
-tmp = loadjson(output);
+tmp = loadjson(output2);
 results=tmp.results;
 
 %% Plot graph
-figure(1)
-plot(results.Chlorine.Time/3600,results.Chlorine.Quality)
-grid on
-title('Chlorine Concentration');
-xlabel('Time (hours)')
-ylabel('Cl_2 (mg/L)')
-legend(results.Network.NodeNameID)
+% figure(1)
+% plot(results.Chlorine{4}.disinfectant)
+% grid on
+% title('Chlorine Concentration');
+% xlabel('Time (hours)')
+% ylabel('Cl_2 (mg/L)')
+% legend(results.Network.NodeNameID)
 
 
 %------------- END OF CODE --------------

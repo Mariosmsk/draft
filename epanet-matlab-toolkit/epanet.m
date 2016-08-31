@@ -463,7 +463,7 @@ classdef epanet <handle
                 ENLoadLibrary(obj.LibEPANETpath,obj.LibEPANET);
                 warning on;
                 %Open the file
-                obj.Errcode=ENopen(obj.InputFile,[obj.InputFile(1:end-4),'.txt'],[obj.InputFile(1:end-4),'.bin'],obj.LibEPANET);
+                obj.Errcode=ENopen(obj.InputFile,'','',obj.LibEPANET);
                 if obj.Errcode~=0
                     warning('Could not open the file, please check INP file.');return;
                 end
@@ -2500,20 +2500,16 @@ classdef epanet <handle
         function unload(obj)
             ENclose(obj.LibEPANET);
             ENMatlabCleanup(obj.LibEPANET);
-%             if exist([obj.BinTempfile(1:end-4),'.bin'])==2
-%                 delete([obj.BinTempfile(1:end-4),'.bin']);
-%             end
-%             delete(obj.BinTempfile);
-%             if exist([obj.BinTempfile(1:end-4),'.txt'])==2
-%                 delete([obj.BinTempfile(1:end-4),'.txt']);
-%             end
-%             [p,f]=fileparts(obj.InputFile);
-%             if exist([p,'/',f,'.txt'])==2
-%                 delete([p,'/',f,'.txt']);
-%             end
-%             if exist(obj.MSXTempFile)==2
-%                 delete(obj.MSXTempFile);
-%             end
+            if exist([obj.BinTempfile(1:end-4),'.bin'])==2
+                delete([obj.BinTempfile(1:end-4),'.bin']);
+            end
+            delete(obj.BinTempfile);
+            if exist([obj.BinTempfile(1:end-4),'.txt'])==2
+                delete([obj.BinTempfile(1:end-4),'.txt']);
+            end
+            if exist(obj.MSXTempFile)==2
+                delete(obj.MSXTempFile);
+            end
             disp('EPANET Class is unloaded')
         end
         function loadMSXFile(obj,msxname,varargin)

@@ -36,7 +36,7 @@ msx.titleDescription{1} = 'Example: Contamination detection algorithm.';
 % section Options
 msx.options{1}='FT2'; %AREA_UNITS FT2/M2/CM2
 msx.options{2}='DAY'; %TIME_UNITS SEC/MIN/HR/DAY
-msx.options{3}='RK5'; %SOLVER EUL/RK5/ROS2
+msx.options{3}='EUL'; %SOLVER EUL/RK5/ROS2
 msx.options{4}='NONE'; %COUPLING FULL/NONE
 msx.options{5}='NONE'; %COMPILER NONE/VC/GC
 msx.options{6}=3600; %TIMESTEP in seconds
@@ -67,7 +67,7 @@ msx.terms{2}={'(1.5826e-4 * RE^0.88 / D)','(1.8e6*exp(-6050/(Temp+273)))*TOC'}; 
 % FORMULA <specieID> <expression>
 msx.pipes{1} ={'RATE','RATE','RATE','RATE'}; %type
 msx.pipes{2} ={'AGE','Chlorine','THMs','TOC'}; %specieID
-msx.pipes{3} ={'1','-Kb*Chlorine - (4/D)*Kw*Kf/(Kw+Kf)*Chlorine','0','Y*Kb*Chlorine*1000'}; %expression
+msx.pipes{3} ={'24','-Kb*Chlorine - (4/D)*Kw*Kf/(Kw+Kf)*Chlorine','Y*Kb*Chlorine*1000','0'}; %expression
 
 % section Tanks
 % EQUIL <specieID> <expression>
@@ -75,7 +75,7 @@ msx.pipes{3} ={'1','-Kb*Chlorine - (4/D)*Kw*Kf/(Kw+Kf)*Chlorine','0','Y*Kb*Chlor
 % FORMULA <specieID> <expression>
 msx.tanks{1} ={'RATE','RATE','RATE','RATE'}; %type
 msx.tanks{2} ={'AGE','Chlorine','THMs','TOC'}; %specieID
-msx.tanks{3} ={'1','-Kb*Chlorine','0','Y*Kb*Chlorine*1000'}; %expression
+msx.tanks{3} ={'24','-Kb*Chlorine','Y*Kb*Chlorine*1000','0'}; %expression
 
 % % section Sources
 % % <type> <nodeID> <specieID> <strength> (<patternID>)

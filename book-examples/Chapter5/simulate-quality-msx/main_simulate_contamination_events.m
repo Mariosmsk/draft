@@ -7,7 +7,7 @@ settings.magnitude=[10 20];
 
 d = epanet(settings.filename); %prosorina
 settings.nodes_id=[d.NodeNameID(10),d.NodeNameID(3)];
-settings.nodes_results=[d.NodeNameID(10),d.NodeNameID(3),d.NodeNameID(6),d.NodeNameID(7)];
+settings.nodes_results=d.NodeNameID;%[d.NodeNameID(10),d.NodeNameID(3),d.NodeNameID(6),d.NodeNameID(7)];
 
 %% Create JSON file for input
 input = savejson(settings);
@@ -32,13 +32,20 @@ tmp = loadjson(output2);
 results=tmp.results;
 
 %% Plot graph
-% figure(1)
-% plot(results.Chlorine{4}.disinfectant)
-% grid on
-% title('Chlorine Concentration');
-% xlabel('Time (hours)')
-% ylabel('Cl_2 (mg/L)')
-% legend(results.Network.NodeNameID)
+figure(1)
+scenario=1;
+plot(results.Chlorine{scenario}.disinfectant)
+grid on
+title('Chlorine Concentration');
+xlabel('Time (hours)')
+ylabel('Chlorine (mg/L)')
+legend(d.NodeNameID)
 
-
+figure(2)
+plot(results.THMs{scenario}.contaminant)
+grid on
+title('THMs Concentration');
+xlabel('Time (hours)')
+ylabel('THMs (ug/L)')
+legend(d.NodeNameID)
 %------------- END OF CODE --------------

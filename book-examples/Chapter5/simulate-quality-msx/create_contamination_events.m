@@ -33,7 +33,7 @@ d = epanet(settings.filename);
 
 NodesResultsIndices=d.getNodeIndex(settings.nodes_results);
 for i=1:settings.num_scenarios
-    if i>1;  d.unloadMSX; end
+    if i>1;  d.unloadMSX;end
     d.loadMSXFile(settings.msx_info.msxFile);
     p1=zeros(1,d.getTimeSimulationDuration/3600);
     p2=zeros(1,d.getTimeSimulationDuration/3600);
@@ -51,7 +51,7 @@ for i=1:settings.num_scenarios
     specIndex2 = 3; % THMs
     level = settings.scenarios{i}.magnitude(2);
     d.setMSXSources(nodeIndex2, specIndex2, type, level, pat2)
-
+    
     nn=d.getMSXComputedQualityNode;
     C1{i}.Scenarios = settings.scenarios{i};
     C2{i}.Scenarios = settings.scenarios{i};

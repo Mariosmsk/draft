@@ -9,7 +9,7 @@ close all;
 
 % Create EPANET object using the INP file
 %d=epanet('Net1_Rossman2000.inp');
-inpname='networks/Net1_Rossman2000.inp'; 
+inpname=which('Net1_Rossman2000.inp'); 
 % Net1_Rossman2000 Net2_Rossman2000 Net3_Rossman2000 BWSN1_Ostfeld2008 
 
 % version='epanet2'; % version dev2.1
@@ -110,7 +110,7 @@ d.getLinkPumpPatternIndex
 
 
 
-% inpname='networks/Net1_Rossman2000.inp';
+% inpname=which('Net1_Rossman2000.inp');
 d=epanet(inpname);
 %% Controls
 Controls=d.getControls

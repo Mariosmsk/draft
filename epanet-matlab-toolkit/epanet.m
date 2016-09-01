@@ -2520,16 +2520,12 @@ classdef epanet <handle
             end
         end
         function runMSXexe(obj)
-            [~,mm]=system(['cmd /c for %A in ("',pwd,'") do @echo %~sA']);
-            mmPwd=regexp(mm,'\s','split');
             inpfile=obj.BinTempfile;
             rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
             if strcmp(computer('arch'),'win64')
-                    folder='64bit';
-                r = sprintf('%s\\%s\\epanetmsx.exe %s %s %s',mmPwd{1},folder,inpfile,obj.MSXTempFile,rptfile);
+                r = sprintf('%s\\epanetmsx.exe %s %s %s',obj.MSXLibEPANETPath,inpfile,obj.MSXTempFile,rptfile);
             elseif strcmp(computer('arch'),'win32')
-                    folder='32bit';
-                r = sprintf('%s\\%s\\epanetmsx.exe %s %s %s',mmPwd{1},folder,inpfile,obj.MSXTempFile,rptfile);
+                r = sprintf('%s\\epanetmsx.exe %s %s %s',obj.MSXLibEPANETPath,inpfile,obj.MSXTempFile,rptfile);
             end
             system(r);
         end
@@ -10931,19 +10927,18 @@ elseif strcmp(previousFlowUnits,'CMD')
 end
 end
 function [fid,binfile] = runEPANETexe(obj)
-    [~,mm]=system(['cmd /c for %A in ("',pwd,'") do @echo %~sA']);
-    mmPwd=regexp(mm,'\s','split');
-    pp=[mmPwd{1},'/'];
-    inpfile=[pp,obj.BinTempfile];
+%     [~,mm]=system(['cmd /c for %A in ("',pwd,'") do @echo %~sA']);
+%     mmPwd=regexp(mm,'\s','split');
+%     pp=[mmPwd{1},'/'];
+    [tmppath,tempfile]=fileparts(obj.BinTempfile);
+    inpfile=[tmppath,'/',tempfile,'.inp'];
     rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
     binfile=[inpfile(1:length(inpfile)-4),'.bin'];
     if exist(binfile)==2, fclose all; delete(binfile); end
     if strcmp(computer('arch'),'win64')
-            folder='64bit';
-        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',mmPwd{1},folder,inpfile,rptfile,binfile);
+        r = sprintf('%s\\epanet2d.exe %s %s %s',obj.LibEPANETpath,inpfile,rptfile,binfile);
     elseif strcmp(computer('arch'),'win32')
-            folder='32bit';
-        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',mmPwd{1},folder,inpfile,rptfile,binfile);
+        r = sprintf('%s\\epanet2d.exe %s %s %s',obj.LibEPANETpath,inpfile,rptfile,binfile);
     end
     system(r);
     fid = fopen(binfile,'r');

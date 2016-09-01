@@ -10927,9 +10927,6 @@ elseif strcmp(previousFlowUnits,'CMD')
 end
 end
 function [fid,binfile] = runEPANETexe(obj)
-%     [~,mm]=system(['cmd /c for %A in ("',pwd,'") do @echo %~sA']);
-%     mmPwd=regexp(mm,'\s','split');
-%     pp=[mmPwd{1},'/'];
     [tmppath,tempfile]=fileparts(obj.BinTempfile);
     inpfile=[tmppath,'/',tempfile,'.inp'];
     rptfile=[inpfile(1:length(inpfile)-4),'.txt'];

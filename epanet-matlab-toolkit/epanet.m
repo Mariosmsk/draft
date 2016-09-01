@@ -2522,10 +2522,10 @@ classdef epanet <handle
         function runMSXexe(obj)
             inpfile=obj.BinTempfile;
             rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
-            if strcmp(computer('arch'),'win64')
-                r = sprintf('%s\\epanetmsx.exe %s %s %s',obj.MSXLibEPANETPath,inpfile,obj.MSXTempFile,rptfile);
-            elseif strcmp(computer('arch'),'win32')
-                r = sprintf('%s\\epanetmsx.exe %s %s %s',obj.MSXLibEPANETPath,inpfile,obj.MSXTempFile,rptfile);
+            if strcmp(computer('arch'),'win64') || strcmp(computer('arch'),'win32')
+                [~,lpwd]=system(['cmd /c for %A in ("',obj.MSXLibEPANETPath,'") do @echo %~sA']);
+                libPwd=regexp(lpwd,'\s','split');
+                r = sprintf('%s\\epanetmsx.exe %s %s %s',libPwd{1},inpfile,obj.MSXTempFile,rptfile);
             end
             system(r);
         end
@@ -10928,14 +10928,16 @@ end
 end
 function [fid,binfile] = runEPANETexe(obj)
     [tmppath,tempfile]=fileparts(obj.BinTempfile);
-    inpfile=[tmppath,'/',tempfile,'.inp'];
+    [~,mm]=system(['cmd /c for %A in ("',tmppath,'") do @echo %~sA']);
+    mmPwd=regexp(mm,'\s','split');
+    inpfile=[mmPwd{1},'/',tempfile,'.inp'];
     rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
     binfile=[inpfile(1:length(inpfile)-4),'.bin'];
     if exist(binfile)==2, fclose all; delete(binfile); end
-    if strcmp(computer('arch'),'win64')
-        r = sprintf('%s\\epanet2d.exe %s %s %s',obj.LibEPANETpath,inpfile,rptfile,binfile);
-    elseif strcmp(computer('arch'),'win32')
-        r = sprintf('%s\\epanet2d.exe %s %s %s',obj.LibEPANETpath,inpfile,rptfile,binfile);
+    if strcmp(computer('arch'),'win64') || strcmp(computer('arch'),'win32')
+        [~,lpwd]=system(['cmd /c for %A in ("',obj.LibEPANETpath,'") do @echo %~sA']);
+        libPwd=regexp(lpwd,'\s','split');
+        r = sprintf('%s\\epanet2d.exe %s %s %s',libPwd{1},inpfile,rptfile,binfile);
     end
     system(r);
     fid = fopen(binfile,'r');

@@ -31,6 +31,8 @@ output2 = create_contamination_events(input2);
 tmp = loadjson(output2);
 results=tmp.results;
 
+delete(which(out_msx.msxFile));
+
 %% Plot graph
 figure(1)
 scenario=1;

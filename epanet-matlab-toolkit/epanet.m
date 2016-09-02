@@ -463,7 +463,7 @@ classdef epanet <handle
                 ENLoadLibrary(obj.LibEPANETpath,obj.LibEPANET);
                 warning on;
                 %Open the file
-                obj.Errcode=ENopen(obj.InputFile,[obj.InputFile(1:end-4),'.txt'],[obj.InputFile(1:end-4),'.bin'],obj.LibEPANET);
+                obj.Errcode=ENopen(obj.InputFile,'','',obj.LibEPANET);
                 if obj.Errcode~=0
                     warning('Could not open the file, please check INP file.');return;
                 end
@@ -2500,20 +2500,16 @@ classdef epanet <handle
         function unload(obj)
             ENclose(obj.LibEPANET);
             ENMatlabCleanup(obj.LibEPANET);
-%             if exist([obj.BinTempfile(1:end-4),'.bin'])==2
-%                 delete([obj.BinTempfile(1:end-4),'.bin']);
-%             end
-%             delete(obj.BinTempfile);
-%             if exist([obj.BinTempfile(1:end-4),'.txt'])==2
-%                 delete([obj.BinTempfile(1:end-4),'.txt']);
-%             end
-%             [p,f]=fileparts(obj.InputFile);
-%             if exist([p,'/',f,'.txt'])==2
-%                 delete([p,'/',f,'.txt']);
-%             end
-%             if exist(obj.MSXTempFile)==2
-%                 delete(obj.MSXTempFile);
-%             end
+            if exist([obj.BinTempfile(1:end-4),'.bin'])==2
+                delete([obj.BinTempfile(1:end-4),'.bin']);
+            end
+            delete(obj.BinTempfile);
+            if exist([obj.BinTempfile(1:end-4),'.txt'])==2
+                delete([obj.BinTempfile(1:end-4),'.txt']);
+            end
+            if exist(obj.MSXTempFile)==2
+                delete(obj.MSXTempFile);
+            end
             disp('EPANET Class is unloaded')
         end
         function loadMSXFile(obj,msxname,varargin)
@@ -2524,16 +2520,12 @@ classdef epanet <handle
             end
         end
         function runMSXexe(obj)
-            [~,mm]=system(['cmd /c for %A in ("',pwd,'") do @echo %~sA']);
-            mmPwd=regexp(mm,'\s','split');
             inpfile=obj.BinTempfile;
             rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
-            if strcmp(computer('arch'),'win64')
-                    folder='64bit';
-                r = sprintf('%s\\%s\\epanetmsx.exe %s %s %s',mmPwd{1},folder,inpfile,obj.MSXTempFile,rptfile);
-            elseif strcmp(computer('arch'),'win32')
-                    folder='32bit';
-                r = sprintf('%s\\%s\\epanetmsx.exe %s %s %s',mmPwd{1},folder,inpfile,obj.MSXTempFile,rptfile);
+            if strcmp(computer('arch'),'win64') || strcmp(computer('arch'),'win32')
+                [~,lpwd]=system(['cmd /c for %A in ("',obj.MSXLibEPANETPath,'") do @echo %~sA']);
+                libPwd=regexp(lpwd,'\s','split');
+                r = sprintf('%s\\epanetmsx.exe %s %s %s',libPwd{1},inpfile,obj.MSXTempFile,rptfile);
             end
             system(r);
         end
@@ -10935,19 +10927,17 @@ elseif strcmp(previousFlowUnits,'CMD')
 end
 end
 function [fid,binfile] = runEPANETexe(obj)
-    [~,mm]=system(['cmd /c for %A in ("',pwd,'") do @echo %~sA']);
+    [tmppath,tempfile]=fileparts(obj.BinTempfile);
+    [~,mm]=system(['cmd /c for %A in ("',tmppath,'") do @echo %~sA']);
     mmPwd=regexp(mm,'\s','split');
-    pp=[mmPwd{1},'/'];
-    inpfile=[pp,obj.BinTempfile];
+    inpfile=[mmPwd{1},'/',tempfile,'.inp'];
     rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
     binfile=[inpfile(1:length(inpfile)-4),'.bin'];
     if exist(binfile)==2, fclose all; delete(binfile); end
-    if strcmp(computer('arch'),'win64')
-            folder='64bit';
-        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',mmPwd{1},folder,inpfile,rptfile,binfile);
-    elseif strcmp(computer('arch'),'win32')
-            folder='32bit';
-        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',mmPwd{1},folder,inpfile,rptfile,binfile);
+    if strcmp(computer('arch'),'win64') || strcmp(computer('arch'),'win32')
+        [~,lpwd]=system(['cmd /c for %A in ("',obj.LibEPANETpath,'") do @echo %~sA']);
+        libPwd=regexp(lpwd,'\s','split');
+        r = sprintf('%s\\epanet2d.exe %s %s %s',libPwd{1},inpfile,rptfile,binfile);
     end
     system(r);
     fid = fopen(binfile,'r');

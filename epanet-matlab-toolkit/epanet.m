@@ -416,7 +416,7 @@ classdef epanet <handle
                 end
             end
             warning on;   
-            obj.InputFile=varargin{1}; % Get name of INP file
+            obj.InputFile=which(varargin{1}); % Get name of INP file
             % Bin functions
             if nargin==2
                 if strcmp(upper(varargin{2}),'BIN')

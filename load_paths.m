@@ -27,8 +27,8 @@ function [output] = load_paths()
 
 %------------- BEGIN CODE --------------
 
-output=addpath(genpath(pwd));
-    
+addpath(genpath(pwd));
+output = 'Paths loaded.';    
 %------------- END OF CODE --------------
 
 

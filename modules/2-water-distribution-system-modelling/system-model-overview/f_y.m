@@ -1,4 +1,4 @@
-function [output] = f_y(input1)
+function [output] = f_y(x,z,c,G,s)
 %FUNCTION_NAME - One line description of what the function or script performs (H1 line)
 %Optional file header info (to give more details about the function than in the H1 line)
 %
@@ -27,6 +27,6 @@ function [output] = f_y(input1)
 
 %------------- BEGIN CODE --------------
 
-output1=input1;
+output = [x.Tank_Volume(:,(s{1})), x.Tank_Volume(:,(s{1}+1)), x.Tank_Chlorine(:,(s{2}+1)), z.Junctions_Head(:,(s{3}+1)), z.Pipe_Flow(:,(s{4}+1)), c.Junctions_Chlorine(:,(s{5}+1))]';
 
 %------------- END OF CODE --------------

@@ -12,8 +12,8 @@ clear;
 close all;clear class;
 
 % Create EPANET object using the INP file
-inpname=which('example.inp'); %Net2_Rossman2000 example
-% inpname=which('Net2_Rossman2000.inp')
+inpname=which('net2-cl2.inp'); %net2-cl2 example
+% inpname=which('net2-cl2.inp')
 
 %% MSX Functions
 d=epanet(inpname);

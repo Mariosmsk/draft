@@ -1,17 +1,17 @@
-function [output] = load_paths()
-%LOAD_PATHS Loads all the folder paths in the memory. 
-%Run this function before executing the book examples.
+function [output] = unload_paths()
+%UNLOAD_PATHS Unloads all the folder paths from the memory. 
+%Run this function when change any folder name.
 %
-% Syntax:  load_paths()
+% Syntax:  unload_paths()
 %
 % Inputs:
 %    none
 %
 % Outputs:
-%    output - String of paths in Matlab memory.
+%    output - Paths unloaded.
 %
 % Example: 
-%    load_paths()
+%    unload_paths()
 %
 % Other m-files required: none
 % Subfunctions: none
@@ -19,9 +19,7 @@ function [output] = load_paths()
 %
 % See also: none
 
-% Author        : Demetrios G. Eliades
 % Work address  : KIOS Research Center, University of Cyprus
-% email         : eldemet@ucy.ac.cy
 % Website       : http://www.kios.ucy.ac.cy
 % Last revision : September 2016
 

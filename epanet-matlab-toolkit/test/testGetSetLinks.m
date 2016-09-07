@@ -9,7 +9,7 @@ close all;
 
 % Create EPANET object using the INP file
 inpname=which('Net1_Rossman2000.inp'); % Net1_Rossman2000
-% Net2_Rossman2000 Net3_Rossman2000 BWSN1_Ostfeld2008 
+% net2-cl2 Net3_Rossman2000 BWSN1_Ostfeld2008 
 d=epanet(inpname);
 
 %% *Get Links Data (EXAMPLES)*

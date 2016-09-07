@@ -2500,6 +2500,7 @@ classdef epanet <handle
         function unload(obj)
             ENclose(obj.LibEPANET);
             ENMatlabCleanup(obj.LibEPANET);
+            fclose all;
             if exist([obj.BinTempfile(1:end-4),'.bin'])==2
                 delete([obj.BinTempfile(1:end-4),'.bin']);
             end
@@ -7565,11 +7566,15 @@ end
 
 obj.MSXFile = char(msxname);
 %Save the temporary msx file
+mm=0;
 if ~isempty(varargin)
     if varargin{1}{1}==1
-        if ~iscell(varargin)
-            obj.MSXTempFile=obj.MSXFile;
-        end
+        mm=1; %for set (write) msx functions 
+    end
+end
+if mm==1
+    if ~iscell(varargin{1})
+        obj.MSXTempFile=obj.MSXFile;
     end
 else
     obj.MSXTempFile=[obj.MSXFile(1:end-4),'_temp.msx'];

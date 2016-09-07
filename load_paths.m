@@ -26,8 +26,9 @@ function [output] = load_paths()
 % Last revision : September 2016
 
 %------------- BEGIN CODE --------------
-
+userpath(pwd);
 addpath(genpath(pwd));
+savepath([pwd,'\pathdef.m']);
 output = 'Paths loaded.';    
 %------------- END OF CODE --------------
 

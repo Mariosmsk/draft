@@ -7566,8 +7566,17 @@ end
 
 obj.MSXFile = char(msxname);
 %Save the temporary msx file
-obj.MSXTempFile=obj.MSXFile;
-if isempty(varargin)
+mm=0;
+if ~isempty(varargin)
+    if varargin{1}{1}==1
+        mm=1; %for set (write) msx functions 
+    end
+end
+if mm==1
+    if ~iscell(varargin{1})
+        obj.MSXTempFile=obj.MSXFile;
+    end
+else
     obj.MSXTempFile=[obj.MSXFile(1:end-4),'_temp.msx'];
     copyfile(obj.MSXFile,obj.MSXTempFile);
 end

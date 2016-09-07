@@ -1,71 +1,67 @@
-%% EPANET-Matlab Class Test Part 2
-% This file is provided to ensure that all functions can be executed
-% correctly.
-% Press F10 for step-by-step execution. You may also use the breakpoints, 
-% indicated with a short dash (-) on the left of each line number.
+function output = simulate_msx(input)
+%SIMULATE_MSX - One line description of what the function or script performs (H1 line)
+%Optional file header info (to give more details about the function than in the H1 line)
+%
+% Syntax:  [output1,output2] = function_name(input1,input2,input3)
+%
+% Inputs:
+%    input1 - Description
+%
+% Outputs:
+%    output1 - Description
+%
+% Example: 
+%    Line 1 of example
+%
+% Other m-files required: none
+% Subfunctions: none
+% MAT-files required: none
+%
+% See also: none
 
-% Execute "addpath(genpath(pwd))" in main folder before running this, to load all EPANET
-% functions
+% Author        : Demetrios G. Eliades, Marios Kyriakou
+% Work address  : KIOS Research Center, University of Cyprus
+% email         : eldemet@ucy.ac.cy
+% Website       : http://www.kios.ucy.ac.cy
+% Last revision : September 2016
 
-clc;
-clear;
-close all;clear class;
+%------------- BEGIN CODE --------------
 
 % Create EPANET object using the INP file
-inpname=which('Net2_Rossman2000.inp'); %Net2_Rossman2000 example
-% inpname=which('Net2_Rossman2000.inp')
+tmp = loadjson(input); 
+settings = tmp.settings;
+d = epanet(settings.filename);
+[~,inpname]=fileparts(settings.filename);
+d.loadMSXFile(which([inpname,'.msx']),d.LibEPANETpath)
 
-%% MSX Functions
-d=epanet(inpname);
-d.loadMSXFile([inpname(1:end-4),'.msx'])
-
-%% MSX PLOTS
-index=1;
 nodesID=d.getNodeNameID;
 linksID=d.getLinkNameID;
-linkID=linksID(index);
-nodeID=nodesID(index);
+linkID=linksID(settings.index);
+nodeID=nodesID(settings.index);
 
-lll=d.getMSXComputedQualityLink
-figure(1);subplot(2,2,1);cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(lll.Time,lll.Quality{index}{i},'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
-title(['LINK ',char(linkID),' - 1st Way']);
-
-nnn=d.getMSXComputedQualityNode
-figure(1);subplot(2,2,2);cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(nnn.Time,nnn.Quality{index}{i},'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
-title(['NODE ',char(nodeID),' - 1st Way']);
+compQualLinks=d.getMSXComputedQualityLink;
+compQualNodes=d.getMSXComputedQualityNode;
 
 arg2=1:d.MSXSpeciesCount;
-s=d.getMSXComputedQualityNode(index,arg2);
+resQualIndexNode=d.getMSXComputedQualityNode(settings.index,arg2);
+resQualIndexLink=d.getMSXComputedQualityLink(settings.index,arg2);
 SpeciesNameID=d.getMSXSpeciesNameID;
 
-%plot 3
-figure(1);subplot(2,2,4);
-for i=arg2
-    specie(:,i)=s.Quality{i,1};
-    time(:,i)=s.Time;
-end
-plot(time,specie);
-title(['NODE ',char(nodeID),' - 2st Way']);
-ylabel('Quantity');
-xlabel('Time(s)');
-legend(SpeciesNameID(arg2));
+results.arg2 = arg2;
+results.linkID = linkID;
+results.nodeID = nodeID;
+results.MSXSpeciesCount = d.getMSXSpeciesCount;
+results.MSXSpeciesNameID = d.MSXSpeciesNameID;
+results.compQualLinks = compQualLinks;
+results.compQualNodes = compQualNodes;
+results.SpeciesNameID = SpeciesNameID;
+results.resQualIndexNode = resQualIndexNode;
+results.resQualIndexLink = resQualIndexLink;
 
- 
-s=d.getMSXComputedQualityLink(index,arg2);
-SpeciesNameID=d.getMSXSpeciesNameID;
-figure(1);subplot(2,2,3);
-for i=arg2
-    specie(:,i)=s.Quality{i,1};
-    time(:,i)=s.Time;
-end
-plot(time,specie);
-title(['LINK ',char(linkID),' - 2st Way']);
-ylabel('Quantity');
-xlabel('Time(s)');
-legend(SpeciesNameID(arg2));
-            
+output = results;
+% output = savejson(results);
 
 d.unloadMSX
-
 d.unload
 
+%------------- END OF CODE --------------

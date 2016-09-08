@@ -1,5 +1,5 @@
 settings=[];
-settings.filename = which('Net1_Rossman2000.inp');
+settings.filename = 'Net1_Rossman2000.inp';
 settings.species = 'Chlorine';
 
 %% Create JSON file for input

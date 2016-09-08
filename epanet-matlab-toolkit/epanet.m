@@ -7564,7 +7564,7 @@ if ~libisloaded(obj.MSXLibEPANET)
     loadlibrary([obj.MSXLibEPANETPath,obj.MSXLibEPANET],[obj.MSXLibEPANETPath,[obj.MSXLibEPANET,'.h']]);
 end
 
-obj.MSXFile = char(msxname);
+obj.MSXFile = which(char(msxname));
 %Save the temporary msx file
 mm=0;
 if ~isempty(varargin)

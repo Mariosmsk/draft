@@ -1,4 +1,4 @@
-function [output] = load_paths()
+function start_toolkit()
 %LOAD_PATHS Loads all the folder paths in the memory. 
 %Run this function before executing the book examples.
 %
@@ -27,7 +27,7 @@ function [output] = load_paths()
 
 %------------- BEGIN CODE --------------
 addpath(genpath(pwd));
-output = 'Paths loaded.';    
+disp('EPANET-MATLAB Toolkit Loaded.');    
 %------------- END OF CODE --------------
 
 

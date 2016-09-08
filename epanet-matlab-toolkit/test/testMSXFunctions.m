@@ -12,12 +12,12 @@ clear;
 close all;clear class;
 
 % Create EPANET object using the INP file
-inpname=which('net2-cl2.inp'); %net2-cl2 example
-% inpname=which('net2-cl2.inp')
+inpname='net2-cl2.inp'; %net2-cl2 example
 
 %% MSX Functions
 d=epanet(inpname);
-d.loadMSXFile([inpname(1:end-4),'.msx'])
+msxname = [inpname(1:end-4),'.msx'];
+d.loadMSXFile(msxname);
 d
 
 % New functions - Read MSX File

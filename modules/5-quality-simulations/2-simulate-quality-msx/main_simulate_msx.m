@@ -1,5 +1,5 @@
 settings=[];
-settings.filename = which('example.inp'); % net2-cl2
+settings.filename = 'example.inp'; % net2-cl2
 settings.index = 1; %node or link index
 settings.figure = 1;
 %% Create JSON file for input

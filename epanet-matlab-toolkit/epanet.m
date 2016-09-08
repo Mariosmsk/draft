@@ -403,17 +403,17 @@ classdef epanet <handle
             % DLLs
             pwdepanet = fileparts(which('epanet.m'));
             if strcmp(computer('arch'),'win64')% if no DLL is given, select one automatically
-                if exist('64bit')==7 % name is a folder.
-                    obj.LibEPANETpath = [pwdepanet,'\64bit\'];
-                else
-                    warning('Folder "64bit" does not exit.');return;
-                end
+                %if exist('64bit')==7 % name is a folder.
+                obj.LibEPANETpath = [pwdepanet,'\64bit\'];
+                %else
+                %    warning('Folder "64bit" does not exit.');return;
+                %end
             elseif strcmp(computer('arch'),'win32')
-                if exist('32bit')==7
-                    obj.LibEPANETpath = [pwdepanet,'\32bit\'];
-                else
-                    warning('Folder "32bit" does not exit.');return;
-                end
+                %if exist('32bit')==7
+                obj.LibEPANETpath = [pwdepanet,'\32bit\'];
+                %else
+                %    warning('Folder "32bit" does not exit.');return;
+                %end
             end
             warning on;   
             obj.InputFile=which(varargin{1}); % Get name of INP file

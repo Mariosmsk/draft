@@ -31,8 +31,7 @@ function output = simulate_msx(input)
 tmp = loadjson(input); 
 settings = tmp.settings;
 d = epanet(settings.filename);
-[~,inpname]=fileparts(settings.filename);
-d.loadMSXFile([inpname,'.msx'],d.LibEPANETpath)
+d.loadMSXFile(settings.msxfilename,d.LibEPANETpath)
 
 nodesID=d.getNodeNameID;
 linksID=d.getLinkNameID;

@@ -1,5 +1,6 @@
 settings=[];
-settings.filename = 'example.inp'; % net2-cl2
+settings.filename = 'Net3-NH2CL.inp'; % net2-cl2
+settings.msxfilename = 'Net3_two_source_chlorine_decay.msx'; % net2-cl2
 settings.index = [1,2]; %node or link index
 settings.figure = 1;
 %% Create JSON file for input

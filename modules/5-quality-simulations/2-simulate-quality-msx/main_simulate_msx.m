@@ -38,6 +38,4 @@ for u=3:4
     xlabel('Time(sec)');
 end
 
-
-
 %------------- END OF CODE --------------

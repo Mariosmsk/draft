@@ -32,7 +32,7 @@ tmp = loadjson(input);
 settings = tmp.settings;
 d = epanet(settings.filename);
 [~,inpname]=fileparts(settings.filename);
-d.loadMSXFile(which([inpname,'.msx']),d.LibEPANETpath)
+d.loadMSXFile([inpname,'.msx'],d.LibEPANETpath)
 
 nodesID=d.getNodeNameID;
 linksID=d.getLinkNameID;

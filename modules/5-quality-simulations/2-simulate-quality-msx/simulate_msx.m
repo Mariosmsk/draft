@@ -43,8 +43,6 @@ compQualLinks=d.getMSXComputedQualityLink;
 compQualNodes=d.getMSXComputedQualityNode;
 
 arg2=1:d.MSXSpeciesCount;
-resQualIndexNode=d.getMSXComputedQualityNode(settings.index,arg2);
-resQualIndexLink=d.getMSXComputedQualityLink(settings.index,arg2);
 SpeciesNameID=d.getMSXSpeciesNameID;
 
 results.arg2 = arg2;
@@ -55,8 +53,6 @@ results.MSXSpeciesNameID = d.MSXSpeciesNameID;
 results.compQualLinks = compQualLinks;
 results.compQualNodes = compQualNodes;
 results.SpeciesNameID = SpeciesNameID;
-results.resQualIndexNode = resQualIndexNode;
-results.resQualIndexLink = resQualIndexLink;
 
 output = results;
 % output = savejson(results);

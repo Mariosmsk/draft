@@ -1,17 +1,17 @@
 function start_toolkit()
-%LOAD_PATHS Loads all the folder paths in the memory. 
-%Run this function before executing the book examples.
+%START_TOOLKIT Loads all the EPANET-MATLAB Toolkit folder paths in MATLAB. 
+%Run this function before calling 'epanet.m' and the Matlab modules.
 %
-% Syntax:  load_paths()
+% Syntax:  start_toolkit
 %
 % Inputs:
 %    none
 %
 % Outputs:
-%    output - String of paths in Matlab memory.
+%    none
 %
 % Example: 
-%    load_paths()
+%    start_toolkit
 %
 % Other m-files required: none
 % Subfunctions: none
@@ -19,7 +19,7 @@ function start_toolkit()
 %
 % See also: none
 
-% Author        : Demetrios G. Eliades
+% Author        : Demetrios G. Eliades, Marios Kyriakou
 % Work address  : KIOS Research Center, University of Cyprus
 % email         : eldemet@ucy.ac.cy
 % Website       : http://www.kios.ucy.ac.cy
@@ -27,7 +27,7 @@ function start_toolkit()
 
 %------------- BEGIN CODE --------------
 addpath(genpath(pwd));
-disp('EPANET-MATLAB Toolkit Loaded.');    
+disp('EPANET-MATLAB Toolkit Paths Loaded.');    
 %------------- END OF CODE --------------
 
 

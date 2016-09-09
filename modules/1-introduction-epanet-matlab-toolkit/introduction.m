@@ -29,15 +29,16 @@ function [output] = introduction()
 
 %% Instructions
 clc % clears everything in the Command Window
-disp('Press F5 key to execute all code.')
+disp('Press F5 key to execute all code.') % disp('...') prints a message on the Command Window
 disp('You can debug the code by pressing the "-" next to each line of code, to create a breakpoint. Press F5 to execute up to that point, and F10 for a step-by-step execution of the code.')
 
 
 %% Data structures
-% Create a vector array of node indices (numbers)
+% Create a vector array of node indices (integer numbers)
 index = [1 2 3 5 6 8 11 13]
 
-% You can avoid printing a command by using the semicolon ";" in the end
+% You can avoid printing results in the Command Window by using the
+% semicolon ";" at the end of each line.
 
 index_noshow = index;
 

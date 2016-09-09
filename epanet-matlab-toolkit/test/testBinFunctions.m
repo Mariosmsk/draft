@@ -1066,8 +1066,4 @@ d.BinUnits.BinQualityWaterAgeUnits
         
 d.BinClose
 d.unload
-%Delete s files 
-sfilesexist = dir('s*'); 
-if (~isempty(sfilesexist)), delete s*, end;
-
 fprintf('Test finished.\n')

@@ -688,9 +688,5 @@ pause
 d.getNodeCoordinates
 d.unload % delete txt and temp files
 
-%% Delete files 
-sfilesexist = dir('s*'); 
-if (~isempty(sfilesexist)), delete('s*'), end;
 delete('TestR*','hydraulics*','*_INP*')
-
 fprintf('Test finished.\n')

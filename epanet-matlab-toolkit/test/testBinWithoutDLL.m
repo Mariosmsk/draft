@@ -993,10 +993,5 @@ d.BinOptionsHeadloss
 d.BinOptionsQualityTolerance
 
 d.BinUnits
-
-%Delete s files 
-sfilesexist = dir('s*'); 
-if (~isempty(sfilesexist)), delete s*, end;
 d.BinClose
-
 fprintf('Test finished.\n')

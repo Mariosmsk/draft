@@ -247,9 +247,5 @@ d.useMSXHydraulicFile('testMSXHydraulics.hyd')
 d.unloadMSX
 
 d.unload
-%Delete s files (temporary files created by the C library
-sfilesexist = dir('s*'); 
-if (~isempty(sfilesexist)), delete s*, end;
 delete('testMSX.msx','*.hyd','*.bin','*bat*','*_temp*')
-
 fprintf('Test finished.\n')

@@ -154,5 +154,4 @@ d.setLinkSettings(2,121)
 d.getLinkSettings(2)
 
 d.unload
-
 fprintf('Test finished.\n')

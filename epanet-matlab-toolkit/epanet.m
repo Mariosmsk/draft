@@ -2520,15 +2520,19 @@ classdef epanet <handle
                 MSXMatlabSetup(obj,msxname,varargin);
             end
         end
-        function runMSXexe(obj)
+        function [status,result] = runMSXexe(obj, varargin)
             inpfile=obj.BinTempfile;
-            rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
+            if isempty(varargin)
+                rptfile=[inpfile(1:length(inpfile)-4),'.txt'];
+            else
+                rptfile=varargin{1};
+            end
             if strcmp(computer('arch'),'win64') || strcmp(computer('arch'),'win32')
                 [~,lpwd]=system(['cmd /c for %A in ("',obj.MSXLibEPANETPath,'") do @echo %~sA']);
                 libPwd=regexp(lpwd,'\s','split');
                 r = sprintf('%s\\epanetmsx.exe %s %s %s',libPwd{1},inpfile,obj.MSXTempFile,rptfile);
             end
-            system(r);
+            [status,result] = system(r);
         end
         function value = getMSXEquationsTerms(obj)
             [value,~,~] = getEquations(obj.MSXFile);
@@ -3045,6 +3049,14 @@ classdef epanet <handle
         end
         function writeMSXReport(obj,varargin)
             [obj.Errcode]=MSXreport(obj.MSXLibEPANET);
+        end
+        function [status,result] = writeMSXReportExe(obj, varargin)
+            if ~isempty(varargin)
+                varargin=varargin{1};
+            else
+                varargin=[obj.BinTempfile(1:length(obj.BinTempfile)-4),'.txt'];
+            end
+            [status,result] = obj.runMSXexe(varargin);
         end
         function index = addMSXPattern(obj,varargin)
             index=-1;

@@ -151,6 +151,11 @@ open([d.MSXTempFile(1:end-4),'.txt']);
 disp('Press any key to continue...')
 pause
 
+rptmsx='reportmsx.txt';
+d.writeMSXReportExe(rptmsx);
+open(rptmsx);
+disp('Press any key to continue...')
+pause
 
 %% GET, ADD PATTERNS
 d.addMSXPattern('testpat',[2 .3 .4 6 5 2 4]);
@@ -247,5 +252,5 @@ d.useMSXHydraulicFile('testMSXHydraulics.hyd')
 d.unloadMSX
 
 d.unload
-delete('testMSX.msx','*.hyd','*.bin','*bat*','*_temp*')
+delete('testMSX.msx','*.hyd','*.bin','*bat*','*_temp*','reportmsx.txt')
 fprintf('Test finished.\n')

@@ -8,8 +8,8 @@ clear;
 close all;
 
 % Create EPANET object using the INP file
-inpname=which('Net1_Rossman2000.inp'); % Net1_Rossman2000
-% net2-cl2 Net3_Rossman2000 BWSN1_Ostfeld2008 
+inpname='Net1.inp'; % Net1
+% net2-cl2 Net3 BWSN_Network_1 
 d=epanet(inpname);
 
 %% *Get Nodes Data (EXAMPLES)*
@@ -106,7 +106,7 @@ d.getNodeCoordinates
 d.getNodeCoordinates{1}
 d.getNodeCoordinates{2}
 d.getNodeCoordinates(2)
-d.getNodeCoordinates(1:d.NodeCount)
+% d.getNodeCoordinates(1:d.NodeCount)
 % Runs hydraulics Step-by-step
 d.openHydraulicAnalysis;
 d.initializeHydraulicAnalysis;
@@ -234,5 +234,4 @@ d.getNodeTankMixingModelType
 d.getNodeTankMixingModelCode
 
 d.unload
-
 fprintf('Test finished.\n')

@@ -9,8 +9,8 @@ close all;
 clear class;
 
 % Create EPANET object using the INP file
-inpname=which('Net1_Rossman2000.inp');
-%Net1_Rossman2000 Net3_Rossman2000 net2-cl2 BWSN1_Ostfeld2008
+inpname='Net1.inp';
+%Net1 Net3 net2-cl2 BWSN_Network_1
 tic;d=epanet(inpname);toc
 d.addPattern('NewPat2', [0.8, 1.1, 1.4, 1.1, 0.8, 0.7]); 
 d.BinUpdateClass; % must be run if use Bin functions
@@ -247,7 +247,7 @@ if d.NodeReservoirCount
 end
 
 %% GET, SET TANKS PARAMETERS
-if strcmp(inpname,which('Net1_Rossman2000.inp'))
+if strcmp(inpname,'Net1.inp')
 if d.BinNodeTankCount
     tic
     tankElevation=d.BinNodeTankElevation;
@@ -583,7 +583,7 @@ end
 
 %% GET, REMOVE RULES CONTROLS
 % section [RULES]
-if strcmp(inpname,which('BWSN1_Ostfeld2008.inp'))
+if strcmp(inpname,'BWSN_Network_1.inp')
     p=d.getBinRulesControlsInfo
     errcode=d.removeBinRulesControlLinkID(p.BinRulesControlLinksID{4}{3}); % PUMP-170
     errcode=d.removeBinRulesControlNodeID(p.BinRulesControlNodesID{4}{2}); % TANK-131
@@ -761,7 +761,7 @@ pause
 
 
 %% GET, SET VALVES
-if strcmp(inpname,which('BWSN1_Ostfeld2008.inp'))
+if strcmp(inpname,'BWSN_Network_1.inp')
     if d.BinLinkValveCount
         index=1;
         m=d.BinLinkValveMinorLoss; 
@@ -825,7 +825,7 @@ d.BinUpdateClass
 disp('Press any key to continue...')
 pause
 
-if strcmp(inpname,which('Net1_Rossman2000.inp'))
+if strcmp(inpname,'Net1.inp')
 %% GET, ADD, REMOVE CONTROLS
     v=d.getBinControlsInfo;
     errcode=d.removeBinControlLinkID(v.BinControlLinksID{1});
@@ -1066,8 +1066,4 @@ d.BinUnits.BinQualityWaterAgeUnits
         
 d.BinClose
 d.unload
-%Delete s files 
-sfilesexist = dir('s*'); 
-if (~isempty(sfilesexist)), delete s*, end;
-
 fprintf('Test finished.\n')

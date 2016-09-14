@@ -9,8 +9,8 @@ close all;
 
 % Create EPANET object using the INP file
 %d=epanet('Net1_Rossman2000.inp');
-inpname=which('Net1_Rossman2000.inp'); 
-% Net1_Rossman2000 net2-cl2 Net3_Rossman2000 BWSN1_Ostfeld2008 
+inpname='Net1.inp'; 
+% Net1 net2-cl2 Net3 BWSN_Network_1 
 
 % version='epanet2'; % version dev2.1
 % d=epanet(inpname,version);
@@ -110,7 +110,7 @@ d.getLinkPumpPatternIndex
 
 
 
-% inpname=which('Net1_Rossman2000.inp');
+% inpname='Net1.inp';
 d=epanet(inpname);
 %% Controls
 Controls=d.getControls
@@ -688,9 +688,5 @@ pause
 d.getNodeCoordinates
 d.unload % delete txt and temp files
 
-%% Delete files 
-sfilesexist = dir('s*'); 
-if (~isempty(sfilesexist)), delete('s*'), end;
 delete('TestR*','hydraulics*','*_INP*')
-
 fprintf('Test finished.\n')

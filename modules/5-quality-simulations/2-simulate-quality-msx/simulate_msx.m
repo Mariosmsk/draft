@@ -31,8 +31,7 @@ function output = simulate_msx(input)
 tmp = loadjson(input); 
 settings = tmp.settings;
 d = epanet(settings.filename);
-[~,inpname]=fileparts(settings.filename);
-d.loadMSXFile(which([inpname,'.msx']),d.LibEPANETpath)
+d.loadMSXFile(settings.msxfilename,d.LibEPANETpath)
 
 nodesID=d.getNodeNameID;
 linksID=d.getLinkNameID;
@@ -43,8 +42,6 @@ compQualLinks=d.getMSXComputedQualityLink;
 compQualNodes=d.getMSXComputedQualityNode;
 
 arg2=1:d.MSXSpeciesCount;
-resQualIndexNode=d.getMSXComputedQualityNode(settings.index,arg2);
-resQualIndexLink=d.getMSXComputedQualityLink(settings.index,arg2);
 SpeciesNameID=d.getMSXSpeciesNameID;
 
 results.arg2 = arg2;
@@ -55,8 +52,6 @@ results.MSXSpeciesNameID = d.MSXSpeciesNameID;
 results.compQualLinks = compQualLinks;
 results.compQualNodes = compQualNodes;
 results.SpeciesNameID = SpeciesNameID;
-results.resQualIndexNode = resQualIndexNode;
-results.resQualIndexLink = resQualIndexLink;
 
 output = results;
 % output = savejson(results);

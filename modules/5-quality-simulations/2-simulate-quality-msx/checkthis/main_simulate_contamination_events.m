@@ -1,5 +1,5 @@
 settings=[];
-settings.filename = which('Net1_Rossman2000.inp');
+settings.filename = 'Net1.inp';
 settings.simulation_time=48*3600; % seconds
 settings.num_scenarios=100;
 settings.num_nodesinj=2; 
@@ -14,7 +14,7 @@ input = savejson(settings);
 
 %% Run Module
 out_scenarios = create_msx_scenarios(input);
-out_msx = create_msx_file;%(input);
+out_msx = create_msx_file2;%(input);
 d.writeMSXFile(out_msx)
 d.setTimeSimulationDuration(settings.simulation_time);
 

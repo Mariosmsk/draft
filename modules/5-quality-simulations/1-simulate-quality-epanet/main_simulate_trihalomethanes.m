@@ -1,6 +1,6 @@
 settings=[];
-settings.filename = 'Net1_Rossman2000.inp';
-settings.species = 'THMS';
+settings.filename = 'Net1.inp';
+settings.species = 'CHEM'; % THMs
 
 %% Create JSON file for input
 input = savejson(settings);

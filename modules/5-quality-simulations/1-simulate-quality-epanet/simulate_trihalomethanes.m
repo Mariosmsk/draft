@@ -1,5 +1,5 @@
-function output = simulate_chlorine_residuals(input)
-%SIMULATE_CHLORINE_RESIDUALS - One line description of what the function or script performs (H1 line)
+function output = simulate_trihalomethanes(input)
+%SIMULATE_TRIALOMETHANES - One line description of what the function or script performs (H1 line)
 %Optional file header info (to give more details about the function than in the H1 line)
 %
 % Syntax:  [output1,output2] = function_name(input1,input2,input3)
@@ -30,6 +30,7 @@ tmp = loadjson(input);
 settings = tmp.settings;
 
 d = epanet(settings.filename);
+d.setBinLimitingPotential(1);
 d.setQualityType(settings.species)
 d.solveCompleteHydraulics;
 C = d.getComputedQualityTimeSeries('time','quality');

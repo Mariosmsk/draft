@@ -8184,6 +8184,7 @@ if isa(highlightlink,'cell')
 end
 
 if (strcmp(lower(lline),'yes'))
+    hold on;
     for i=1:v.linkcount
         FromNode=strfind(strcmp(v.nodesconnlinks(i,1),v.nodenameid),1);
         ToNode=strfind(strcmp(v.nodesconnlinks(i,2),v.nodenameid),1);
@@ -8234,15 +8235,6 @@ if (strcmp(lower(lline),'yes'))
             legendString{6} = char('Valves');
         end
 
-        % Show Link id
-        if (strcmp(lower(Link),'yes') && ~length(hh))
-            text((x1+x2)/2,(y1+y2)/2,v.linknameid(i),'Fontsize',fontsize,'Parent',axesid);
-        end
-        % Show Link Index
-        if (strcmp(lower(LinkInd),'yes') && ~length(hh))
-            text((x1+x2)/2,(y1+y2)/2,num2str(v.linkindex(i)),'Fontsize',fontsize,'Parent',axesid);
-        end
-
         if length(hh) && isempty(selectColorLink)
             line([x1,x2],[y1,y2],'LineWidth',1,'Color','r','Parent',axesid);
             text((x1+x2)/2,(y1+y2)/2,v.linknameid(i),'Fontsize',fontsize,'Parent',axesid);
@@ -8267,13 +8259,21 @@ if (strcmp(lower(lline),'yes'))
                 line([x1 v.nodecoords{3}{i} x2],[y1 v.nodecoords{4}{i} y2],'LineWidth',1,'Color',char(selectColorLink(hh)),'Parent',axesid);
             end
         end
-        hold on
+        % Show Link id
+        if (strcmp(lower(Link),'yes')) %&& ~length(hh))
+            text((x1+x2)/2,(y1+y2)/2,v.linknameid(i),'Fontsize',fontsize,'Parent',axesid);
+        end
+        % Show Link Index
+        if (strcmp(lower(LinkInd),'yes')) %&& ~length(hh))
+            text((x1+x2)/2,(y1+y2)/2,num2str(v.linkindex(i)),'Fontsize',fontsize,'Parent',axesid);
+        end
     end
 end
 
 if (strcmp(lower(npoint),'yes'))
     if (strcmp(lower(npoint),'yes'))
         % Coordinates for node FROM
+        hold on;
         for i=1:v.nodecount
             [x] = double(v.nodecoords{1}(i));
             [y] = double(v.nodecoords{2}(i));
@@ -8317,15 +8317,6 @@ if (strcmp(lower(npoint),'yes'))
                     'MarkerSize',16,'Parent',axesid);
 
                 legendString{3} = char('Tanks');
-            end
-
-            % Show Node id
-            if (strcmp(lower(Node),'yes') && ~length(hh))
-                text(x,y,v.nodenameid(i),'Fontsize',fontsize);%'BackgroundColor',[.7 .9 .7],'Margin',margin/4);
-            end
-            % Show Node index
-            if (strcmp(lower(NodeInd),'yes') && ~length(hh))
-                text(x,y,num2str(v.nodeindex(i)),'Fontsize',fontsize,'Parent',axesid);%'BackgroundColor',[.7 .9 .7],'Margin',margin/4);
             end
 
             if length(hh) && isempty(selectColorNode)
@@ -8378,21 +8369,30 @@ if (strcmp(lower(npoint),'yes'))
                     end
                end
             end
-            hold on
+            % Show Node id
+            if (strcmp(lower(Node),'yes')) %&& ~length(hh))
+                text(x,y,v.nodenameid(i),'Fontsize',fontsize);%'BackgroundColor',[.7 .9 .7],'Margin',margin/4);
+            end
+            % Show Node index
+            if (strcmp(lower(NodeInd),'yes')) %&& ~length(hh))
+                text(x,y,num2str(v.nodeindex(i)),'Fontsize',fontsize,'Parent',axesid);%'BackgroundColor',[.7 .9 .7],'Margin',margin/4);
+            end
         end
     end
 end
 % Legend Plots
-u=1;
-for i=find(~cellfun(@isempty,legendString))
-    if h(i)~=0
-        String{u} = legendString{i};
-        hh(:,u) = h(i);
-        u=u+1;
+if isempty(highlightnodeindex) || isempty(highlightnodeindex)
+    u=1;
+    for i=find(~cellfun(@isempty,legendString))
+        if h(i)~=0
+            String{u} = legendString{i};
+            hh(:,u) = h(i);
+            u=u+1;
+        end
     end
-end
 
-legend(hh,String);
+    legend(hh,String);
+end
 % Axis OFF and se Background
 [xmax,~]=max(v.nodecoords{1});
 [xmin,~]=min(v.nodecoords{1});

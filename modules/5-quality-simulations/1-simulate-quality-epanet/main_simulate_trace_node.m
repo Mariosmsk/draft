@@ -1,5 +1,5 @@
 settings=[];
-settings.filename = 'Net1_Rossman2000.inp';
+settings.filename = 'Net1.inp';
 settings.species = 'TRACE';
 settings.node = '9';
 

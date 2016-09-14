@@ -22,11 +22,7 @@ K     (K1*T1 + K2*(1-T1))
 
 [PIPES]
 RATE     T1     0     
-RATE     CL2     -K*CL2     
-
-[TANKS]
-RATE     T1     0     
-RATE     CL2     -K*CL2     
+RATE     CL2     -K*CL2       
 
 [SOURCES]
 

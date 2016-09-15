@@ -21,8 +21,8 @@ CONSTANT     K2     17.7    ;Source 2 decay coeff.
 K     (K1*T1 + K2*(1-T1))     
 
 [PIPES]
-RATE     T1     0     
-RATE     CL2     -K*CL2       
+RATE     T1     0           ;T1 is conservative
+RATE     CL2     -K*CL2     ;CL2 has first order decay 
 
 [SOURCES]
 

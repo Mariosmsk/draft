@@ -1,8 +1,9 @@
 settings=[];
-settings.filename = 'Net3.inp'; % net2-cl2
+settings.filename = 'Net3_MSXexample.inp'; % net2-cl2
 settings.msxfilename = 'Net3_two_source_chlorine_decay.msx'; % net2-cl2
 % settings.index = [1:97]; %node or link index
 settings.figure = 1;
+settings.duration = 700;
 %% Create JSON file for input
 input = savejson(settings);
 
@@ -64,6 +65,8 @@ c5 = cell(1,length(pp5)); c5(:) = {'r'};
   
 h=results.d.plot('highlightlink',[pp1 pp2 pp3 pp4 pp5],'colorlink',[c1 c2 c3 c4 c5],...
     'highlightnode',[pp1n pp2n pp3n pp4n pp5n],'colornode',[c1n c2n c3n c4n c5n],'nodes','yes');
+h2=results.d.plot('highlightlink',[pp1 pp2 pp3 pp4 pp5],'colorlink',[c1 c2 c3 c4 c5],...
+    'highlightnode',[pp1n pp2n pp3n pp4n pp5n],'colornode',[c1n c2n c3n c4n c5n]);
 
 results.d.unloadMSX
 results.d.unload

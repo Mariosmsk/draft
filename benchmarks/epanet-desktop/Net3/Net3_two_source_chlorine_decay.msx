@@ -29,8 +29,8 @@ RATE     CL2     -K*CL2     ;CL2 has first order decay
 [QUALITY]
 ;Initial conditions (= 0 if not specified here)
 NODE    River   T1      1.0
-NODE    1       CL2     1.2
-NODE    2       CL2     1.2
+NODE    River   CL2     1.2
+NODE    Lake    CL2     1.2
 
 [PARAMETERS]
 [PATTERNS]

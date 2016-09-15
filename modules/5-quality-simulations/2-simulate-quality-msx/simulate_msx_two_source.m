@@ -31,6 +31,9 @@ function output = simulate_msx_two_source(input)
 tmp = loadjson(input); 
 settings = tmp.settings;
 d = epanet(settings.filename);
+d.setTimeSimulationDuration(settings.duration*3600);
+d.saveInputFile(d.BinTempfile);
+d.loadEPANETFile(d.BinTempfile);
 d.loadMSXFile(settings.msxfilename,d.LibEPANETpath)
 
 nodeID=d.getNodeNameID;

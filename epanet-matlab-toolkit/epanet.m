@@ -659,7 +659,7 @@ classdef epanet <handle
             
         end % End of epanet class constructor
         function Errcode = loadEPANETFile(obj,varargin)
-           [Errcode] = ENopen(varargin{1},[varargin{1}(1:end-4),'.rpt'],[varargin{1}(1:end-4),'.bin'],obj.LibEPANET); 
+           [Errcode] = ENopen(varargin{1},[varargin{1}(1:end-4),'.txt'],[varargin{1}(1:end-4),'.bin'],obj.LibEPANET); 
         end
         function [value] = plot(obj,varargin)
             %Plots network in a new Matlab figure

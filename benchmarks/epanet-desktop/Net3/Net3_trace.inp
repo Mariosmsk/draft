@@ -310,6 +310,7 @@ Link 330 OPEN IF Node 1 ABOVE 19.1
 
 [QUALITY]
 ;Node            	InitQual
+Lake                  1.0 
 
 [SOURCES]
 ;Node            	Type        	Quality     	Pattern
@@ -331,15 +332,15 @@ Link 330 OPEN IF Node 1 ABOVE 19.1
 ;Tank            	Model
 
 [TIMES]
- Duration           	24:00 
+ Duration           	360 
  Hydraulic Timestep 	1:00 
  Quality Timestep   	0:05 
  Pattern Timestep   	1:00 
  Pattern Start      	0:00 
  Report Timestep    	1:00 
- Report Start       	0:00 
- Start ClockTime    	12 am
- Statistic          	None
+ Report Start       	312 
+ Start ClockTime    	6 AM
+ Statistic          	Average
 
 [REPORT]
  Status             	Yes
@@ -446,7 +447,7 @@ Link 330 OPEN IF Node 1 ABOVE 19.1
  247             	35.02           	2.05            
  249             	35.02           	1.81            
  251             	34.15           	1.10            
- 253             	32.17           	1.88            
+ 253             	32.16           	2.06            
  255             	33.51           	2.45            
  257             	21.17           	23.32           
  259             	20.80           	23.40           

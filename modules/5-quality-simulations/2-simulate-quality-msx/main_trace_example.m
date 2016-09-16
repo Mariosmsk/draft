@@ -1,14 +1,13 @@
-settings=[];
-settings.filename = 'Net3_MSXexample.inp'; % net2-cl2
-settings.msxfilename = 'Net3_two_source_chlorine_decay.msx'; % net2-cl2
-% settings.index = [1:97]; %node or link index
-settings.figure = 1;
-settings.duration = 24;
+clear all;close all;clc;
+settings.filename = 'Net3_trace.inp'; 
+settings.msxfilename = 'Net3_trace.msx'; 
+% Trace River
+settings.duration = 650;
 %% Create JSON file for input
 input = savejson(settings);
 
 %% Run Module
-output = simulate_msx_two_source(input);
+output = simulate_msx_trace(input);
 results = output;
 
 % load results.mat
@@ -66,38 +65,14 @@ c3 = cell(1,length(pp3)); c3(:) = {'g'};
 c4 = cell(1,length(pp4)); c4(:) = {'y'};
 c5 = cell(1,length(pp5)); c5(:) = {'r'};
   
-h=results.d.plot('highlightlink',[pp1 pp2 pp3 pp4 pp5],'colorlink',[c1 c2 c3 c4 c5],...
-    'highlightnode',[pp1n pp2n pp3n pp4n pp5n],'colornode',[c1n c2n c3n c4n c5n],'nodes','yes');
+% h=results.d.plot('highlightlink',[pp1 pp2 pp3 pp4 pp5],'colorlink',[c1 c2 c3 c4 c5],...
+%     'highlightnode',[pp1n pp2n pp3n pp4n pp5n],'colornode',[c1n c2n c3n c4n c5n],'nodes','yes');
 h2=results.d.plot('highlightlink',[pp1 pp2 pp3 pp4 pp5],'colorlink',[c1 c2 c3 c4 c5],...
     'highlightnode',[pp1n pp2n pp3n pp4n pp5n],'colornode',[c1n c2n c3n c4n c5n]);
-h2=results.d.plot('highlightlink',[pp1 pp2 pp3 pp4 pp5],'colorlink',[c1 c2 c3 c4 c5],...
-    'highlightnode',[pp1n pp2n pp3n pp4n pp5n],'colornode',[c1n c2n c3n c4n c5n],'links','yes');
+% h2=results.d.plot('highlightlink',[pp1 pp2 pp3 pp4 pp5],'colorlink',[c1 c2 c3 c4 c5],...
+%     'highlightnode',[pp1n pp2n pp3n pp4n pp5n],'colornode',[c1n c2n c3n c4n c5n],'links','yes');
 
 results.d.unloadMSX
 results.d.unload
-
-% for u=1:length(results.nodeID)
-%     figure;cmap=hsv(5);
-%     for i=1:results.MSXSpeciesCount
-%         plot(results.compQualNodes.Time,results.compQualNodes.Quality{settings.index(u)}{i},'Color',cmap(i,:));
-%         hold on; 
-%     end
-%     legend(results.MSXSpeciesNameID);
-%     title(['NODE ',char(results.nodeID(u))]);
-%     ylabel('Quantity');
-%     xlabel('Time(sec)');
-% end
-% 
-% for u=1:length(results.linkID)
-%     figure;cmap=hsv(5);
-%     for i=1:results.MSXSpeciesCount
-%         plot(results.compQualLinks.Time,results.compQualLinks.Quality{settings.index(u)}{i},'Color',cmap(i,:));
-%         hold on; 
-%     end
-%     legend(results.MSXSpeciesNameID);
-%     title(['LINK ',char(results.linkID(u))]);
-%     ylabel('Quantity');
-%     xlabel('Time(sec)');
-% end
 
 %------------- END OF CODE --------------

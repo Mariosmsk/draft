@@ -1,5 +1,5 @@
-function output = simulate_msx_two_source(input)
-%SIMULATE_MSX - One line description of what the function or script performs (H1 line)
+function output = simulate_msx_trace(input)
+%SIMULATE_MSX_TRACE - One line description of what the function or script performs (H1 line)
 %Optional file header info (to give more details about the function than in the H1 line)
 %
 % Syntax:  [output1,output2] = function_name(input1,input2,input3)
@@ -57,6 +57,5 @@ results.d = d;
 
 output = results;
 % output = savejson(results);
-
 
 %------------- END OF CODE --------------

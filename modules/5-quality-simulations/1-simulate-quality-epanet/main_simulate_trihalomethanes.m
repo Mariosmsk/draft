@@ -1,6 +1,9 @@
 settings=[];
-settings.filename = 'Net1.inp';
-settings.species = 'CHEM'; % THMs
+settings.filename = 'Net3.inp';
+settings.species = 'THMs';
+settings.species_units = 'ug/L';
+settings.kb = 0.5;
+settings.kw = 1;
 
 %% Create JSON file for input
 input = savejson(settings);
@@ -18,6 +21,6 @@ plot(results.THMs.Time/3600,results.THMs.Quality)
 grid on
 title('Trihalomethane Concentration');
 xlabel('Time (hours)')
-ylabel('THMs (mg/L)')
+ylabel('THMs (ug/L)')
 legend(results.Network.NodeNameID)
 %------------- END OF CODE --------------

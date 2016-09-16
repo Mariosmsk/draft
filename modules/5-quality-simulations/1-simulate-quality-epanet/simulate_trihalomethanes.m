@@ -30,12 +30,16 @@ tmp = loadjson(input);
 settings = tmp.settings;
 
 d = epanet(settings.filename);
-d.setBinLimitingPotential(1);
-d.setQualityType(settings.species)
+d.setBinLimitingPotential(1); 
+d.setQualityType(settings.species,settings.species_units)
+d.setNodeInitialQuality(zeros(1,d.NodeCount));
+d.setLinkBulkReactionCoeff(ones(1,d.LinkCount)*settings.kb);
+d.setLinkWallReactionCoeff(ones(1,d.LinkCount)*settings.kw);
+
 d.solveCompleteHydraulics;
 C = d.getComputedQualityTimeSeries('time','quality');
 d.unload
-results.Chlorine=C;
+results.THMs=C;
 results.Network=d;
 output = savejson(results);
 

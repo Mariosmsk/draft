@@ -4346,6 +4346,12 @@ classdef epanet <handle
             indexParameter=7;
             [Errcode]=setBinParam(obj,indexParameter,parameter,sections);        
         end
+        function [value] = getBinLimitingPotential(obj)
+            [~,value] = limitingPotential(obj,'get');
+        end
+        function [Errcode]=setBinLimitingPotential(obj,newlimiting)
+            Errcode = limitingPotential(obj,'', newlimiting);
+        end
         function [Errcode]=setBinLinkGlobalWallReactionCoeff(obj,varargin)
             parameter=varargin{1};
             sections={'[REACTIONS]','[MIXING]'};
@@ -8426,6 +8432,52 @@ function [info,tline,allines] = readAllFile(inpname)
         info{i} = str(~cellfun('isempty', str));
     end
     fclose(fid);
+end
+function [Errcode,value] = limitingPotential(obj,param, varargin)
+    [tlines]=regexp( fileread(obj.BinTempfile), '\n', 'split');
+    Errcode=0;value=[];
+    if strcmp(param,'get')
+        for i=1:length(tlines)
+           tmp{i}=regexp(tlines{i}, '\s*', 'split');
+           atlines=tmp{i};
+           atlines(strcmp('',atlines)) = [];
+           newlines{i}=tlines{i};
+           if ~isempty(atlines)
+               if strcmp(lower(atlines{1}),'limiting')
+                   value = str2num(atlines{3});return;
+               end
+           end
+       end
+    else
+        fid = fopen([obj.BinTempfile],'w');
+        for i=1:length(tlines)
+           tmp{i}=regexp(tlines{i}, '\s*', 'split');
+           atlines=tmp{i};
+           atlines(strcmp('',atlines)) = [];
+           newlines{i}=tlines{i};
+           getLimit = obj.getBinLimitingPotential;
+           if length(atlines)==3 && isempty(getLimit)
+               if strcmp(lower(atlines{1}),'global') && strcmp(lower(atlines{2}),'wall')
+                  index=i;
+                  newlines{i}=tlines{i};
+                  newlines{i+1}=['Limiting',blanks(3),'Potential',blanks(3),num2str(varargin{1})];
+                  break;
+              end
+           end   
+        end
+        if isempty(getLimit)
+            for i=index+2:length(tlines)+1
+                newlines{i}=tlines{i-1};
+            end
+            fprintf(fid, '%s\n', newlines{:});  
+            if obj.Bin==1
+                Errcode=closeOpenNetwork(obj);
+            end 
+        else
+            fprintf(fid, '%s\n', tlines{:});
+        end
+        fclose(fid);
+    end
 end
 function [Errcode]=setBinParam(obj,indexParameter,parameter,sections,varargin)
     ok=0;Errcode=0;

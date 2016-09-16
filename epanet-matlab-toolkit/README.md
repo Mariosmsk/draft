@@ -408,6 +408,7 @@ The `EPANET-Matlab Toolkit` is based/inspired on the [EPANET-Matlab Toolkit](htt
 |getBinControlsInfo|Retrieves the controls info|
 |getBinCurvesInfo|Retrieves the curves info|
 |getBinLinksInfo|Retrieves the links info|
+|getBinLimitingPotential|Retrieves limiting potential|
 |getBinNodesInfo|Retrieves the nodes info|
 |getBinNodeSourceInfo|Retrieves the sources info|
 |getBinOptionsInfo|Retrieves the options info|
@@ -432,6 +433,7 @@ The `EPANET-Matlab Toolkit` is based/inspired on the [EPANET-Matlab Toolkit](htt
 |setBinHeadlossHW|Sets headloss to H-W|
 |setBinLinkGlobalBulkReactionCoeff|Sets the global bulk reaction rate coeff.|
 |setBinLinkGlobalWallReactionCoeff|Sets the global wall reaction rate coeff.|
+|setBinLimitingPotential|Sets limiting potential|
 |setBinLinkPipeDiameters|Sets the values of pipe diameters|
 |setBinLinkPipeLengths|Sets the values of pipe lengths|
 |setBinLinkPipeMinorLoss|Sets the values of pipe minor losses|

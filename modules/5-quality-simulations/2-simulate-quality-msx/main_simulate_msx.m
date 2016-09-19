@@ -1,6 +1,6 @@
 settings=[];
-settings.filename = 'net2-cl2.inp'; % net2-cl2
-settings.msxfilename = 'net2-cl2.msx'; % net2-cl2
+settings.filename = 'example.inp'; % net2-cl2, example
+settings.msxfilename = 'example.msx'; % net2-cl2, example
 settings.index = [1:2]; %node or link index
 settings.figure = 1;
 %% Create JSON file for input

@@ -58,4 +58,7 @@ results.d = d;
 output = results;
 % output = savejson(results);
 
+results.d.unloadMSX
+results.d.unload
+
 %------------- END OF CODE --------------

@@ -36,6 +36,18 @@ d.saveInputFile(d.BinTempfile);
 d.loadEPANETFile(d.BinTempfile);
 d.loadMSXFile(settings.msxfilename,d.LibEPANETpath)
 
+H=10^-settings.ph; % hydrogen ion
+spesies_index = d.getMSXSpeciesIndex(settings.species_id);
+tmp=d.getMSXLinkInitqualValue;
+tmp{1}(spesies_index)= H;
+d.setMSXLinkInitqualValue(tmp);
+
+tmp=d.getMSXNodeInitqualValue;
+for i=1:d.NodeCount
+    tmp{i}(spesies_index)= H;
+end
+d.setMSXNodeInitqualValue(tmp);
+
 nodeID=d.getNodeNameID;
 linkID=d.getLinkNameID;
 

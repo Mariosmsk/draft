@@ -22,10 +22,6 @@ input = savejson(settings);
 output = simulate_batch_nh2cl(input);
 results2 = output;
 
-<<<<<<< HEAD
-results.d.unloadMSX
-results.d.unload
-=======
 % Plots
 figure;
 subplot(2,1,1);
@@ -48,6 +44,5 @@ ylabel('NH2CL(mM)');
 plot(t,y(:,3)*1000,'r<');
 tmp=[{['EPANET-MSX at pH=',num2str(ph2)]},{['Matlab Results at pH=',num2str(ph2)]}];
 legend(tmp);
->>>>>>> origin/master
 
 %------------- END OF CODE --------------

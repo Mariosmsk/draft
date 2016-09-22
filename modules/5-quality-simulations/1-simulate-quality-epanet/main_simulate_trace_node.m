@@ -14,7 +14,7 @@ tmp = loadjson(output);
 results=tmp.results;
 
 %% Plot graph
-figure(1)
+figure;
 plot(results.Trace.Time/3600,results.Trace.Quality)
 grid on
 title('Trace Nodes');

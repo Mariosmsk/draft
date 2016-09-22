@@ -13,7 +13,7 @@ tmp = loadjson(output);
 results=tmp.results;
 
 %% Plot graph
-figure(1)
+figure;
 plot(results.Chlorine.Time/3600,results.Chlorine.Quality)
 grid on
 title('Chlorine Concentration');

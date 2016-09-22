@@ -30,7 +30,8 @@ tmp = loadjson(input);
 settings = tmp.settings;
 
 d = epanet(settings.filename);
-d.setQualityType(settings.species)
+d.setTimeSimulationDuration(settings.duration*3600);
+d.setQualityType(settings.species);
 d.solveCompleteHydraulics;
 C = d.getComputedQualityTimeSeries('time','quality');
 d.unload

@@ -14,7 +14,7 @@ input = savejson(settings);
 
 %% Run Module
 out_scenarios = create_msx_scenarios(input);
-out_msx = create_msx_file2;%(input);
+out_msx = create_msx_file;%(input);
 d.writeMSXFile(out_msx)
 d.setTimeSimulationDuration(settings.simulation_time);
 

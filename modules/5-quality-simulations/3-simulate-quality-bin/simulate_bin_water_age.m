@@ -1,5 +1,5 @@
-function output = simulate_water_age(input)
-%SIMULATE_WATER_AGE - One line description of what the function or script performs (H1 line)
+function output = simulate_bin_water_age(input)
+%SIMULATE_BIN_WATER_AGE - One line description of what the function or script performs (H1 line)
 %Optional file header info (to give more details about the function than in the H1 line)
 %
 % Syntax:  [output] = simulate_water_age(input)
@@ -30,12 +30,14 @@ tmp = loadjson(input);
 settings = tmp.settings;
 
 d = epanet(settings.filename);
-d.setTimeSimulationDuration(settings.duration*3600);
-d.setQualityType(settings.species);
-d.solveCompleteHydraulics;
-C = d.getComputedQualityTimeSeries('time','quality');
+d.setBinTimeSimulationDuration(settings.duration*3600);
+d.setBinQualityAge;
+CN = d.getBinComputedNodeQuality;
+CL = d.getBinComputedLinkQuality;
+d.BinClose;
 d.unload
-results.Water_Age=C;
+results.WaterAgeNodes=CN;
+results.WaterAgeLinks=CL;
 results.Network=d;
 output = savejson(results);
 

@@ -1,8 +1,8 @@
-function output = simulate_trihalomethanes(input)
-%SIMULATE_TRIALOMETHANES - One line description of what the function or script performs (H1 line)
+function output = simulate_bin_trace_node(input)
+%SIMULATE_BIN_TRACE_NODE - One line description of what the function or script performs (H1 line)
 %Optional file header info (to give more details about the function than in the H1 line)
 %
-% Syntax:  [output1,output2] = function_name(input1,input2,input3)
+% Syntax:  [output] = simulate_trace_node(input)
 %
 % Inputs:
 %    input1 - Description
@@ -13,13 +13,13 @@ function output = simulate_trihalomethanes(input)
 % Example: 
 %    Line 1 of example
 %
-% Other m-files required: none
+% Other m-files required: simulate_chlorine_residuals
 % Subfunctions: none
 % MAT-files required: none
 %
 % See also: none
 
-% Author        : Demetrios G. Eliades
+% Author        : Demetrios G. Eliades, Marios Kyriakou
 % Work address  : KIOS Research Center, University of Cyprus
 % email         : eldemet@ucy.ac.cy
 % Website       : http://www.kios.ucy.ac.cy
@@ -30,16 +30,15 @@ tmp = loadjson(input);
 settings = tmp.settings;
 
 d = epanet(settings.filename);
-d.setBinLimitingPotential(1); 
-d.setQualityType(settings.species,settings.species_units)
-d.setNodeInitialQuality(zeros(1,d.NodeCount));
-d.setLinkBulkReactionCoeff(ones(1,d.LinkCount)*settings.kb);
-d.setLinkWallReactionCoeff(ones(1,d.LinkCount)*settings.kw);
-
-d.solveCompleteHydraulics;
-C = d.getComputedQualityTimeSeries('time','quality');
+d.BinUpdateClass;
+d.setBinTimeSimulationDuration(settings.duration*3600);
+d.setBinQualityTrace(settings.node);
+CN = d.getBinComputedNodeQuality;
+CL = d.getBinComputedLinkQuality;
+d.BinClose;
 d.unload
-results.THMs=C;
+results.TraceNodes=CN;
+results.TraceLinks=CL;
 results.Network=d;
 output = savejson(results);
 

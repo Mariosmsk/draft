@@ -2,6 +2,7 @@
 settings=[];
 settings.filename = 'Net1.inp';
 settings.species = 'Chlorine'; 
+settings.units = 'mg/L';
 settings.duration = 24; %hours
 
 %% Create JSON file for input

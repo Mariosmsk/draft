@@ -31,7 +31,7 @@ settings = tmp.settings;
 
 d = epanet(settings.filename);
 d.setBinTimeSimulationDuration(settings.duration*3600);
-d.setBinQualType('Chlorine','mg/L');
+d.setBinQualType(settings.species,settings.units);
 CN = d.getBinComputedNodeQuality;
 CL = d.getBinComputedLinkQuality;
 d.BinClose;

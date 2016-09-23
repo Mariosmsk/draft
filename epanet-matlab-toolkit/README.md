@@ -464,6 +464,7 @@ The `EPANET-Matlab Toolkit` is based/inspired on the [EPANET-Matlab Toolkit](htt
 |setBinQualityChem|Sets the type of water quality analysis to Chem|
 |setBinQualityNone|Sets the type of water quality analysis to None|
 |setBinQualityTrace|Sets the type of water quality analysis to Trace|
+|setBinQualType|Sets the type of water quality analysis to any chem e.g. chlorine|
 |setBinTimeHydraulicStep|Sets the hydraulic step|
 |setBinTimePatternStart|Sets the pattern start|
 |setBinTimePatternStep|Sets the pattern step|

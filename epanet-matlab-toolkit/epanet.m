@@ -4210,6 +4210,15 @@ classdef epanet <handle
                Errcode=closeOpenNetwork(obj);
            end
         end
+        function [Errcode]=setBinQualType(obj, chemname, chemunits, varargin)
+            sections={'[OPTIONS]','[REPORT]'};
+            indexParameter=1;
+            if nargin<3
+                chemunits='mg/L';
+            end
+            parameter=['Quality',blanks(5),chemname,blanks(5),chemunits];
+            [Errcode]=setBinParam(obj,indexParameter,parameter,sections);          
+        end
         function [Errcode]=setBinQualityChem(obj,varargin)
             sections={'[OPTIONS]','[REPORT]'};
             indexParameter=1;

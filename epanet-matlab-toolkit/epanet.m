@@ -4376,8 +4376,10 @@ classdef epanet <handle
             if exist([obj.BinTempfile(1:end-4),'.bin'])==2
                 delete([obj.BinTempfile(1:end-4),'.bin'])
             end
-            delete(obj.BinTempfile)
-            delete([obj.BinTempfile(1:end-4),'.txt'])
+            if ~libisloaded(obj.LibEPANET)
+                delete(obj.BinTempfile);
+                delete([obj.BinTempfile(1:end-4),'.txt']);
+            end
             if exist([obj.BinTempfile(1:end-4),'.msx'])==2
                 delete([obj.BinTempfile(1:end-4),'.msx'])
             end

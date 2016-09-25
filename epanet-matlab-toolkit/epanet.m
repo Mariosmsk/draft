@@ -394,6 +394,8 @@ classdef epanet <handle
         MSXTYPESOLVER={'EUL','RK5','ROS2'}; % is the choice of numerical integration method used to solve the reaction system
         MSXTYPECOUPLING={'FULL','NONE'}; % is the choice of numerical integration method used to solve the reaction system
         MSXTYPECOMPILER={'NONE','VC','GC'}; % is the choice of numerical integration method used to solve the reaction system
+        MSXTYPENODE=0; % for a node
+        MSXTYPELINK=1; % for a link
     end
     methods
         function obj = epanet(varargin)

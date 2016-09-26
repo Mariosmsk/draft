@@ -146,8 +146,6 @@ if isempty(NData)
     if isfield(PData,'vsize')     NData.vsize = PData.vsize; end
     if isfield(PData,'tsize')     NData.tsize = PData.tsize; end
     if isfield(PData,'legend')    NData.legend = PData.legend; end
-    if isfield(PData,'DLLname')   NData.DLLName = PData.DLLName; end
-    if isfield(PData,'Hname')     NData.Hname = PData.Hname; end
 
     % Colormaps
     colormap(NData.c);

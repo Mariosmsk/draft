@@ -1,4 +1,4 @@
-function [] = NetworkMovie(V,L,fig,movfname,quality,fps,InpFname,...
+function [] = NetworkMovie(V,L,fig,movfname,quality,fps,...
     PData,SData,d)
 %% Synopsis
 % NetworkMovie uses NetworkFrame() to plot the network graph on figure
@@ -95,8 +95,7 @@ l = [];
 if colorV, v=V(:,1); end
 if colorL, l=L(:,1); end
 [NData,fig] = NetworkFrame(fig,v,l,PData,SData,[],d);
-disp 'Adjust figure window properties as desired, and press any key to continue'
-% pause;
+
 if makeavi
     mov.FrameRate=fps;
     mov.Quality=quality;

@@ -19,9 +19,9 @@ d.loadMSXFile(settings.msxname);
 [V,L,T] = getQualityData(settings.bulk_specie_id,...
     settings.wall_specie_id,settings.msxname,d);
 
-fig = writeFrame(settings,d,V);
+% fig = writeFrame(settings,d,V);
         
-% [PData, SData] = movie_parameters(settings,V);
+[PData, SData] = movie_parameters(settings,V);
 
 %% Write the Movie File
 % NetworkMovie will display the first frame in a figure window and allow

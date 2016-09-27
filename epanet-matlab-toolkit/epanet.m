@@ -8179,6 +8179,10 @@ elseif bin==0
     v.nodeindex=obj.getNodeIndex;
 end
 
+if isnan(v.nodecoords{1}(2))
+   warning('Do not exist coordinates.'); close(g);
+   return
+end
 % Get node names and x, y coordiantes
 if isa(highlightnode,'cell')
     for i=1:length(highlightnode)

@@ -1,25 +1,33 @@
 settings=[];
-settings.inpname = 'net2-cl2.inp';
-settings.msxname = 'net2-cl2.msx';
-settings.bulk_specie_id = 'CL2'; % Animate the bulk chlorine specie
-settings.wall_specie_id = ''; % There is no wall specie
+settings.inpname = 'BWSN_Network_1.inp'; %Net1 net2-cl2 Net3 example
+% settings.msxname = 'example.msx'; % add msx file or check for AGE
+settings.bulk_specie_id = 'AGE'; % AGE CL2 NH2CL Animate the bulk specie
+settings.wall_specie_id = ''; % AS5s Animate the wall specie
+settings.duration = 48; % hours
 
-settings.movname = 'test.avi';
+settings.movname = [settings.inpname(1:end-4),'.avi'];
 settings.fps = 8;
 settings.quality = 100;
 settings.fig = [];
-settings.vsize = 4;  % Size of vertices in points (0 == omits verts)
+settings.vsize = 5;  % Size of vertices in points (0 == omits verts)
 settings.lwidth = 3; % Width of links in points
-settings.tsize = 5;  % Size of tank/reservoir nodes
+settings.tsize = 10;  % Size of tank/reservoir nodes
 
 d=epanet(settings.inpname);
-d.loadMSXFile(settings.msxname);
+d.setTimeSimulationDuration(3600*settings.duration);
+
+if strcmp(settings.bulk_specie_id,'AGE')
+    out_msx = create_msx_file_water_age;%(input);
+    d.writeMSXFile(out_msx)
+    settings.msxname = out_msx.msxFile;
+    d.loadMSXFile(settings.msxname,d.LibEPANETpath)
+else
+    d.loadMSXFile(settings.msxname);
+end
 
 %   Get the simulation data using Epanet or Epanet-MSX
 [V,L,T] = getQualityData(settings.bulk_specie_id,...
     settings.wall_specie_id,settings.msxname,d);
-
-% fig = writeFrame(settings,d,V);
         
 [PData, SData] = movie_parameters(settings,V);
 
@@ -37,3 +45,4 @@ implay(settings.movname);
 
 %% Unload EPANET-MATLAB Toolkit  
 d.unload;
+if exist(settings.msxname)==2, delete(settings.msxname); end

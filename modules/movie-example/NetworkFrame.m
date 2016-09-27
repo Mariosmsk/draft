@@ -236,16 +236,19 @@ if isempty(NData)
         dv = (maxval - minval)/mapsize;
         labelvalue = minval + ((ytick - 1)*dv);
         if length(labelvalue)==length(ytick)
-            labelvalue = [labelvalue 1];
+            labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
         end
-        labelstring = num2str( labelvalue', 3 );
+        labelstring = num2str( labelvalue', 5 );
         ylab = {labelstring};
-        try
-            set(NData.hvc,'Ticks',labelvalue);
-        catch e
-            labelvalue = [labelvalue 1.2];
-            set(NData.hvc,'YTicklabel',labelvalue(2:end));
-        end
+
+%         try
+%             set(NData.hvc,'Ticks',[str2num(labelstring)']);
+%         catch e
+        labelstring = num2str( labelvalue', 5 );
+        set(NData.hvc,'ticks',1:length(labelvalue));
+        set(NData.hvc,'ticklabels',cellstr(labelstring));
+        set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
+%         end
     end
     
     % Extra node symbols

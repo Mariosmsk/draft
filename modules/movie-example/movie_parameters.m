@@ -11,12 +11,12 @@ PData.logtransv = 'n';      % Do not log transform the data
 PData.vmin = 0;             % min vertex value for plot color mapping
 PData.vmax = max(max(V));   % max vertex value
 % PData.logtransl = 'n';    % We're not plotting link data so these are ignored
-% PData.lmin = min(min(L));a
+% PData.lmin = min(min(L));
 % PData.lmax = max(max(L));
-PData.lwidth = 3;           % Width of links in points
-PData.vsize = 4;            % Size of vertices in points (0 == omits verts)
-PData.tsize = 5;            % Size of tank/reservoir nodes
-PData.legend = 'v';         % Show a colorbar legend for vertex data
+PData.lwidth = settings.lwidth;	% Width of links in points
+PData.vsize = settings.vsize;	% Size of vertices in points (0 == omits verts)
+PData.tsize = settings.tsize; 	% Size of tank/reservoir nodes
+PData.legend = 'v';             % Show a colorbar legend for vertex data
 
 SData = [];                 % No special node symbols
 % SData(1...).ivs = [];             % Node IDs to annotate with special symbols

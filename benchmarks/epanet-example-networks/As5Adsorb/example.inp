@@ -33,4 +33,25 @@ EPANET-MSX Example Network
  Headloss           	H-W
  Quality            	NONE
 
+[COORDINATES]
+;Node            	X-Coord         	Y-Coord
+ A               	2592.89         	7334.41
+ B               	2822.33         	7421.38         
+ C               	2712.26         	7138.36         
+ D               	3026.73         	7138.36                  
+ Source          	1878.93         	7327.04         
+
+[VERTICES]
+;Link            	X-Coord         	Y-Coord
+
+[LABELS]
+;X-Coord           Y-Coord          Label & Anchor Node
+
+[BACKDROP]
+ DIMENSIONS     	0.00            	0.00            	10000.00        	10000.00        
+ UNITS          	None
+ FILE           	
+ OFFSET         	0.00            	0.00            
+
 [END]
+

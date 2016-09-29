@@ -561,7 +561,7 @@ classdef epanet <handle
 %             obj.QualityType = obj.getQualityType;
             n = obj.getQualityInfo;
             obj.QualityChemUnits = n.QualityChemUnits;
-            obj.QualityChemName= n.QualityChemUnits;
+            obj.QualityChemName= n.QualityChemName;
             
             %Get time parameters
             obj.TimeSimulationDuration = obj.getTimeSimulationDuration;

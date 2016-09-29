@@ -1,4 +1,4 @@
-function [PData, SData] = movie_parameters(settings,V)
+function [PData, SData] = movie_parameters(settings,V,L)
 %% Specify Movie Parameters
 % These parameters are described in NetworkFrame()...
 fig = settings.fig;         % Use a new figure window
@@ -11,8 +11,8 @@ PData.logtransv = 'n';      % Do not log transform the data
 PData.vmin = 0;             % min vertex value for plot color mapping
 PData.vmax = max(max(V));   % max vertex value
 % PData.logtransl = 'n';    % We're not plotting link data so these are ignored
-% PData.lmin = min(min(L));
-% PData.lmax = max(max(L));
+PData.lmin = 0;
+PData.lmax = max(max(L));
 PData.lwidth = settings.lwidth;	% Width of links in points
 PData.vsize = settings.vsize;	% Size of vertices in points (0 == omits verts)
 PData.tsize = settings.tsize; 	% Size of tank/reservoir nodes

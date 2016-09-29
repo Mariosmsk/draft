@@ -1,5 +1,5 @@
 %% Function getHydraulicData
-function [V,L,T,errcode] = getHydraulicData(NodeType,LinkType,inpFname)
+function [V,L,T,errcode] = getHydraulicData(NodeType,LinkType,d)
 %% Synopsis
 %   [V,L,T,errcode] = getHydraulicData(NodeType,LinkType,inpFname) Returns
 %   vertex (V) and link (L) data from running an Epanet hydraulic
@@ -12,70 +12,59 @@ function [V,L,T,errcode] = getHydraulicData(NodeType,LinkType,inpFname)
 %   each frame.  If either of NodeType or LinkType are undefined then V or
 %   L will be empty.
 %
-%   errcode = 0 if Epanet simulation completes normally; otherwise an error
-%   message is printed and errcode > 0 corresponds to an Epanet error code.
-%
 %   If defined, the output matrices V, L, and T are (nnodes x nframes),
 %   (nlinks x nframes), and (nframes x 1) respectively.  The value of
 %   nframes is defined by the values of REPORT START and REPORT STEP in the
 %   Epanet input file.  Specifically, frames are stored only when Epanet
 %   simulation time t satisfies: (t >= REPORT_START && mod(t,REPORT_STEP)
 %   == 0).
-%% Global Declarations
-% defined for MATLAB versions of Epanet programmer's toolkits.  See
-% ENMatlabSetup()
-global EN_CONSTANT
-global EN_SIZE
-%% Initialize MATLAB EPANET
-% Note that Matlab must be able to find the libraries epanet2.dll
-% or epanet2.so, and the header file epanet2.h
+% Jim Uber
+%
+% modified by Marios Kyriakou 29/09/2016
 
-% setup Epanet
-ENMatlabSetup('epanet2','epanet2.h');
+%% Check nodetype and linktype
+if strcmp(lower(NodeType(1:4)),'pres')
+    NodeType = 'Pressure';
+end
+if strcmp(lower(LinkType(1:4)),'flow')
+    LinkType = 'Flows';
+end
+if strcmp(lower(NodeType(1:4)),'dema')
+    NodeType = 'ActualDemand';
+end
+if strcmp(lower(LinkType(1:4)),'velo')
+    LinkType = 'Velocity';
+end
 
-% open Epanet
-[errcode] = ENopen(inpFname, 'epanet.rpt', '');
-if errcode; return; end
 %% Hydraulic Analysis
 T = [];         % The time data
 V = [];         % The vertex data
 L = [];         % The link data
 % Get the simulation time parameters
-[errcode, reportStart] = ENgettimeparam(EN_CONSTANT.EN_REPORTSTART);
-if errcode; return; end
-[errcode, reportStep] = ENgettimeparam(EN_CONSTANT.EN_REPORTSTEP);
-if errcode; return; end
+reportStart = d.getTimeReportingStart;
+reportStep = d.getTimeReportingStep;
 
 tleft = 1;      % Time left in simulation
 iframe = 1;     % frame index
-[errcode] = ENopenH();
-if errcode; return; end
-[errcode] = ENinitH(0);
-if errcode; return; end
-while (tleft > 0 && errcode == 0)
-    [errcode, t] = ENrunH();
-
+d.openHydraulicAnalysis;
+d.initializeHydraulicAnalysis;
+while (tleft > 0)
+    t = d.runHydraulicAnalysis;
     if t >= reportStart && ~mod(t,reportStep)
         % Retrieve results at time t
-        V = [V zeros(EN_SIZE.nnodes,1)];
-        for in=1:EN_SIZE.nnodes
-            [errcode, V(in,iframe)] = ...
-                ENgetnodevalue(in, EN_CONSTANT.(NodeType));
+        V = [V zeros(d.NodeCount,1)];
+        for in=1:d.NodeCount
+            V(in,iframe) = eval(['d.getNode',NodeType,'(in)']);
         end
-        L = [L zeros(EN_SIZE.nlinks,1)];
-        for in=1:EN_SIZE.nlinks
-            [errcode, L(in,iframe)] = ...
-                ENgetlinkvalue(in, EN_CONSTANT.(LinkType));
+        L = [L zeros(d.LinkCount,1)];
+        for in=1:d.LinkCount
+            L(in,iframe) = eval(['d.getLink',LinkType,'(in)']);
         end
         T = [T; t];
-
         iframe = iframe + 1;
     end
-
-    [errcode, tleft] = ENnextH();
+    tleft = d.nextHydraulicAnalysisStep;
 end
-[errcode] = ENcloseH();
-if errcode; return; end
-%% Matlab Epanet cleanup
-ENclose();
-ENMatlabCleanup();
+L=abs(L);
+d.closeHydraulicAnalysis;
+

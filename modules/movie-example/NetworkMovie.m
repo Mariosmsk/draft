@@ -1,5 +1,5 @@
-function [] = NetworkMovie(V,L,fig,movfname,quality,fps,...
-    PData,SData,d)
+function [NData] = NetworkMovie(V,L,fig,movfname,quality,fps,...
+    PData,SData,d,NodeType,LinkType,varargin)
 %% Synopsis
 % NetworkMovie uses NetworkFrame() to plot the network graph on figure
 % handle fig with nodes and links colored by V,L, and store the animation
@@ -53,6 +53,10 @@ function [] = NetworkMovie(V,L,fig,movfname,quality,fps,...
 %
 % modified by Marios Kyriakou 25/09/2016
 
+if ~isempty(varargin)
+    hyd=varargin{1};
+end
+
 nframes = 0;
 if isempty(V)
     colorV=false;
@@ -94,7 +98,7 @@ v = [];
 l = [];
 if colorV, v=V(:,1); end
 if colorL, l=L(:,1); end
-[NData,fig] = NetworkFrame(fig,v,l,PData,SData,[],d);
+[NData,fig] = NetworkFrame(fig,v,l,PData,SData,[],d,NodeType,LinkType,hyd);
 
 if makeavi
     mov.FrameRate=fps;
@@ -109,8 +113,8 @@ end
 % Draw the rest
 for i=2:nframes
     if colorV, v=V(:,i); end
-    if colorL, l=L(:,i); end
-    [NData,fig] = NetworkFrame(fig,v,l,PData,SData,NData,d);
+    if colorL, l=abs(L(:,i)); end
+    [NData,fig] = NetworkFrame(fig,v,l,PData,SData,NData,d,NodeType,LinkType,hyd);
     if makeavi
         M=getframe(fig);
         writeVideo(mov,M);

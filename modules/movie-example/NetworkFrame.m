@@ -261,10 +261,19 @@ if isempty(NData)
         set(NData.hvc,'ticks',1:length(labelvalue));
         set(NData.hvc,'ticklabels',cellstr(labelstring));
         set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
-%     end% fix units
 
-        if isfield(NData,'hvcL'), ylabel(NData.hvcL, [LinkType,' (',d.LinkFlowUnits{1},')'],'fontsize',12); end
-        if isfield(NData,'hvc'), ylabel(NData.hvc, [NodeType,' (',d.NodePressureUnits,')'],'fontsize',12); end
+        
+        % Units for NodeType
+        unts_node=[]; unts_link=[];
+        if ~isempty(d.MSXFile)
+            sind = d.getMSXSpeciesIndex(NodeType);
+            if sind, unts_node = d.MSXSpeciesUnits{sind}; end
+        end
+        if strcmp('CL2', NodeType), NodeType='Chlorine'; end
+        if strcmp(d.QualityChemName, NodeType), unts_node = d.QualityChemUnits; end
+        
+        if isfield(NData,'hvcL'), ylabel(NData.hvcL, [LinkType,' (',unts_link,')'],'fontsize',12); end
+        if isfield(NData,'hvc'), ylabel(NData.hvc, [NodeType,' (',unts_node,')'],'fontsize',12); end
 
 
     % Extra node symbols

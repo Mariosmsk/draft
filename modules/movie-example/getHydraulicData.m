@@ -1,5 +1,5 @@
 %% Function getHydraulicData
-function [V,L,T,errcode] = getHydraulicData(NodeType,LinkType,d)
+function [V,L,T] = getHydraulicData(NodeType,LinkType,d)
 %% Synopsis
 %   [V,L,T,errcode] = getHydraulicData(NodeType,LinkType,inpFname) Returns
 %   vertex (V) and link (L) data from running an Epanet hydraulic
@@ -27,13 +27,15 @@ if strcmp(lower(NodeType(1:4)),'pres')
     NodeType = 'Pressure';
 end
 if strcmp(lower(LinkType(1:4)),'flow')
-    LinkType = 'Flows';
+    LinkType = 'Flow';
+    linktype = 'Flows';
 end
 if strcmp(lower(NodeType(1:4)),'dema')
     NodeType = 'ActualDemand';
 end
 if strcmp(lower(LinkType(1:4)),'velo')
     LinkType = 'Velocity';
+    linktype = LinkType;
 end
 
 %% Hydraulic Analysis
@@ -58,7 +60,7 @@ while (tleft > 0)
         end
         L = [L zeros(d.LinkCount,1)];
         for in=1:d.LinkCount
-            L(in,iframe) = eval(['d.getLink',LinkType,'(in)']);
+            L(in,iframe) = eval(['d.getLink',linktype,'(in)']);
         end
         T = [T; t];
         iframe = iframe + 1;

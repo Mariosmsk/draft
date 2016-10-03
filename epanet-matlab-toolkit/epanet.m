@@ -106,6 +106,7 @@ classdef epanet <handle
         NodeCount;                   % Number of nodes
         NodeDemandPatternIndex;      % Index of demand patterns
         NodeDemandPatternNameID;     % ID of demand patterns
+        NodeDemandUnits;             % Units for demand
         NodeElevations;              % Elevation of nodes
         NodeElevationUnits;          % Units for elevation
         NodeEmitterCoeff;            % Emmitter Coefficient of nodes
@@ -621,6 +622,7 @@ classdef epanet <handle
                 obj.NodeTankDiameterUnits='feet';
                 obj.EnergyEfficiencyUnits='percent';
                 obj.NodeElevationUnits='feet';
+                obj.NodeDemandUnits=obj.LinkFlowUnits;
                 obj.NodeEmitterCoefficientUnits='flow units @ 1 psi drop';
                 obj.EnergyUnits='kwatt-hours';
                 obj.LinkFrictionFactorUnits='unitless';
@@ -642,6 +644,7 @@ classdef epanet <handle
                 obj.NodeTankDiameterUnits='meters';
                 obj.EnergyEfficiencyUnits='percent';
                 obj.NodeElevationUnits='meters';
+                obj.NodeDemandUnits=obj.LinkFlowUnits;
                 obj.NodeEmitterCoefficientUnits='flow units @ 1 meter drop';
                 obj.EnergyUnits='kwatt-hours';
                 obj.LinkFrictionFactorUnits='unitless';
@@ -6928,6 +6931,7 @@ classdef epanet <handle
                 value.BinNodeTankDiameterUnits='feet';
                 value.BinEnergyEfficiencyUnits='percent';
                 value.BinNodeElevationUnits='feet';
+                value.BinNodeDemandUnits=value.BinLinkFlowUnits;
                 value.BinNodeEmitterCoefficientUnits='flow units @ 1 psi drop';
                 value.BinEnergyUnits='kwatt-hours';
                 value.BinLinkFrictionFactorUnits='unitless';
@@ -6950,6 +6954,7 @@ classdef epanet <handle
                 value.BinNodeTankDiameterUnits='meters';
                 value.BinEnergyEfficiencyUnits='percent';
                 value.BinNodeElevationUnits='meters';
+                value.BinNodeDemandUnits=value.BinLinkFlowUnits;
                 value.BinNodeEmitterCoefficientUnits='flow units @ 1 meter drop';
                 value.BinEnergyUnits='kwatt-hours';
                 value.BinLinkFrictionFactorUnits='unitless';

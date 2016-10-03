@@ -19,19 +19,15 @@ d=epanet(settings.inpname);
 d.setTimeSimulationDuration(3600*settings.duration);
 NodeType = settings.bulk_specie_id;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NodeType = 'Demand';
-% LinkType = 'Flows';
-% [V,L,T] = getHydraulicData(NodeType,LinkType,d);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 if strcmp(settings.bulk_specie_id,'AGE')
     out_msx = create_msx_file_water_age;%(input);
     d.writeMSXFile(out_msx)
     settings.msxname = out_msx.msxFile;
     d.loadMSXFile(settings.msxname,d.LibEPANETpath)
-else
+elseif ~strcmp(settings.bulk_specie_id,'CL2') 
     d.loadMSXFile(settings.msxname);
+else
+    settings.msxname=[];
 end
 
 %   Get the simulation data using Epanet or Epanet-MSX
@@ -45,7 +41,7 @@ end
 % you to make adjustments to it (zoom, pan, etc.) before rendering the
 % frames into an AVI movie file.
 NetworkMovie(V,L,settings.fig,settings.movname,...
-    settings.quality,settings.fps,PData,SData,d,NodeType,LinkType,settings.hyd);
+    settings.quality,settings.fps,PData,SData,d,NodeType,[],settings.hyd);
 
 %% Show the Movie
 % You could display the movie in Matlab as follows, or just use 

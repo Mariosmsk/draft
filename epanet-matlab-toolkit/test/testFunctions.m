@@ -98,7 +98,7 @@ d.TimeStarting_Time % EN_STARTTIME  - ENgettimeparam
 d.TimeHTime % EN_HTIME - ENgettimeparam
 d.TimeHaltFlag % EN_HALTFLAG - ENgettimeparam
 d.TimeNextEvent %find the lesser of the hydraulic time step length, or the time to next fill/empty
-d.NodeTankMaxVolume % EN_MAXVOLUME - ENgetnodevalue
+d.NodeTankMaximumWaterVolume % EN_MAXVOLUME - ENgetnodevalue
 %d.CurvesInfo bug in epanet20013 energopoiisi sto prwto run
 
 

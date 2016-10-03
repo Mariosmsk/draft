@@ -43,13 +43,15 @@ end
 NetworkMovie(V,L,settings.fig,settings.movname,...
     settings.quality,settings.fps,PData,SData,d,NodeType,[],settings.hyd);
 
+%% Unload EPANET-MATLAB Toolkit  
+d.unload;
+
 %% Show the Movie
 % You could display the movie in Matlab as follows, or just use 
 % an external viewer...
 implay(settings.movname);
 
-%% Unload EPANET-MATLAB Toolkit  
-d.unload;
+%% Delete tmp msx file
 if isfield(settings,'msxname')
     if exist(settings.msxname)==2, delete(settings.msxname); end
 end

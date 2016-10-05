@@ -77,6 +77,4 @@ P.FlowSamples = {1,1,1,1,1,1};
 output.P = P;
 output.B = d;
 
-% output = savejson(P);
-
 %------------- END OF CODE --------------

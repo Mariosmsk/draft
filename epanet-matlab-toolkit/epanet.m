@@ -199,43 +199,42 @@ classdef epanet <handle
         Version;                     % EPANET version
         
         % Parameters used with EPANET MSX
-        MSXLibEPANET;           
-        MSXLibEPANETPath;
-        MSXConstantsNameID;
-        MSXConstantsValue;
-        MSXConstantsCount;
-        MSXConstantsIndex;
-        MSXParametersCount;
-        MSXPatternsCount;
-        MSXSpeciesCount;
-        MSXLinkInitqualValue;
-        MSXNodeInitqualValue;
-        MSXFile;
-        MSXTempFile;
-        MSXParametersNameID;
-        MSXParametersIndex;
-        MSXParametersPipesValue;
-        MSXParametersTanksValue;
-        MSXPatternsNameID;
-        MSXPatternsIndex;
-        MSXPatternsLengths;
-        MSXPattern;
-        MSXEquationsPipes;
-        MSXSources;
-        MSXSourceLevel;
-        MSXSourceNodeNameID;
-        MSXSourcePatternNameID;
-        MSXSourcePatternIndex;
-        MSXSourceType;
-        MSXSourceTypeCode;
-        MSXSpeciesATOL;
-        MSXSpeciesIndex;
-        MSXSpeciesNameID;
-        MSXSpeciesRTOL;
-        MSXSpeciesType;
-        MSXSpeciesUnits;
-        MSXEquationsTanks;
-        MSXEquationsTerms; 
+        MSXLibEPANET;                % MSX EPANET library dll
+        MSXLibEPANETPath;            % MSX EPANET library path
+        MSXConstantsNameID;          % ID name of constants
+        MSXConstantsValue;           % Value of constants
+        MSXConstantsCount;           % Number of constants
+        MSXConstantsIndex;           % Index of constants
+        MSXParametersCount;          % Number of parameters
+        MSXPatternsCount;            % Number of msx patterns
+        MSXSpeciesCount;             % Number of species
+        MSXLinkInitqualValue;        % Initial concentration of chemical species assigned to links of the pipe network
+        MSXNodeInitqualValue;        % Initial concentration of chemical species assigned to nodes
+        MSXFile;                     % Name of the msx file
+        MSXTempFile;                 % Name of the temp msx file
+        MSXParametersNameID;         % ID name of parameters
+        MSXParametersIndex;          % Index name of parameters
+        MSXParametersPipesValue;     % Value of reaction parameters for pipes
+        MSXParametersTanksValue;     % Value of reaction parameters for tanks
+        MSXPatternsNameID;           % ID name of msx patterns
+        MSXPatternsIndex;            % Index of msx patterns
+        MSXPatternsLengths;          % Number of time periods in all patterns
+        MSXPattern;                  % Get all msx patterns
+        MSXEquationsPipes;           % Species dynamics in pipes
+        MSXSources;                  % Sources info
+        MSXSourceLevel;              % Value of all nodes source level
+        MSXSourceNodeNameID;         % ID label of all nodes
+        MSXSourcePatternIndex;       % Value of all node source pattern index
+        MSXSourceType;               % Value of all node source type 'CONCEN','MASS', 'SETPOINT', 'FLOWPACED'
+        MSXSourceTypeCode;           % Code of source type
+        MSXSpeciesATOL;              % Absolute tolerance used to determine when two concentration levels of a species are the same
+        MSXSpeciesIndex;             % Index name of species
+        MSXSpeciesNameID;            % ID name of species
+        MSXSpeciesRTOL;              % Relative accuracy level on a species’ concentration used to adjust time steps in the RK5 and ROS2 integration methods
+        MSXSpeciesType;              % Type of all species, bulk or wall
+        MSXSpeciesUnits;             % Species mass units
+        MSXEquationsTanks;           % Species dynamics in tanks
+        MSXEquationsTerms;           % Species dynamics in terms
         
         % Parameters used when the Binary mode is used 
         Bin;

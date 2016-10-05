@@ -243,9 +243,14 @@ if isempty(NData)
             labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
         end
         labelstring = num2str( labelvalue', 5 );
-        set(NData.hvcL,'ticks',1:length(labelvalue));
-        set(NData.hvcL,'ticklabels',cellstr(labelstring));
-        set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
+        try
+            set(NData.hvcL,'ticks',1:length(labelvalue));
+            set(NData.hvcL,'ticklabels',cellstr(labelstring));
+            set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
+        catch e
+            labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
+            set(NData.hvcL,'yticklabel', labelvalue(2:end)');
+        end
         
         try unts_node = eval(['d.Node',NodeType,'Units{1}']);
         catch e, unts_node = eval(['d.Node',NodeType,'Units']); end
@@ -268,9 +273,14 @@ if isempty(NData)
         labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
     end
     labelstring = num2str( labelvalue', 5 );
-    set(NData.hvc,'ticks',1:length(labelvalue));
-    set(NData.hvc,'ticklabels',cellstr(labelstring));
-    set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
+    try
+        set(NData.hvc,'ticks',1:length(labelvalue));
+        set(NData.hvc,'ticklabels',cellstr(labelstring));
+        set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
+    catch e
+        labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
+        set(NData.hvc,'yticklabel', labelvalue(2:end)');
+    end
 
     if isfield(NData,'hvcL'), ylabel(NData.hvcL, [LinkType,' (',unts_link,')'],'fontsize',12); end
     if isfield(NData,'hvc'), ylabel(NData.hvc, [NodeType,' (',unts_node,')'],'fontsize',12); end

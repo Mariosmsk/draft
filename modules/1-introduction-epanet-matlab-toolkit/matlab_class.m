@@ -1,4 +1,3 @@
-%% How i can create a matlab class
 % Example: B=matlab_class('Net1.inp','epanet2'); 
 %          B.getNodeCount
 %

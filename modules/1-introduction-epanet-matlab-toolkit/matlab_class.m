@@ -1,5 +1,8 @@
 % Example: B=matlab_class('Net1.inp','epanet2'); 
 %          B.getNodeCount
+%   p = properties('matlab_class');
+%   methods('matlab_class')
+%   events('matlab_class')
 %
 classdef matlab_class
     

@@ -93,8 +93,8 @@ d.getNodeTankBulkReactionCoeff(11)
 d.getNodeTankVolume
 d.getNodeTankVolume(11)
 
-d.getNodeTankMaxVolume
-d.getNodeTankMaxVolume(11)
+d.getNodeTankMaximumWaterVolume
+d.getNodeTankMaximumWaterVolume(11)
 
 d.getNodeType
 d.getNodeType(11)

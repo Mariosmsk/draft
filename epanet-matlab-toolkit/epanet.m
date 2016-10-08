@@ -47,195 +47,194 @@ classdef epanet <handle
     %   implied. See the Licence for the specific language governing
     %   permissions and limitations under the Licence.
     properties
-        ControlLevelValues; %The control level values
-        ControlLinkIndex; % Set of control types in links
-        ControlNodeIndex; % Set of control types in nodes
-        ControlRules; %Retrieves the parameters of all control statements
-        ControlRulesCount;  % Number of controls
-        Controls;
-        ControlSettings; % Settings for the controls
-        ControlTypes; % Set of control types
-        ControlTypesIndex; %Index of the control types
-        CurveCount; % Number of curves
-        CurvesInfo;
-        EnergyEfficiencyUnits; % Units for efficiency
-        EnergyUnits; %Units for energy
-        Errcode; %Code for the EPANET error message
-        HeadCurveIndex;
-        InputFile;  % Name of the input file
-        Iterations;
-        LibEPANET; %EPANET library dll
-        LibEPANETpath; %EPANET library dll path
-        LinkBulkReactionCoeff; % Bulk reaction coefficient of each link
-        LinkCount; % Number of links
-        LinkDiameter; % Diameter of each link
-        LinkFlowUnits; %Units of flow
-        LinkFrictionFactorUnits; %Units for friction factor
-        LinkIndex; % Index of links
-        LinkInitialSetting; %Initial settings of links
-        LinkInitialStatus; %Initial status of links
-        LinkLength; % Length of links
-        LinkLengthsUnits; % Units of length
-        LinkLengthUnits; % Units of length
-        LinkMinorLossCoeff; %Minor loss coefficient of links
-        LinkMinorLossCoeffUnits; %Minor loss coefficient units
-        LinkNameID; % Name ID of links
-        LinkPipeCount;% Number of pipes
-        LinkPipeDiameterUnits; % Units for pipe diameters
-        LinkPipeIndex; % Index of pipe links
-        LinkPipeNameID; % Name ID of pipe links
-        LinkPipeRoughnessCoeffUnits; %Pipe roughness coefficient units
-        LinkPumpCount;%Number of pumps
-        LinkPumpIndex; % Index of pumps
-        LinkPumpNameID; % Name ID of pumps
-        LinkPumpPatternIndex;
-        LinkPumpPatternNameID;
-        LinkPumpPowerUnits; %Units of power
-        LinkPumpType;
-        LinkPumpTypeCode;
-        LinkRoughnessCoeff; % Roughness coefficient of links
-        LinkType; %ID of link type
-        LinkTypeIndex; %Index of link type
-        LinkValveCount;% Number of valves
-        LinkValveIndex; % Index of valves
-        LinkValveNameID; % ID name of valves
-        LinkVelocityUnits; % Units for velocity
-        LinkWallReactionCoeff; %Wall reaction coefficient of links
-        NodeBaseDemands;            % Base demands of nodes
-        NodeCoordinates;            % Coordinates for each node (long/lat & intermediate pipe coordinates)
-        NodeCount;                  % Number of nodes
-        NodeDemandPatternIndex;     % Index of demand patterns
-        NodeDemandPatternNameID;
-        NodeElevations;             % Elevation of nodes
-        NodeElevationUnits;         % Units for elevation
-        NodeEmitterCoeff;           % Emmitter Coefficient of nodes
-        NodeEmitterCoefficientUnits;% Units for emitter coefficient
-        NodeHeadUnits; % Nodal head units
-        NodeIndex;                  % Index of nodes
-        NodeInitialQuality;         %Initial quality of nodes
-        NodeJunctionCount;          % Number of junctions
-        NodeJunctionIndex; % Index of node junctions
-        NodeJunctionNameID; %Name ID of node junctions
-        NodeNameID; %Name ID of all nodes
-        NodeDemandCategoriesNumber;
-        NodePatternIndex;
-        NodePressureUnits; % PUnits for Pressure
-        NodeReservoirCount;         % Number of reservoirs
-        NodeReservoirIndex; %Index of reservoirs
-        NodeReservoirNameID;%Name ID of reservoirs
-        NodesConnectingLinksID; %Name IDs of nodes which connect links
-        NodesConnectingLinksIndex; %Indices of nodes which connect links
-        NodeSourcePatternIndex; %Index of pattern for node sources
-        NodeSourceQuality; %Quality of node sources
-        NodeSourceTypeIndex; %Index of source type
-        NodeTankBulkReactionCoeff; %Bulk reaction coefficients in tanks
-        NodeTankCount;              % Number of tanks
-        NodeTankDiameter; %Tank Diameters
-        NodeTankDiameterUnits;      % Units for tank diameters
-        NodeTankIndex; %Indices of Tanks
-        NodeTankInitialLevel; %Initial water level in tanks
-        NodeTankInitialWaterVolume; %Initial water volume in tanks
-        NodeTankMaximumWaterLevel; % Maximum water level in tanks
-        NodeTankMaxVolume;
-        NodeTankMinimumFraction; % Fraction of the total tank volume devoted to the inlet/outlet compartment
-        NodeTankMinimumWaterLevel; % Minimum water level
-        NodeTankMinimumWaterVolume; % Minimum water volume
-        NodeTankMixingModelCode; % Code of mixing model (MIXED:0, 2COMP:1, FIFO:2, LIFO:3)
-        NodeTankMixingModelType; % Type of mixing model (MIXED, 2COMP, FIFO, or LIFO)
-        NodeTankMixZoneVolume;  % Mixing zone volume
-        NodeTankNameID; % Name ID of Tanks
-        NodeTankReservoirCount;     % Number of tanks and reservoirs
-        NodeTankVolumeCurveIndex; %Index of curve for tank volumes
-        NodeTankVolumeUnits; %Units for volume
-        NodeType; %ID of node type
-        NodeTypeIndex; %Index of nodetype
-        OptionsAccuracyValue; %Convergence value (0.001 is default)
-        OptionsEmitterExponent; %Exponent of pressure at an emmiter node (0.5 is default)
-        OptionsHeadloss; %Headloss formula (Hazen-Williams, Darcy-Weisbach or Chezy-Manning)
-        OptionsHydraulics; %Save or Use hydraulic soltion. *** Not implemented ***
-        OptionsMaxTrials; % Maximum number of trials (40 is default)
-        OptionsPattern; % *** Not implemented ***
-        OptionsPatternDemandMultiplier; %Multiply demand values (1 is default)
-        OptionsQualityTolerance; %Tolerance for water quality (0.01 is default)
-        OptionsSpecificGravity; %*** Not implemented ***
-        OptionsUnbalanced; %*** Not implemented ***
-        OptionsUnbalancedContinueN; % *** Not implemented ***
-        OptionsViscosity; %*** Not implemented ***
-        Pattern; % get all patterns
-        PatternAverageValue;
-        PatternCount;  % Number of patterns
-        PatternDemandsUnits; %Units for demands
-        PatternIndex; %Indices of the patterns
-        PatternLengths; %Length of the patterns
-        PatternNameID; %ID of the patterns
-        QualityChemName;
-        QualityChemUnits;
-        QualityCode; % Water quality analysis code (None:0/Chemical:1/Age:2/Trace:3)
-        QualityReactionCoeffBulkUnits; % Bulk reaction coefficient units
-        QualityReactionCoeffWallUnits; % Wall reaction coefficient units
+        ControlLevelValues;          % The control level values
+        ControlLinkIndex;            % Set of control types in links
+        ControlNodeIndex;            % Set of control types in nodes
+        ControlRules;                % Retrieves the parameters of all control statements
+        ControlRulesCount;           % Number of controls
+        Controls;                    % Controls info
+        ControlSettings;             % Settings for the controls
+        ControlTypes;                % Set of control types
+        ControlTypesIndex;           % Index of the control types
+        CurveCount;                  % Number of curves
+        CurvesInfo;                  % Curves info
+        EnergyEfficiencyUnits;       % Units for efficiency
+        EnergyUnits;                 % Units for energy
+        Errcode;                     % Code for the EPANET error message
+        HeadCurveIndex;              % Head curve indices
+        InputFile;                   % Name of the input file
+        Iterations;                  % Iterations to reach solution
+        LibEPANET;                   % EPANET library dll
+        LibEPANETpath;               % EPANET library dll path
+        LinkBulkReactionCoeff;       % Bulk reaction coefficient of each link
+        LinkCount;                   % Number of links
+        LinkDiameter;                % Diameter of each link
+        LinkFlowUnits;               % Units of flow
+        LinkFrictionFactorUnits;     % Units for friction factor
+        LinkIndex;                   % Index of links
+        LinkInitialSetting;          % Initial settings of links
+        LinkInitialStatus;           % Initial status of links
+        LinkLength;                  % Length of links
+        LinkLengthsUnits;            % Units of length
+        LinkLengthUnits;             % Units of length
+        LinkMinorLossCoeff;          % Minor loss coefficient of links
+        LinkMinorLossCoeffUnits;     % Minor loss coefficient units
+        LinkNameID;                  % Name ID of links
+        LinkPipeCount;               % Number of pipes
+        LinkPipeDiameterUnits;       % Units for pipe diameters
+        LinkPipeIndex;               % Index of pipe links
+        LinkPipeNameID;              % Name ID of pipe links
+        LinkPipeRoughnessCoeffUnits; % Pipe roughness coefficient units
+        LinkPumpCount;               % Number of pumps
+        LinkPumpIndex;               % Index of pumps
+        LinkPumpNameID;              % Name ID of pumps
+        LinkPumpPatternIndex;        % Index of pump pattern
+        LinkPumpPatternNameID;       % ID of pump pattern
+        LinkPumpPowerUnits;          % Units of power
+        LinkPumpType;                % Pump type e.g constant horsepower, power function, user-defined custom curv
+        LinkPumpTypeCode;            % Pump index/code
+        LinkRoughnessCoeff;          % Roughness coefficient of links
+        LinkType;                    % ID of link type
+        LinkTypeIndex;               % Index of link type
+        LinkValveCount;              % Number of valves
+        LinkValveIndex;              % Index of valves
+        LinkValveNameID;             % ID name of valves
+        LinkVelocityUnits;           % Units for velocity
+        LinkWallReactionCoeff;       % Wall reaction coefficient of links
+        NodeBaseDemands;             % Base demands of nodes
+        NodeCoordinates;             % Coordinates for each node (long/lat & intermediate pipe coordinates)
+        NodeCount;                   % Number of nodes
+        NodeDemandPatternIndex;      % Index of demand patterns
+        NodeDemandPatternNameID;     % ID of demand patterns
+        NodeDemandUnits;             % Units for demand
+        NodeElevations;              % Elevation of nodes
+        NodeElevationUnits;          % Units for elevation
+        NodeEmitterCoeff;            % Emmitter Coefficient of nodes
+        NodeEmitterCoefficientUnits; % Units for emitter coefficient
+        NodeHeadUnits;               % Nodal head units
+        NodeIndex;                   % Index of nodes
+        NodeInitialQuality;          % Initial quality of nodes
+        NodeJunctionCount;           % Number of junctions
+        NodeJunctionIndex;           % Index of node junctions
+        NodeJunctionNameID;          % Name ID of node junctions
+        NodeNameID;                  % Name ID of all nodes
+        NodeDemandCategoriesNumber;  % Number of demand categories for nodes
+        NodePatternIndex;            % Node demand pattern indices
+        NodePressureUnits;           % Units for Pressure
+        NodeReservoirCount;          % Number of reservoirs
+        NodeReservoirIndex;          % Index of reservoirs
+        NodeReservoirNameID;         % Name ID of reservoirs
+        NodesConnectingLinksID;      % Name IDs of nodes which connect links
+        NodesConnectingLinksIndex;   % Indices of nodes which connect links
+        NodeSourcePatternIndex;      % Index of pattern for node sources
+        NodeSourceQuality;           % Quality of node sources
+        NodeSourceTypeIndex;         % Index of source type
+        NodeTankBulkReactionCoeff;   % Bulk reaction coefficients in tanks
+        NodeTankCount;               % Number of tanks
+        NodeTankDiameter;            % Tank Diameters
+        NodeTankDiameterUnits;       % Units for tank diameters
+        NodeTankIndex;               % Indices of Tanks
+        NodeTankInitialLevel;        % Initial water level in tanks
+        NodeTankInitialWaterVolume;  % Initial water volume in tanks
+        NodeTankMaximumWaterLevel;   % Maximum water level in tanks
+        NodeTankMaximumWaterVolume;  % Maximum water volume
+        NodeTankMinimumFraction;     % Fraction of the total tank volume devoted to the inlet/outlet compartment
+        NodeTankMinimumWaterLevel;   % Minimum water level
+        NodeTankMinimumWaterVolume;  % Minimum water volume
+        NodeTankMixingModelCode;     % Code of mixing model (MIXED:0, 2COMP:1, FIFO:2, LIFO:3)
+        NodeTankMixingModelType;     % Type of mixing model (MIXED, 2COMP, FIFO, or LIFO)
+        NodeTankMixZoneVolume;       % Mixing zone volume
+        NodeTankNameID;              % Name ID of Tanks
+        NodeTankReservoirCount;      % Number of tanks and reservoirs
+        NodeTankVolumeCurveIndex;    % Index of curve for tank volumes
+        NodeTankVolumeUnits;         % Units for volume
+        NodeType;                    % ID of node type
+        NodeTypeIndex;               % Index of nodetype
+        OptionsAccuracyValue;        % Convergence value (0.001 is default)
+        OptionsEmitterExponent;      % Exponent of pressure at an emmiter node (0.5 is default)
+        OptionsHeadloss;             % Headloss formula (Hazen-Williams, Darcy-Weisbach or Chezy-Manning)
+        OptionsHydraulics;           % Save or Use hydraulic soltion. *** Not implemented ***
+        OptionsMaxTrials;            % Maximum number of trials (40 is default)
+        OptionsPattern;              % *** Not implemented *** % but get with BinOptionsPattern
+        OptionsPatternDemandMultiplier; % Multiply demand values (1 is default)
+        OptionsQualityTolerance;     % Tolerance for water quality (0.01 is default)
+        OptionsSpecificGravity;      % *** Not implemented *** % but get with BinOptionsSpecificGravity
+        OptionsUnbalanced;           % *** Not implemented *** % but get with BinOptionsUnbalanced
+        OptionsViscosity;            % *** Not implemented *** % but get with BinOptionsViscosity
+        Pattern;                     % Get all patterns 
+        PatternAverageValue;         % Average value of patterns
+        PatternCount;                % Number of patterns
+        PatternDemandsUnits;         % Units for demands
+        PatternIndex;                % Indices of the patterns
+        PatternLengths;              % Length of the patterns
+        PatternNameID;               % ID of the patterns
+        QualityChemName;             % Quality Chem Name
+        QualityChemUnits;            % Quality Chem Units
+        QualityCode;                 % Water quality analysis code (None:0/Chemical:1/Age:2/Trace:3)
+        QualityReactionCoeffBulkUnits;   % Bulk reaction coefficient units
+        QualityReactionCoeffWallUnits;   % Wall reaction coefficient units
         QualitySourceMassInjectionUnits; % Units for source mass injection
-        QualityTraceNodeIndex; %Index of trace node (0 if QualityCode<3)
-        QualityType; % Water quality analysis type (None/Chemical/Age/Trace)
-        QualityUnits; %Units for quality concentration.
-        QualityWaterAgeUnits; %Units for water age
-        RelativeError;
-        TimeHaltFlag;
-        TimeHTime;
-        TimeHydraulicStep; %Hydraulic time step
-        TimeNextEvent; %find the lesser of the hydraulic time step length, or the time to next fill/empty
-        TimePatternStart; %Pattern start time
-        TimePatternStep; %Pattern Step
-        TimeQualityStep; %Quality Step
-        TimeReportingPeriods; % Reporting periods
-        TimeReportingStart; %Start time for reporting
-        TimeReportingStep; %Reporting time step
-        TimeRuleControlStep; % Time step for evaluating rule-based controls
-        TimeSimulationDuration; %Simulation duration
-        TimeStarting_Time;
-        TimeStatisticsIndex; %Index of time series post-processing type ('NONE':0,'AVERAGE':1,'MINIMUM':2,'MAXIMUM':3, 'RANGE':4)
-        TimeStatisticsType; %Type of time series post-processing ('NONE','AVERAGE','MINIMUM','MAXIMUM', 'RANGE')
-        Units_SI_Metric;
-        Units_US_Customary;
-        Version; % EPANET version
+        QualityTraceNodeIndex;       % Index of trace node (0 if QualityCode<3)
+        QualityType;                 % Water quality analysis type (None/Chemical/Age/Trace)
+        QualityUnits;                % Units for quality concentration.
+        QualityWaterAgeUnits;        % Units for water age
+        RelativeError;               % Relative error - hydraulic simulation statistic
+        TimeHaltFlag;                % Number of halt flag
+        TimeHTime;                   % Number of htime
+        TimeHydraulicStep;           % Hydraulic time step
+        TimeNextEvent;               % Find the lesser of the hydraulic time step length, or the time to next fill/empty
+        TimePatternStart;            % Pattern start time
+        TimePatternStep;             % Pattern Step
+        TimeQualityStep;             % Quality Step
+        TimeReportingPeriods;        % Reporting periods
+        TimeReportingStart;          % Start time for reporting
+        TimeReportingStep;           % Reporting time step
+        TimeRuleControlStep;         % Time step for evaluating rule-based controls
+        TimeSimulationDuration;      % Simulation duration
+        TimeStartTime;               % Number of start time
+        TimeStatisticsIndex;         % Index of time series post-processing type ('NONE':0,'AVERAGE':1,'MINIMUM':2,'MAXIMUM':3, 'RANGE':4)
+        TimeStatisticsType;          % Type of time series post-processing ('NONE','AVERAGE','MINIMUM','MAXIMUM', 'RANGE')
+        Units_SI_Metric;             % Equal with 1 if is SI-Metric
+        Units_US_Customary;          % Equal with 1 if is US-Customary
+        Version;                     % EPANET version
         
         % Parameters used with EPANET MSX
-        MSXLibEPANET;           
-        MSXLibEPANETPath;
-        MSXConstantsNameID;
-        MSXConstantsValue;
-        MSXConstantsCount;
-        MSXConstantsIndex;
-        MSXParametersCount;
-        MSXPatternsCount;
-        MSXSpeciesCount;
-        MSXLinkInitqualValue;
-        MSXNodeInitqualValue;
-        MSXFile;
-        MSXTempFile;
-        MSXParametersNameID;
-        MSXParametersIndex;
-        MSXParametersPipesValue;
-        MSXParametersTanksValue;
-        MSXPatternsNameID;
-        MSXPatternsIndex;
-        MSXPatternsLengths;
-        MSXPattern;
-        MSXEquationsPipes;
-        MSXSources;
-        MSXSourceLevel;
-        MSXSourceNodeNameID;
-        MSXSourcePatternNameID;
-        MSXSourcePatternIndex;
-        MSXSourceType;
-        MSXSourceTypeCode;
-        MSXSpeciesATOL;
-        MSXSpeciesIndex;
-        MSXSpeciesNameID;
-        MSXSpeciesRTOL;
-        MSXSpeciesType;
-        MSXSpeciesUnits;
-        MSXEquationsTanks;
-        MSXEquationsTerms; 
+        MSXLibEPANET;                % MSX EPANET library dll
+        MSXLibEPANETPath;            % MSX EPANET library path
+        MSXConstantsNameID;          % ID name of constants
+        MSXConstantsValue;           % Value of constants
+        MSXConstantsCount;           % Number of constants
+        MSXConstantsIndex;           % Index of constants
+        MSXParametersCount;          % Number of parameters
+        MSXPatternsCount;            % Number of msx patterns
+        MSXSpeciesCount;             % Number of species
+        MSXLinkInitqualValue;        % Initial concentration of chemical species assigned to links of the pipe network
+        MSXNodeInitqualValue;        % Initial concentration of chemical species assigned to nodes
+        MSXFile;                     % Name of the msx file
+        MSXTempFile;                 % Name of the temp msx file
+        MSXParametersNameID;         % ID name of parameters
+        MSXParametersIndex;          % Index name of parameters
+        MSXParametersPipesValue;     % Value of reaction parameters for pipes
+        MSXParametersTanksValue;     % Value of reaction parameters for tanks
+        MSXPatternsNameID;           % ID name of msx patterns
+        MSXPatternsIndex;            % Index of msx patterns
+        MSXPatternsLengths;          % Number of time periods in all patterns
+        MSXPattern;                  % Get all msx patterns
+        MSXEquationsPipes;           % Species dynamics in pipes
+        MSXSources;                  % Sources info
+        MSXSourceLevel;              % Value of all nodes source level
+        MSXSourceNodeNameID;         % ID label of all nodes
+        MSXSourcePatternIndex;       % Value of all node source pattern index
+        MSXSourceType;               % Value of all node source type 'CONCEN','MASS', 'SETPOINT', 'FLOWPACED'
+        MSXSourceTypeCode;           % Code of source type
+        MSXSpeciesATOL;              % Absolute tolerance used to determine when two concentration levels of a species are the same
+        MSXSpeciesIndex;             % Index name of species
+        MSXSpeciesNameID;            % ID name of species
+        MSXSpeciesRTOL;              % Relative accuracy level on a species’ concentration used to adjust time steps in the RK5 and ROS2 integration methods
+        MSXSpeciesType;              % Type of all species, bulk or wall
+        MSXSpeciesUnits;             % Species mass units
+        MSXEquationsTanks;           % Species dynamics in tanks
+        MSXEquationsTerms;           % Species dynamics in terms
         
         % Parameters used when the Binary mode is used 
         Bin;
@@ -533,7 +532,7 @@ classdef epanet <handle
             obj.NodeBaseDemands = obj.getNodeBaseDemands;
             %Get all tank data
             obj.NodeTankInitialLevel = obj.getNodeTankInitialLevel;
-            obj.NodeTankMinimumWaterVolume = obj.getNodeTankInitialWaterVolume;
+            obj.NodeTankInitialWaterVolume = obj.getNodeTankInitialWaterVolume;
             obj.NodeTankMixingModelCode = obj.getNodeTankMixingModelCode;
             obj.NodeTankMixingModelType = obj.getNodeTankMixingModelType;
             obj.NodeTankMixZoneVolume = obj.getNodeTankMixZoneVolume;
@@ -561,7 +560,7 @@ classdef epanet <handle
 %             obj.QualityType = obj.getQualityType;
             n = obj.getQualityInfo;
             obj.QualityChemUnits = n.QualityChemUnits;
-            obj.QualityChemName= n.QualityChemUnits;
+            obj.QualityChemName= n.QualityChemName;
             
             %Get time parameters
             obj.TimeSimulationDuration = obj.getTimeSimulationDuration;
@@ -578,11 +577,11 @@ classdef epanet <handle
             % Get EPANET version
             obj.Version = obj.getVersion;
             try%New version dev2.1.dll LibEPANET
-                obj.TimeStarting_Time = obj.getTimeStarting_Time;
+                obj.TimeStartTime = obj.getTimeStartTime;
                 obj.TimeHTime = obj.getTimeHTime;
                 obj.TimeHaltFlag = obj.getTimeHaltFlag;
                 obj.TimeNextEvent = obj.getTimeNextEvent;
-                obj.NodeTankMaxVolume = obj.getNodeTankMaxVolume;
+                obj.NodeTankMaximumWaterVolume = obj.getNodeTankMaximumWaterVolume;
                 obj.NodeBaseDemands = obj.getNodeBaseDemands;
                 obj.NodeDemandCategoriesNumber = obj.getNodeDemandCategoriesNumber;
                 obj.PatternAverageValue = obj.getPatternAverageValue;
@@ -622,6 +621,7 @@ classdef epanet <handle
                 obj.NodeTankDiameterUnits='feet';
                 obj.EnergyEfficiencyUnits='percent';
                 obj.NodeElevationUnits='feet';
+                obj.NodeDemandUnits=obj.LinkFlowUnits;
                 obj.NodeEmitterCoefficientUnits='flow units @ 1 psi drop';
                 obj.EnergyUnits='kwatt-hours';
                 obj.LinkFrictionFactorUnits='unitless';
@@ -643,6 +643,7 @@ classdef epanet <handle
                 obj.NodeTankDiameterUnits='meters';
                 obj.EnergyEfficiencyUnits='percent';
                 obj.NodeElevationUnits='meters';
+                obj.NodeDemandUnits=obj.LinkFlowUnits;
                 obj.NodeEmitterCoefficientUnits='flow units @ 1 meter drop';
                 obj.EnergyUnits='kwatt-hours';
                 obj.LinkFrictionFactorUnits='unitless';
@@ -1452,7 +1453,7 @@ classdef epanet <handle
                 j=j+1;
             end
         end
-        function value = getNodeTankMaxVolume(obj, varargin)
+        function value = getNodeTankMaximumWaterVolume(obj, varargin)
             %New version dev2.1
             indices = getNodeIndices(obj,varargin);j=1;
             for i=indices
@@ -1712,7 +1713,7 @@ classdef epanet <handle
             [obj.Errcode, value] = ENgettimeparam(9,obj.LibEPANET);
         end
         %%%%% New version dev2.1 %%%%%
-        function value = getTimeStarting_Time(obj)
+        function value = getTimeStartTime(obj)
             %Retrieves the number of start time
             [obj.Errcode, value] = ENgettimeparam(10,obj.LibEPANET);
         end
@@ -2356,7 +2357,7 @@ classdef epanet <handle
         end
 %         function value = setTimeReportingPeriods(obj)
 %             [obj.Errcode, value] = ENgettimeparam(9,obj.LibEPANET);
-%         function value = setTimeStarting_Time(obj)
+%         function value = setTimeStartTime(obj)
 %             [obj.Errcode, value] = ENgettimeparam(10,obj.LibEPANET);
 %         function value = setTimeNextEvent(obj)
 %             [obj.Errcode, value] = ENgettimeparam(13,obj.LibEPANET);
@@ -6929,6 +6930,7 @@ classdef epanet <handle
                 value.BinNodeTankDiameterUnits='feet';
                 value.BinEnergyEfficiencyUnits='percent';
                 value.BinNodeElevationUnits='feet';
+                value.BinNodeDemandUnits=value.BinLinkFlowUnits;
                 value.BinNodeEmitterCoefficientUnits='flow units @ 1 psi drop';
                 value.BinEnergyUnits='kwatt-hours';
                 value.BinLinkFrictionFactorUnits='unitless';
@@ -6951,6 +6953,7 @@ classdef epanet <handle
                 value.BinNodeTankDiameterUnits='meters';
                 value.BinEnergyEfficiencyUnits='percent';
                 value.BinNodeElevationUnits='meters';
+                value.BinNodeDemandUnits=value.BinLinkFlowUnits;
                 value.BinNodeEmitterCoefficientUnits='flow units @ 1 meter drop';
                 value.BinEnergyUnits='kwatt-hours';
                 value.BinLinkFrictionFactorUnits='unitless';

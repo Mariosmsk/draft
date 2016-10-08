@@ -1,5 +1,5 @@
 function [NData,fig] = NetworkFrame(fig,vdata,ldata,...
-    PData,SData,NData,d)
+    PData,SData,NData,d,NodeType,LinkType,varargin)
 %
 % NetworkFrame plots a static frame of a network graph described in Epanet
 % input format, with nodes and/or links colored using the values in vdata
@@ -110,6 +110,10 @@ function [NData,fig] = NetworkFrame(fig,vdata,ldata,...
 %
 % modified by Marios Kyriakou 25/09/2016
 
+if ~isempty(varargin)
+    hyd=varargin{1};
+end
+
 if isempty(fig)
     fig=figure;
     axis equal;
@@ -205,52 +209,82 @@ if isempty(NData)
     end
 
     % Add colorbar legend
-    if NData.legend~='n'
-        logtrans='n';
-        if NData.legend=='l'
-            minval=NData.lmin;
-            maxval=NData.lmax;
-            if NData.logtransl=='y' 
-                minval=log10(minval);
-                maxval=log10(maxval);
-                logtrans='y'; 
-            end
-        else
-            minval=NData.vmin;
-            maxval=NData.vmax;
-            if NData.logtransv=='y' 
-                minval=log10(minval);
-                maxval=log10(maxval);
-                logtrans='y'; 
-            end
-        end
-        % Right hand side legend
-        NData.hvc = colorbar('EastOutside');
-        [mapsize,n] = size(NData.cmap);
-        ytick = [1: floor(mapsize/4) : mapsize];   % ytick holds the colormap positions to label
-        [~,ticksize] = size(ytick);
-        if ytick(ticksize) ~= mapsize
-            ticksize = ticksize + 1;
-            ytick(ticksize) = mapsize;
-        end
-        dv = (maxval - minval)/mapsize;
-        labelvalue = minval + ((ytick - 1)*dv);
+    logtrans='n';
+    minvalL=NData.lmin;
+    maxvalL=NData.lmax;
+    if NData.logtransl=='y' 
+        minvalL=log10(minval);
+        maxvalL=log10(maxval);
+        logtrans='y'; 
+    end
+    minval=NData.vmin;
+    maxval=NData.vmax;
+    if NData.logtransv=='y' 
+        minval=log10(minval);
+        maxval=log10(maxval);
+        logtrans='y'; 
+    end
+        
+    [mapsize,n] = size(NData.cmap);
+    ytick = [1: floor(mapsize/4) : mapsize];   % ytick holds the colormap positions to label
+    [~,ticksize] = size(ytick);
+    if ytick(ticksize) ~= mapsize
+        ticksize = ticksize + 1;
+        ytick(ticksize) = mapsize;
+    end
+
+    unts_node=[]; unts_link=[];
+    if hyd==1
+        % Right hand side legend link
+        NData.hvcL = colorbar('WestOutside');
+        dv = (maxvalL - minvalL)/mapsize;
+        labelvalue = minvalL + ((ytick - 1)*dv);
         if length(labelvalue)==length(ytick)
             labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
         end
         labelstring = num2str( labelvalue', 5 );
-        ylab = {labelstring};
-
-%         try
-%             set(NData.hvc,'Ticks',[str2num(labelstring)']);
-%         catch e
-        labelstring = num2str( labelvalue', 5 );
+        try
+            set(NData.hvcL,'ticks',1:length(labelvalue));
+            set(NData.hvcL,'ticklabels',cellstr(labelstring));
+            set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
+        catch e
+            labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
+            set(NData.hvcL,'yticklabel', labelvalue(2:end)');
+        end
+        
+        try unts_node = eval(['d.Node',NodeType,'Units{1}']);
+        catch e, unts_node = eval(['d.Node',NodeType,'Units']); end
+        try unts_link = eval(['d.Link',LinkType,'Units{1}']);
+        catch e, unts_link = eval(['d.Link',LinkType,'Units']); end
+    else
+        % Units for NodeType quality
+        if ~isempty(d.MSXFile)
+            sind = d.getMSXSpeciesIndex(NodeType);
+            if sind, unts_node = d.MSXSpeciesUnits{sind}; end
+        end
+        if strcmp('CL2', NodeType), NodeType='Chlorine'; end
+        if strcmp(d.QualityChemName, NodeType), unts_node = d.QualityChemUnits; end
+    end
+    % Right hand side legend node
+    NData.hvc = colorbar('EastOutside');
+    dv = (maxval - minval)/mapsize;
+    labelvalue = minval + ((ytick - 1)*dv);
+    if length(labelvalue)==length(ytick)
+        labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
+    end
+    labelstring = num2str( labelvalue', 5 );
+    try
         set(NData.hvc,'ticks',1:length(labelvalue));
         set(NData.hvc,'ticklabels',cellstr(labelstring));
         set(gca, 'clim', [0.5 length(labelvalue)+0.5]);
-%         end
+    catch e
+        labelvalue = [labelvalue labelvalue(end)+labelvalue(2)-labelvalue(1)];
+        set(NData.hvc,'yticklabel', labelvalue(2:end)');
     end
-    
+
+    if isfield(NData,'hvcL'), ylabel(NData.hvcL, [LinkType,' (',unts_link,')'],'fontsize',12); end
+    if isfield(NData,'hvc'), ylabel(NData.hvc, [NodeType,' (',unts_node,')'],'fontsize',12); end
+
     % Extra node symbols
     NData.snodeh=[];
     if ~isempty(SData)

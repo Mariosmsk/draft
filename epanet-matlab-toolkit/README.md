@@ -295,7 +295,7 @@ The `EPANET-Matlab Toolkit` is based/inspired on the [EPANET-Matlab Toolkit](htt
 |getMSXPatternsLengths|Retrieves the number of time periods in all or some patterns|
 |getMSXPatternsNameID|Retrieves the patterns IDs|
 |getMSXSourceLevel|Retrieves the value of all nodes source level|
-|getMSXSourceNodeNameID|Retrieves the indices of parameters|
+|getMSXSourceNodeNameID|Retrieves the ID label of all nodes|
 |getMSXSourcePatternIndex|Retrieves the value of all node source pattern index|
 |getMSXSourceType|Retrieves the value of all node source type|
 |getMSXSources|Retrieves the source info|
@@ -305,8 +305,8 @@ The `EPANET-Matlab Toolkit` is based/inspired on the [EPANET-Matlab Toolkit](htt
 |getMSXSpeciesCount|Retrieves the number of species|
 |getMSXSpeciesIndex|Retrieves the indices of species|
 |getMSXSpeciesNameID|Retrieves the species IDs|
-|getMSXSpeciesType|Retrieves the value of all species|
-|getMSXSpeciesUnits|Retrieves the species units|
+|getMSXSpeciesType|Retrieves the type of all species (BULK/WALL)|
+|getMSXSpeciesUnits|Retrieves the species mass units|
 |getMSXTimeStep|Retrieves the time step|
 |getMSXRateUnits|Retrieves the rate/time units (SEC/MIN/HR/DAY)|
 |getMSXAreaUnits|Retrieves the area units (FT2/M2/CM2)|

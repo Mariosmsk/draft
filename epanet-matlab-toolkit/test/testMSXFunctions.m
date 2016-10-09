@@ -12,13 +12,12 @@ clear;
 close all;clear class;
 
 % Create EPANET object using the INP file
-inpname='net2-cl2.inp'; %net2-cl2 example
+inpname='example.inp'; %net2-cl2 example
 
 %% MSX Functions
 d=epanet(inpname);
 msxname = [inpname(1:end-4),'.msx'];
 d.loadMSXFile(msxname);
-d
 
 % New functions - Read MSX File
 d.getMSXSolver
@@ -106,10 +105,10 @@ pause
 
 %% MSX PLOTS
 lll=d.getMSXComputedQualityLink
-figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(lll.Time,lll.Quality{1}{i},'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
+figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(lll.Time,lll.Quality{1}(:,i),'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
 
 nnn=d.getMSXComputedQualityNode
-figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(nnn.Time,nnn.Quality{1}{i},'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
+figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(nnn.Time,nnn.Quality{1}(:,i),'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
 
 d.plotMSXSpeciesNodeConcentration(1,1:d.MSXSpeciesCount)
 d.plotMSXSpeciesNodeConcentration(2,1:d.MSXSpeciesCount)
@@ -168,12 +167,8 @@ pause
 
 %% GET, SET SOURCES
 v=d.getMSXSources
-node = 1;
-spec=1;
-type = 0;
-level=0.2;
-pat = 1;
-d.setMSXSources(node, spec, type, level, pat)
+d.addMSXPattern('PatAsIII',[2 .3 .4 6 5 2 4]);
+d.setMSXSources(d.NodeNameID{1}, d.MSXSpeciesNameID{1}, 'Setpoint', 0.5, 'PatAsIII')
 v=d.getMSXSources
 disp('Press any key to continue...')
 pause

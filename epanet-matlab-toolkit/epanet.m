@@ -2896,7 +2896,7 @@ classdef epanet <handle
             end
             if ~isempty(varargin)
                 if length(varargin)==1
-                    ss=varargin{1};%index node
+                    ss=varargin{1};%index node    %future work with argument ID
                     uu=1:obj.getMSXSpeciesCount;
                 elseif length(varargin)==2
                     ss=varargin{1};%index node
@@ -2906,42 +2906,54 @@ classdef epanet <handle
                 ss=1:obj.getNodeCount;%index node
                 uu=1:obj.getMSXSpeciesCount;
             end
+            value.Quality = cell(1,length(ss));
             % Obtain a hydraulic solution
             obj.solveMSXCompleteHydraulics(obj.MSXLibEPANET);
             % Run a step-wise water quality analysis without saving
             % RESULTS to file
             obj.initializeMSXQualityAnalysis(0);
             % Retrieve species concentration at node
-            k=2; tleft=1;t=0;i=1;nl=1;
+            k=2; tleft=1;t=0;nl=1;
             value.Time(k,:)=0;
             timeSmle=obj.getTimeSimulationDuration;%bug at time
             while(tleft>0 && obj.Errcode==0 && timeSmle~=t)
                 [t, tleft]=obj.stepMSXQualityAnalysisTimeLeft;
                 if ~isempty(varargin)
                     if t<3600 || t==3600
-                        for j=uu
-                            value.Quality{j,i}(k,:)=obj.getMSXNodeInitqualValue{ss}(j);
+                        i=1;
+                        for nl=ss
+                            for j=uu
+                                value.Quality{i}(k,j)=obj.getMSXNodeInitqualValue{nl}(j);
+                            end
+                            i=i+1;
                         end
                     else
-                        for j=uu
-                            value.Quality{j,i}(k,:)=obj.getMSXSpeciesConcentration(0, ss, j);%node code0
+                        i=1;
+                        for nl=ss
+                            for j=uu
+                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(0, nl, j);%node code0
+                            end
+                            i=i+1;
                         end
                     end
                 else
                     if t<3600 || t==3600
+                        i=1;
                         for nl=ss
                             for j=uu
-                                value.Quality{nl}{j}(k)=obj.getMSXNodeInitqualValue{(nl)}(j);
+                                value.Quality{i}(k,j)=obj.getMSXNodeInitqualValue{(nl)}(j);
                             end
+                            i=i+1;
                         end
                     else
+                        i=1;
                         for nl=ss
                             for j=uu
-                                value.Quality{nl}{j}(k)=obj.getMSXSpeciesConcentration(0, (nl), j);%node code0
+                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(0, (nl), j);%node code0
                             end
+                            i=i+1;
                         end
                     end
-                    nl=nl+1;
                 end
                 value.Time(k,:)=t;
                 k=k+1;
@@ -2964,6 +2976,7 @@ classdef epanet <handle
                 ss=1:obj.getLinkCount;%index link
                 uu=1:obj.getMSXSpeciesCount;
             end
+            value.Quality = cell(1,length(ss));
             % Obtain a hydraulic solution
             obj.solveMSXCompleteHydraulics(obj.MSXLibEPANET);
             % Run a step-wise water quality analysis without saving
@@ -2971,35 +2984,46 @@ classdef epanet <handle
             obj.initializeMSXQualityAnalysis(0);
             
             % Retrieve species concentration at node
-            k=2;tleft=1;i=1;
+            k=2;tleft=1;
             value.Time(k,:)=0;
             while(tleft>0 && obj.Errcode==0)
                 [t, tleft]=obj.stepMSXQualityAnalysisTimeLeft;
                 if ~isempty(varargin)
                     if t<3600 || t==3600
-                        for j=uu
-                            value.Quality{j,i}(k,:)=obj.getMSXLinkInitqualValue{ss}(j);
+                        i=1;
+                        for nl=ss
+                            for j=uu
+                                value.Quality{i}(k,j)=obj.getMSXLinkInitqualValue{nl}(j);
+                            end
+                            i=i+1;
                         end
                     else
-                        for j=uu
-                            value.Quality{j,i}(k,:)=obj.getMSXSpeciesConcentration(1, ss, j);
+                        i=1;
+                        for nl=ss                        
+                            for j=uu
+                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(1, nl, j);
+                            end
+                            i=i+1;
                         end
                     end
                 else
                     if t<3600 || t==3600
+                        i=1;
                         for nl=ss
                             for j=uu
-                                value.Quality{nl}{j}(k)=obj.getMSXLinkInitqualValue{(nl)}(j);
+                                value.Quality{i}(k,j)=obj.getMSXLinkInitqualValue{(nl)}(j);
                             end
+                            i=i+1;
                         end
                     else
+                        i=1;
                         for nl=ss
                             for j=uu
-                                value.Quality{nl}{j}(k)=obj.getMSXSpeciesConcentration(1, (nl), j);%link code1
+                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(1, (nl), j);%link code1
                             end
+                            i=i+1;
                         end
                     end
-                    nl=nl+1;
                 end
                 value.Time(k,:)=t;
                 k=k+1;

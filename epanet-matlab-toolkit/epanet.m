@@ -2913,7 +2913,7 @@ classdef epanet <handle
             % RESULTS to file
             obj.initializeMSXQualityAnalysis(0);
             % Retrieve species concentration at node
-            k=2; tleft=1;t=0;nl=1;
+            k=2; tleft=1;t=0;
             value.Time(k,:)=0;
             timeSmle=obj.getTimeSimulationDuration;%bug at time
             while(tleft>0 && obj.Errcode==0 && timeSmle~=t)
@@ -2982,7 +2982,6 @@ classdef epanet <handle
             % Run a step-wise water quality analysis without saving
             % RESULTS to file
             obj.initializeMSXQualityAnalysis(0);
-            
             % Retrieve species concentration at node
             k=2;tleft=1;
             value.Time(k,:)=0;

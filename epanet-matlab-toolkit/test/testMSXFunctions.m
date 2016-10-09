@@ -227,7 +227,9 @@ d.getMSXPattern
 d.setMSXPatternValue(1,1,2);
 d.getMSXPattern 
 
-d.setMSXPattern(1,[1 0.5 0.8 2 1.5]);
+d.setMSXPattern(1,[1 0.5 0.8 2 1.5]); % node index, values
+% or d.setMSXPattern('testpat',[1 1 1 1 1.5]); nodeID , values
+
 d.getMSXPattern 
 d.getMSXPatternValue(1,5) 
 

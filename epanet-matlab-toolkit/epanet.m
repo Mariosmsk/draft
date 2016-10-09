@@ -3135,9 +3135,12 @@ classdef epanet <handle
                 end
             end
         end
-        function setMSXPattern(obj,index,patternVector)
+        function setMSXPattern(obj,pat,patternVector)
+            if ischar(pat)
+                pat=obj.getMSXPatternsIndex(pat);
+            end
             nfactors=length(patternVector);
-            [obj.Errcode] = MSXsetpattern(index, patternVector, nfactors, obj.MSXLibEPANET);
+            [obj.Errcode] = MSXsetpattern(pat, patternVector, nfactors, obj.MSXLibEPANET);
         end
         function setMSXPatternMatrix(obj,patternMatrix)
             nfactors=size(patternMatrix,2);

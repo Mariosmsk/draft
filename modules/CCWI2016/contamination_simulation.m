@@ -2,11 +2,10 @@
 close all; clear; rng(1)
 
 %% Load EPANET Network and MSX
-G = epanet('BWSN_Network_1.inp');
+G = epanet('BWSN_Network_1.inp'); % Load EPANET Input file
 G.loadMSXFile('Arsenite.msx'); % Load MSX file
 
 % Sensor locations
-
 sensor_index = G.getNodeIndex({'JUNCTION-17', 'JUNCTION-83', 'JUNCTION-122', 'JUNCTION-31', 'JUNCTION-45'});
 
 %% Simulation Setup
@@ -18,37 +17,34 @@ demand_pattern = G.getPattern;
 roughness_coeff = G.getLinkRoughnessCoeff;
 
 %% Scenarios
-Ns = 10; % Number of scenarios to simulate
-u_p = 0.10; % pattern uncertainty
-u_r = 0.05; % roughness coefficient uncertainty
-max_inj_conc = 0.5;
-inj_start_time = 1*48; % after day 1 (Dt = 30min)
-inj_duration = 12; % 6 hours
+Ns = 100; % Number of scenarios to simulate
+u_p = 0.20; % pattern uncertainty
+u_r = 0.20; % roughness coefficient uncertainty
+max_inj_conc = 2.0;
+inj_start_time = 2*48; % after day 2 (Dt = 30min)
+inj_duration = 24; % maximum duration of 12 hours
 inj_sc=[randi(G.NodeCount,Ns,1), max_inj_conc*rand(Ns,1), randi(48,Ns,1)+inj_start_time, randi(inj_duration,Ns,1)]; % Injection location, magnitude, start time, duration 
 
-inj_sc=[18, 1, 48, 12]; % Injection location, magnitude, start time, duration 
-
-
-
-
 %% Run epochs
+tic
 for i = 1:Ns
-    %randomize hydraulics
+    disp(['Iteration ', int2str(i)])
+    % Randomize hydraulics
     r_p = -u_p + 2*u_p.*rand(size(demand_pattern,1),size(demand_pattern,2));
     new_demand_pattern = demand_pattern + demand_pattern.*r_p;
-    G.setPatternMatrix(new_demand_pattern);
+    G.setPatternMatrix(new_demand_pattern); % Set new patterns
     r_r = -u_r + 2*u_r.*rand(size(roughness_coeff,1),size(roughness_coeff,2));
     new_roughness_coeff = roughness_coeff + roughness_coeff.*r_r;
-    G.setLinkRoughnessCoeff(new_roughness_coeff);
-    
-    %G.setMSXSources(inj_sc(i,1), 2, 0, 1, 2) %node, species_index, type, concentration, pattern
-    G.setMSXSources(18, 2, 0, 0.5, 2)
-    %as3_pat = ones(1, t_d*48);
-    %as3_pat(inj_sc(i,3):(inj_sc(i,3)+inj_sc(i,4))) = 1; % 
-    %G.setMSXPattern(2,as3_pat);
-    Q{i} = G.getMSXComputedQualityNode(sensor_index);
+    G.setLinkRoughnessCoeff(new_roughness_coeff); % Set new roughness coefficients
+    % Randomize injection
+    G.setMSXSources(inj_sc(i,1), 2, 2, inj_sc(i,2), 2) % Specify Arsenite injection source
+    as3_pat = zeros(1, t_d*48);
+    as3_pat(inj_sc(i,3):(inj_sc(i,3)+inj_sc(i,4))) = 1; % 
+    G.setMSXPattern(2,as3_pat); % Set pattern for injection
+    Q{i} = G.getMSXComputedQualityNode(sensor_index); % Solve hydraulics and MSX quality dynamics
+    G.setMSXSources(inj_sc(i,1), 2, 2, 0, 2) % Reset injection source
 end
-
+toc
 G.unloadMSX
 
 %% Plot Networkd

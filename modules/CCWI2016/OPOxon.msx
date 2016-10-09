@@ -1,0 +1,46 @@
+[TITLE]
+OP-OXON-Chlorine reaction kinetic model, pH=9
+for Morehead, KY WDS
+
+[OPTIONS]
+ RATE_UNITS  MIN
+ SOLVER      RK5
+ TIMESTEP    300
+ RTOL        1.E-3
+ ATOL        1.E-3
+
+[SPECIES]
+; Type   Name      Units   RTol   ATol
+ BULK     Chlorine  MG      1.E-3  1.E-3
+ BULK     OP        MG      1.E-3  1.E-3
+ BULK     OPDECAY   MG      1.E-3  1.E-3
+;BULK Oxon
+;pH=9
+
+;[COEFFICIENTS]
+;CONSTANT KB         6.94444E-4  ;Free chlorine bulk decay rate == 1/day
+;CONSTANT KP         6.94444E-4  ;Oxon reaction rate
+;CONSTANT KR         0.254800169 ;OP reaction rate
+;CONSTANT MWChlorine 70.9        ;mg/mmol free chlorine as Cl2
+;CONSTANT MWOP       304.35      ;mg/mmol OP
+;CONSTANT MWOxon     288.35      ;mg/mmol Oxon
+
+[PIPE]
+ RATE Chlorine -6.944E-4*Chlorine - 8.37E-04*Chlorine*OP
+ RATE OP       -3.59E-03*Chlorine*OP
+ RATE OPDECAY   3.59E-03*Chlorine*OP
+;RATE Chlorine -KB*Chlorine - KR*Chlorine*OP/MWOP
+;RATE OP       -KR*Chlorine*OP/MWChlorine
+;RATE Oxon      KR*MWOxon*Chlorine*OP/MWChlorine/MWOP - KP*Oxon
+
+[SOURCES]
+  SETPOINT    JUNCTION-34   OP      0        POP
+  SETPOINT    RESERVOIR-129 Chlorine   1        PCL2R129
+  SETPOINT    TANK-130      Chlorine   1        PCL2T130
+  SETPOINT    TANK-131      Chlorine   0        PCL2T131
+
+[PATTERNS]
+    PCL2R129    1  
+    PCL2T130    1   
+    PCL2T131    0 
+    POP        0

@@ -2917,17 +2917,17 @@ classdef epanet <handle
             timeSmle=obj.getTimeSimulationDuration;%bug at time
             while(tleft>0 && obj.Errcode==0 && timeSmle~=t)
                 [t, tleft]=obj.stepMSXQualityAnalysisTimeLeft;
-                if ~isempty(varargin)
-                    if t<3600 || t==3600
-                        for j=uu
-                            value.Quality{j,i}(k,:)=obj.getMSXNodeInitqualValue{ss}(j);
-                        end
-                    else
-                        for j=uu
-                            value.Quality{j,i}(k,:)=obj.getMSXSpeciesConcentration(0, ss, j);%node code0
-                        end
-                    end
-                else
+%                 if ~isempty(varargin)
+%                     if t<3600 || t==3600
+%                         for j=uu
+%                             value.Quality{j,i}(k,:)=obj.getMSXNodeInitqualValue{ss}(j);
+%                         end
+%                     else
+%                         for j=uu
+%                             value.Quality{j,i}(k,:)=obj.getMSXSpeciesConcentration(0, ss, j);%node code0
+%                         end
+%                     end
+%                 else
                     if t<3600 || t==3600
                         for nl=ss
                             for j=uu
@@ -2942,7 +2942,7 @@ classdef epanet <handle
                         end
                     end
                     nl=nl+1;
-                end
+%                 end
                 value.Time(k,:)=t;
                 k=k+1;
             end

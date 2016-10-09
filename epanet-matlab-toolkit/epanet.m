@@ -384,7 +384,6 @@ classdef epanet <handle
         TYPEQUALITY={'NONE', 'CHEM', 'AGE', 'TRACE', 'MULTIS'}; % Constants for quality: 'NONE', 'CHEM', 'AGE', 'TRACE', 'MULTIS'
         TYPEREPORT={'YES','NO','FULL'}; % Constants for report: 'YES','NO','FULL'
         TYPESOURCE={'CONCEN','MASS', 'SETPOINT', 'FLOWPACED'}; % Constants for sources: 'CONCEN','MASS', 'SETPOINT', 'FLOWPACED'
-        TYPESOURCEMSX={'NOSOURCE','CONCEN','MASS', 'SETPOINT', 'FLOWPACED'}; % Constants for sources: 'CONCEN','MASS', 'SETPOINT', 'FLOWPACED'
         TYPESTATS={'NONE','AVERAGE','MINIMUM','MAXIMUM', 'RANGE'}; % Constants for statistics: 'NONE','AVERAGE','MINIMUM','MAXIMUM', 'RANGE'
         TYPEUNITS={'CFS', 'GPM', 'MGD', 'IMGD', 'AFD', 'LPS', 'LPM', 'MLD', 'CMH', 'CMD'}; % Constants for units: 'CFS', 'GPM', 'MGD', 'IMGD', 'AFD', 'LPS', 'LPM', 'MLD', 'CMH', 'CMD'
         
@@ -393,6 +392,7 @@ classdef epanet <handle
         MSXTYPESOLVER={'EUL','RK5','ROS2'}; % is the choice of numerical integration method used to solve the reaction system
         MSXTYPECOUPLING={'FULL','NONE'}; % is the choice of numerical integration method used to solve the reaction system
         MSXTYPECOMPILER={'NONE','VC','GC'}; % is the choice of numerical integration method used to solve the reaction system
+        MSXTYPESOURCE={'NOSOURCE','CONCEN', 'MASS', 'SETPOINT','FLOWPACED'}; % Constants for sources: 'NO SOURCE''CONCEN','MASS', 'SETPOINT', 'FLOWPACED'
         MSXTYPENODE=0; % for a node
         MSXTYPELINK=1; % for a link
     end
@@ -2832,7 +2832,7 @@ classdef epanet <handle
             for i=1:obj.getNodeCount
                 for j=1:obj.getMSXSpeciesCount
                     [obj.Errcode, obj.MSXSourceType{i}{j},obj.MSXSourceLevel{i}(j),obj.MSXSourcePatternIndex{i}(j)] = MSXgetsource(i,j,obj.MSXLibEPANET);
-                    obj.MSXSourceTypeCode{i}(j)=find(strcmp(obj.TYPESOURCEMSX,obj.MSXSourceType{i}{j}))-2;
+                    obj.MSXSourceTypeCode{i}(j)=find(strcmp(obj.MSXTYPESOURCE,obj.MSXSourceType{i}{j}))-2;
                 end
             end
             SnodeID=obj.getMSXSourceNodeNameID;
@@ -3031,14 +3031,15 @@ classdef epanet <handle
         function plotMSXSpeciesNodeConcentration(obj,varargin)
             s=obj.getMSXComputedQualityNode(varargin{1},varargin{2});
             nodesID=obj.getNodeNameID;
-            SpeciesNameID=obj.getMSXSpeciesNameID;
+            SpeciesNameID=obj.getMSXSpeciesNameID;nd=1;
             for l=varargin{1}
                 nodeID=nodesID(l);
                 figure('Name',['NODE ',char(nodeID)]);
                 for i=varargin{2}
-                    specie(:,i)=s.Quality{i,1};
-                    time(:,i)=s.Time;
+                    specie(:,i)=s.Quality{nd}(:,i);
+                    time(:,i)=s.Time; 
                 end
+                nd=nd+1;
                 plot(time,specie);
                 title(['NODE ',char(nodeID)]);
                 ylabel('Quantity');
@@ -3049,14 +3050,15 @@ classdef epanet <handle
         function plotMSXSpeciesLinkConcentration(obj,varargin)
             s=obj.getMSXComputedQualityLink(varargin{1},varargin{2});
             linksID=obj.getLinkNameID;
-            SpeciesNameID=obj.getMSXSpeciesNameID;
+            SpeciesNameID=obj.getMSXSpeciesNameID;nd=1;
             for l=varargin{1}
                 linkID=linksID(l);
                 figure('Name',['LINK ',char(linkID)]);
                 for i=varargin{2}
-                    specie(:,i)=s.Quality{i,1};
+                    specie(:,i)=s.Quality{nd}(:,i);
                     time(:,i)=s.Time;
                 end
+                nd=nd+1;
                 plot(time,specie);
                 title(['LINK ',char(linkID)]);
                 ylabel('Quantity');
@@ -3095,8 +3097,12 @@ classdef epanet <handle
                 setMSXPattern(obj,index,varargin{2});
             end
         end
-        function setMSXSources(obj, node, species, type, level, pat)
-            MSXsetsource(node, species, type, level, pat, obj.MSXLibEPANET);
+        function setMSXSources(obj, nodeID, speciesID, sourcetype, concentration, patID)
+            node = obj.getNodeIndex(nodeID);
+            species = obj.getMSXSpeciesIndex(speciesID);
+            type = find(strcmp(obj.MSXTYPESOURCE,upper(sourcetype)))-2;
+            pat = obj.getMSXPatternsIndex(patID);
+            MSXsetsource(node, species, type, concentration, pat, obj.MSXLibEPANET);
         end
         function setMSXConstantsValue(obj, value)
             for i=1:length(value)

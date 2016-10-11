@@ -48,8 +48,8 @@ classdef epanet <handle
     %   permissions and limitations under the Licence.
     properties
         ControlLevelValues;          % The control level values
-        ControlLinkIndex;            % Set of control types in links
-        ControlNodeIndex;            % Set of control types in nodes
+        ControlLinkIndex;            % Set of control links index
+        ControlNodeIndex;            % Set of control nodes index
         ControlRules;                % Retrieves the parameters of all control statements
         ControlRulesCount;           % Number of controls
         Controls;                    % Controls info
@@ -131,7 +131,7 @@ classdef epanet <handle
         NodeSourceTypeIndex;         % Index of source type
         NodeTankBulkReactionCoeff;   % Bulk reaction coefficients in tanks
         NodeTankCount;               % Number of tanks
-        NodeTankDiameter;            % Tank Diameters
+        NodeTankDiameter;            % Diameters of tanks
         NodeTankDiameterUnits;       % Units for tank diameters
         NodeTankIndex;               % Indices of Tanks
         NodeTankInitialLevel;        % Initial water level in tanks
@@ -161,7 +161,7 @@ classdef epanet <handle
         OptionsSpecificGravity;      % *** Not implemented *** % but get with BinOptionsSpecificGravity
         OptionsUnbalanced;           % *** Not implemented *** % but get with BinOptionsUnbalanced
         OptionsViscosity;            % *** Not implemented *** % but get with BinOptionsViscosity
-        Pattern;                     % Get all patterns 
+        Pattern;                     % Get all patterns - matrix
         PatternAverageValue;         % Average value of patterns
         PatternCount;                % Number of patterns
         PatternDemandsUnits;         % Units for demands
@@ -237,140 +237,139 @@ classdef epanet <handle
         MSXEquationsTerms;           % Species dynamics in terms
         
         % Parameters used when the Binary mode is used 
-        Bin;
-        BinControlLinksID;
-        BinControlNodesID;
-        BinControlRulesCount;
-        BinControlsInfo;
-        BinCountInitialQualitylines;
-        BinCountPatternlines;
-        BinCountReactionlines;
-        BinCountStatuslines;
-        BinCurveAllLines;
-        BinCurveCount; % Number of curves
-        BinCurveNameID; %ID name of curves
-        BinCurveTypes; % Type of curves 
-        BinCurveXvalue; %X-value of curves
-        BinCurveYvalue; %Y-value of curves
-        BinLinkBulkReactionCoeff;
-        BinLinkCount;
-        BinLinkDiameters;
-        BinLinkFlowUnits;
-        BinLinkFromNode;
-        BinLinkGlobalBulkReactionCoeff;
-        BinLinkGlobalWallReactionCoeff;
-        BinLinkInitialStatus;
-        BinLinkInitialStatusNameID;
-        BinLinkLengths;
-        BinLinkNameID;
-        BinLinkPipeCount;
-        BinLinkPipeDiameters;
-        BinLinkPipeIndex;
-        BinLinkPipeLengths;
-        BinLinkPipeMinorLoss;
-        BinLinkPipeNameID;
-        BinLinkPipeRoughness;
-        BinLinkPipeStatus;
-        BinLinkPumpCount;
-        BinLinkPumpCurveNameID;
-        BinLinkPumpIndex;
-        BinLinkPumpNameID;
-        BinLinkPumpNameIDPower;
-        BinLinkPumpPatterns;
-        BinLinkPumpPower;
-        BinLinkPumpStatus;  
-        BinLinkPumpStatusNameID;   
-        BinLinkRoughnessCoeff;
-        BinLinkSettings;
-        BinLinkToNode;
-        BinLinkType;
-        BinLinkValveCount;
-        BinLinkValveDiameters;
-        BinLinkValveIndex;
-        BinLinkValveMinorLoss;
-        BinLinkValveNameID;
-        BinLinkValveSetting;
-        BinLinkValveStatus;
-        BinLinkValveStatusNameID;
-        BinLinkValveType;
-        BinLinkWallReactionCoeff;
-        BinNodeBaseDemands;
-        BinNodeCoordinates;
-        BinNodeCount;  
-        BinNodeDemandPatternNameID;
-        BinNodeElevations;
-        BinNodeInitialQuality;
-        BinNodeJunctionCount; 
-        BinNodeJunctionElevation;
-        BinNodeJunctionIndex;
-        BinNodeJunctionNameID;
-        BinNodeJunctionsBaseDemands;
-        BinNodeJunctionsBaseDemandsID;
-        BinNodeNameID;
-        BinNodePressureUnits;
-        BinNodeResDemandPatternNameID;
-        BinNodeReservoirCount; 
-        BinNodeReservoirElevation;
-        BinNodeReservoirIndex;
-        BinNodeReservoirNameID;
-        BinNodeSourcePatternIndex;
-        BinNodeSourcePatternNameID;
-        BinNodeSourceQuality;
-        BinNodeSourceType;
-        BinNodeSourceTypeCode;
-        BinNodeSourceTypeIndex;
-        BinNodeTankCount;
-        BinNodeTankDiameter;
-        BinNodeTankElevation;
-        BinNodeTankIndex;
-        BinNodeTankInitLevel;
-        BinNodeTankMaxLevel;
-        BinNodeTankMinimumFraction;
-        BinNodeTankMinLevel;
-        BinNodeTankMinVol;
-        BinNodeTankMixID;
-        BinNodeTankMixModel;
-        BinNodeTankNameID;
-        BinNodeTankReservoirCount;   
-        BinNodeType;
-        BinOptionsAccuracyValue;
-        BinOptionsDiffusivity;
-        BinOptionsEmitterExponent;
-        BinOptionsHeadloss;
-        BinOptionsMaxTrials;
-        BinOptionsPattern;
-        BinOptionsPatternDemandMultiplier;
-        BinOptionsQualityTolerance;
-        BinOptionsSpecificGravity;
-        BinOptionsUnbalanced;
-        BinOptionsViscosity;
-        BinPatternCount;
-        BinPatternLengths;
-        BinPatternMatrix;
-        BinPatternNameID;
-        BinPatternValue; 
-        BinQualityCode;
-        BinQualityTraceNodeID;
-        BinQualityTraceNodeIndex;
-        BinQualityType;% Water quality analysis code (None:0/Chemical:1/Age:2/Trace:3)
-        BinQualityUnits;
-        BinRulesControlLinksID;
-        BinRulesControlNodesID;
-        BinRulesControlsInfo;
-        BinRulesCount;
-        BinUnits_SI_Metric;
-        BinTempfile;
-        BinTimeHydraulicStep;
-        BinTimePatternStart;
-        BinTimePatternStep;
-        BinTimeQualityStep;
-        BinTimeReportingStart;
-        BinTimeReportingStep;
-        BinTimeSimulationDuration;
-        BinTimeStatistics;
-        BinTimeStatisticsIndex;
-        BinUnits;
-        BinUnits_US_Customary;
+        Bin;                         % Check if use Bin functions (use saveInputFile if is 1)
+        BinControlLinksID;           % Set of control links ID
+        BinControlNodesID;           % Set of control nodes ID
+        BinControlRulesCount;        % Number of controls
+        BinControlsInfo;             % Controls info
+        BinCountInitialQualitylines; % Count lines used by quality section
+        BinCountPatternlines;        % Count lines used by pattern section
+        BinCountReactionlines;       % Count lines used by reaction section
+        BinCountStatuslines;         % Count lines used by status section
+        BinCurveAllLines;            % Curves info from section 
+        BinCurveCount;               % Number of curves
+        BinCurveNameID;              % ID name of curves
+        BinCurveTypes;               % Type of curves 
+        BinCurveXvalue;              % X-value of curves
+        BinCurveYvalue;              % Y-value of curves
+        BinLinkBulkReactionCoeff;    % Bulk reaction coefficient of each link
+        BinLinkCount;                % Number of links
+        BinLinkDiameters;            % Diameter of each link
+        BinLinkFlowUnits;            % Units of flow
+        BinLinkFromNode;             % IDs of node at start of link
+        BinLinkGlobalBulkReactionCoeff;% Global Bulk Reaction Coeff
+        BinLinkGlobalWallReactionCoeff;% Global Wall Reaction Coeff
+        BinLinkInitialStatus;        % Initial status of links
+        BinLinkInitialStatusNameID;  % Name ID of links where is status refers in BinLinkInitialStatus
+        BinLinkLengths;              % Length of links
+        BinLinkNameID;               % Name ID of links
+        BinLinkPipeCount;            % Number of pipes
+        BinLinkPipeDiameters;        % Diameter of each pipe
+        BinLinkPipeIndex;            % Index of pipe links
+        BinLinkPipeLengths;          % Length of pipes
+        BinLinkPipeMinorLoss;        % Minor loss coefficient of pipes
+        BinLinkPipeNameID;           % Name ID of pipes
+        BinLinkPipeRoughness;        % Roughness coefficient of pipes
+        BinLinkPipeStatus;           % Initial status of pipes
+        BinLinkPumpCount;            % Number of pumps
+        BinLinkPumpCurveNameID;      % Curve Name ID used from pumps
+        BinLinkPumpIndex;            % Index of pumps
+        BinLinkPumpNameID;           % Name ID of pumps
+        BinLinkPumpNameIDPower;      % Name ID of pumps with Power
+        BinLinkPumpPatterns;         % Patterns used from pumps
+        BinLinkPumpPower;            % Power of pumps
+        BinLinkPumpStatus;           % Initial status of pumps
+        BinLinkPumpStatusNameID;     % Name ID of pumps where is status refers in BinLinkPumpStatus
+        BinLinkRoughnessCoeff;       % Roughness coefficient of links
+        BinLinkSettings;             % Initial settings of links
+        BinLinkToNode;               % IDs of node at start of link
+        BinLinkType;                 % ID of link type
+        BinLinkValveCount;           % Number of valves
+        BinLinkValveDiameters;       % Diameter of each valve
+        BinLinkValveIndex;           % Index of valve links
+        BinLinkValveMinorLoss;       % Minor loss coefficient of valves
+        BinLinkValveNameID;          % Name ID of valves
+        BinLinkValveSetting;         % Initial settings of valves
+        BinLinkValveStatus;          % Initial status of valves
+        BinLinkValveStatusNameID;    % Name ID of valves where is status refers in BinLinkValveStatus
+        BinLinkValveType;            % Valve type, 'PRV', 'PSV', 'PBV', 'FCV', 'TCV', 'GPV'
+        BinLinkWallReactionCoeff;    % Wall reaction coefficient of links
+        BinNodeBaseDemands;          % Base demands of nodes
+        BinNodeCoordinates;          % Coordinates for each node (long/lat & intermediate pipe coordinates) - vertices
+        BinNodeCount;                % Number of nodes
+        BinNodeDemandPatternNameID;  % ID of demand patterns
+        BinNodeElevations;           % Elevation of nodes
+        BinNodeInitialQuality;       % Initial quality of nodes
+        BinNodeJunctionCount;        % Number of junctions
+        BinNodeJunctionElevation;    % Elevation of junctions
+        BinNodeJunctionIndex;        % Index of junctions
+        BinNodeJunctionNameID;       % Name ID of junctions
+        BinNodeJunctionsBaseDemands; % Base demands of junctions
+        BinNodeJunctionsBaseDemandsID;% Name ID of junctions where is basedemand refers in BinNodeJunctionsBaseDemands
+        BinNodeNameID;               % Name ID of nodes
+        BinNodePressureUnits;        % Units for Pressure
+        BinNodeResDemandPatternNameID;% ID of demand patterns for reservoirs
+        BinNodeReservoirCount;       % Number of reservoirs
+        BinNodeReservoirElevation;   % Elevation of reservoirs
+        BinNodeReservoirIndex;       % Index of reservoirs
+        BinNodeReservoirNameID;      % Name ID of reservoirs
+        BinNodeSourcePatternIndex;   % Index of pattern for node sources
+        BinNodeSourcePatternNameID;  % ID of pattern for node sources
+        BinNodeSourceQuality;        % Quality of node sources
+        BinNodeSourceType;           % Source Types
+        BinNodeSourceTypeIndex;      % Index of source type   
+        BinNodeTankCount;            % Number of tanks
+        BinNodeTankDiameter;         % Diameters of tanks
+        BinNodeTankElevation;        % Elevations of tanks
+        BinNodeTankIndex;            % Index of tanks
+        BinNodeTankInitialLevel;     % Initial water level in tanks
+        BinNodeTankMaximumWaterLevel;% Maximum water level in tanks
+        BinNodeTankMinimumFraction;  % Fraction of the total tank volume devoted to the inlet/outlet compartment
+        BinNodeTankMinimumWaterLevel;% Minimum water level
+        BinNodeTankMinimumWaterVolume;% Minimum water volume
+        BinNodeTankMixID;            % Name ID of tanks mix
+        BinNodeTankMixModel;         % Mix Model Type
+        BinNodeTankNameID;           % Name ID of tanks
+        BinNodeTankReservoirCount;   % Number of reservoirs
+        BinNodeType;                 % ID of node type
+        BinOptionsAccuracyValue;     % Convergence value (0.001 is default)
+        BinOptionsDiffusivity;       % Diffusivity value (1 is default)
+        BinOptionsEmitterExponent;   % Exponent of pressure at an emmiter node (0.5 is default)
+        BinOptionsHeadloss;          % Headloss formula (Hazen-Williams, Darcy-Weisbach or Chezy-Manning)
+        BinOptionsMaxTrials;         % Maximum number of trials (40 is default)
+        BinOptionsPattern;           % Pattern to be applied to all junctions where no demand pattern was specified
+        BinOptionsPatternDemandMultiplier;% Multiply demand values (1 is default)
+        BinOptionsQualityTolerance;  % Tolerance for water quality (0.01 is default)
+        BinOptionsSpecificGravity;   % Ratio of the density of the fluid being modeled to that of water at 4 deg. C (unitless)
+        BinOptionsUnbalanced;        % Determines what happens if a hydraulic solution cannot be reached (STOP is default) STOP/CONTINUE 
+        BinOptionsViscosity;         % Kinematic viscosity of the fluid being modeled relative to that of water at 20 deg. C (1.0 centistoke)(1 is default)
+        BinPatternCount;             % Number of patterns
+        BinPatternLengths;           % Length of the patterns
+        BinPatternMatrix;            % Get all patterns - matrix
+        BinPatternNameID;            % ID of the patterns
+        BinPatternValue;             % Patterns values for all
+        BinQualityCode;              % Water quality analysis code (None:0/Chemical:1/Age:2/Trace:3)
+        BinQualityTraceNodeID;       % ID of trace node (0 if QualityCode<3)
+        BinQualityTraceNodeIndex;    % Index of trace node (0 if QualityCode<3)
+        BinQualityType;              % Water quality analysis type (None:0/Chemical:1/Age:2/Trace:3)
+        BinQualityUnits;             % Units for quality concentration.
+        BinRulesControlLinksID;      % Set of rule links ID
+        BinRulesControlNodesID;      % Set of rule nodes ID
+        BinRulesControlsInfo;        % Rules info from section 
+        BinRulesCount;               % Number of rules
+        BinUnits_SI_Metric;          % Equal with 1 if is SI-Metric
+        BinTempfile;                 % Name of the temp input file
+        BinTimeHydraulicStep;        % Hydraulic time step
+        BinTimePatternStart;         % Pattern start time
+        BinTimePatternStep;          % Pattern Step
+        BinTimeQualityStep;          % Quality Step
+        BinTimeReportingStart;       % Start time for reporting
+        BinTimeReportingStep;        % Reporting time step
+        BinTimeSimulationDuration;   % Simulation duration
+        BinTimeStatistics;           % Type of time series post-processing ('NONE','AVERAGE','MINIMUM','MAXIMUM', 'RANGE')
+        BinTimeStatisticsIndex;      % Index of time series post-processing type ('NONE':0,'AVERAGE':1,'MINIMUM':2,'MAXIMUM':3, 'RANGE':4)
+        BinUnits;                    % Units of all parameters
+        BinUnits_US_Customary;       % Equal with 1 if is US-Customary 
     end
     properties (Constant = true)
         classversion='2.1a';
@@ -3487,6 +3486,7 @@ classdef epanet <handle
             if obj.Bin
                 obj.saveInputFile([obj.BinTempfile]);
             end
+            obj.BinUnits_SI_Metric=0; obj.BinUnits_US_Customary=0;
             [~,info] = obj.readInpFile;
             for hc=1:length(info)
                 tline = info{hc};
@@ -3522,11 +3522,11 @@ classdef epanet <handle
                         obj.BinNodeTankNameID={};
                         obj.BinNodeTankIndex=[];
                         obj.BinNodeTankElevation=[];
-                        obj.BinNodeTankInitLevel=[]; 
-                        obj.BinNodeTankMinLevel=[];  
-                        obj.BinNodeTankMaxLevel=[]; 
+                        obj.BinNodeTankInitialLevel=[]; 
+                        obj.BinNodeTankMinimumWaterLevel=[];  
+                        obj.BinNodeTankMaximumWaterLevel=[]; 
                         obj.BinNodeTankDiameter=[];  
-                        obj.BinNodeTankMinVol=[];
+                        obj.BinNodeTankMinimumWaterVolume=[];
                         continue;
                         % [PIPES] section
                     elseif strcmpi(tok(1:5),'[PIPE')
@@ -3578,7 +3578,7 @@ classdef epanet <handle
                         continue;
                         % [DEMANDS] section
                     elseif strcmpi(tok(1:5),'[DEMA') %&& max(obj.BinNodeJunctionsBaseDemands)==0
-                        sect=8;d=1;pd=1;pk=1;                       
+                        sect=8;d=1;pd=1;                     
                         continue;
                         % [STATUS] section
                     elseif strcmpi(tok(1:5),'[STAT')
@@ -3618,11 +3618,10 @@ classdef epanet <handle
                         continue;
                         % [RULES] section
                     elseif strcmpi(tok(1:5),'[RULE')
-                        sect=20;d=1;dd=0; 
+                        sect=20;d=1;obj.BinRulesCount=0; 
                         obj.BinRulesControlsInfo={};
                         obj.BinRulesControlLinksID={};
                         obj.BinRulesControlNodesID={};
-                        obj.BinRulesCount=1;
                         continue;
                         % [QUALITY] section
                     elseif strcmpi(tok(1:5),'[QUAL')
@@ -3634,7 +3633,7 @@ classdef epanet <handle
                         sect=13;
                         obj.BinNodeSourcePatternIndex = nan(1,obj.BinNodeCount);
                         obj.BinNodeSourceQuality = nan(1,obj.BinNodeCount);
-                        obj.BinNodeSourceTypeCode = nan(1,obj.BinNodeCount);
+                        obj.BinNodeSourceTypeIndex = nan(1,obj.BinNodeCount);
                         obj.BinNodeSourceType = cell(1,obj.BinNodeCount);
                         obj.BinNodeSourcePatternNameID = cell(1,obj.BinNodeCount);
                         continue;
@@ -3770,11 +3769,11 @@ classdef epanet <handle
                     obj.BinNodeTankNameID{p}=atline{1};
                     obj.BinNodeTankIndex(p)=k;
                     obj.BinNodeTankElevation(p)=str2num(atline{2});
-                    obj.BinNodeTankInitLevel(p)=single(str2num(atline{3}));
-                    obj.BinNodeTankMinLevel(p)=str2num(atline{4});
-                    obj.BinNodeTankMaxLevel(p)=single(str2num(atline{5}));
+                    obj.BinNodeTankInitialLevel(p)=single(str2num(atline{3}));
+                    obj.BinNodeTankMinimumWaterLevel(p)=str2num(atline{4});
+                    obj.BinNodeTankMaximumWaterLevel(p)=single(str2num(atline{5}));
                     obj.BinNodeTankDiameter(p)=str2num(atline{6});
-                    obj.BinNodeTankMinVol(p)=single(str2num(atline{7}));
+                    obj.BinNodeTankMinimumWaterVolume(p)=single(str2num(atline{7}));
                     k=k+1;
                     p=p+1;
                     % Links
@@ -3910,17 +3909,16 @@ classdef epanet <handle
                     % Rules
                 elseif sect==20
                     if strcmp(upper(atline{1}),{'RULE'})
-                        dd=dd+1;d=1;
+                        obj.BinRulesCount=obj.BinRulesCount+1;d=1;
                     end
-                    obj.BinRulesControlsInfo{dd}{d}=atline;
+                    obj.BinRulesControlsInfo{obj.BinRulesCount}{d}=atline;
                     
                     if sum(strcmp(upper(atline{2}),{'LINK','PIPE','PUMP','VALVE'}))
-                        obj.BinRulesControlLinksID{dd}{d}=atline{3}; 
+                        obj.BinRulesControlLinksID{obj.BinRulesCount}{d}=atline{3}; 
                     elseif sum(strcmp(upper(atline{2}),{'NODE','JUNCTION','RESERVOIR','TANK'}))
-                        obj.BinRulesControlNodesID{dd}{d}=atline{3}; 
+                        obj.BinRulesControlNodesID{obj.BinRulesCount}{d}=atline{3}; 
                     end
                     d=d+1;     
-                    obj.BinRulesCount=obj.BinRulesCount+1;
                     % Quality
                 elseif sect==12
                     h=find(strcmpi(obj.BinNodeNameID,atline{1}));
@@ -3936,8 +3934,8 @@ classdef epanet <handle
                         obj.BinNodeSourcePatternNameID{indexNode}=atline{4};
                     end
                     obj.BinNodeSourceQuality(indexNode)=str2num(atline{3});
-                    obj.BinNodeSourceTypeCode(indexNode)=find((strcmpi(obj.TYPESOURCE,atline{2})-1)>-1)-1;
-                    obj.BinNodeSourceType{indexNode}=obj.TYPESOURCE{obj.BinNodeSourceTypeCode(indexNode)+1};
+                    obj.BinNodeSourceTypeIndex(indexNode)=find((strcmpi(obj.TYPESOURCE,atline{2})-1)>-1)-1;
+                    obj.BinNodeSourceType{indexNode}=obj.TYPESOURCE{obj.BinNodeSourceTypeIndex(indexNode)+1};
                     % Mixing
                 elseif sect==14
                     obj.BinNodeTankMixID{d}=atline{1};
@@ -4124,7 +4122,7 @@ classdef epanet <handle
             obj.BinLinkInitialStatus=bb;
             if ~isempty(obj.BinLinkPumpIndex)
                 obj.BinLinkPumpStatus=obj.BinLinkInitialStatus(obj.BinLinkPumpIndex);
-                obj.BinLinkPumpStatusNameID=obj.BinLinkInitialStatusNameID(1:obj.BinLinkPumpCount);
+                obj.BinLinkPumpStatusNameID=obj.BinLinkInitialStatusNameID(obj.BinLinkPumpIndex);
             end
             if ~isempty(obj.BinLinkPumpIndex)
                 obj.BinLinkValveStatus=obj.BinLinkInitialStatus(obj.BinLinkValveIndex);
@@ -4143,6 +4141,12 @@ classdef epanet <handle
             end
             obj.BinControlRulesCount=length(obj.BinControlsInfo);
             obj.BinUnits=getBinUnits(obj);
+            % US Customary - SI metric
+            if find(strcmp(obj.BinLinkFlowUnits, obj.TYPEUNITS))<6
+                obj.BinUnits_US_Customary=1;
+            else
+                obj.BinUnits_SI_Metric=1;
+            end
         end
         function [Errcode]=setBinNodeInitialQuality(obj,varargin)
             parameter=varargin{1};
@@ -4360,19 +4364,19 @@ classdef epanet <handle
             indexParameter=2;
             [Errcode]=setBinParam(obj,indexParameter,parameter,sections);        
         end
-        function [Errcode]=setBinNodeTankInitLevel(obj,varargin)
+        function [Errcode]=setBinNodeTankInitialLevel(obj,varargin)
             parameter=varargin{1};
             sections={'[TANKS]','[PIPES]'};
             indexParameter=3;
             [Errcode]=setBinParam(obj,indexParameter,parameter,sections);        
         end
-        function [Errcode]=setBinNodeTankMinLevel(obj,varargin)
+        function [Errcode]=setBinNodeTankMinimumWaterLevel(obj,varargin)
             parameter=varargin{1};
             sections={'[TANKS]','[PIPES]'};
             indexParameter=4;
             [Errcode]=setBinParam(obj,indexParameter,parameter,sections);        
         end
-        function [Errcode]=setBinNodeTankMaxLevel(obj,varargin)
+        function [Errcode]=setBinNodeTankMaximumWaterLevel(obj,varargin)
             parameter=varargin{1};
             sections={'[TANKS]','[PIPES]'};
             indexParameter=5;
@@ -4384,7 +4388,7 @@ classdef epanet <handle
             indexParameter=6;
             [Errcode]=setBinParam(obj,indexParameter,parameter,sections);        
         end
-        function [Errcode]=setBinNodeTankMinVol(obj,varargin)
+        function [Errcode]=setBinNodeTankMinimumWaterVolume(obj,varargin)
             parameter=varargin{1};
             sections={'[TANKS]','[PIPES]'};
             indexParameter=7;
@@ -4654,8 +4658,8 @@ classdef epanet <handle
                fprintf(f,'\n[TANKS]');b=1;
                for u=obj.BinNodeTankIndex
 %                    InitLevel   	MinLevel    	MaxLevel    	Diameter    	MinVol      	VolCurve
-                   fprintf(f,'\n%s%s%f%s%f%s%f%s%f%s%f%s%f',obj.BinNodeNameID{u},sps,obj.BinNodeElevations(u),sps,obj.BinNodeTankInitLevel(b),sps,obj.BinNodeTankMinLevel(b),...
-                       sps,obj.BinNodeTankMaxLevel(b),sps,obj.BinNodeTankDiameter(b),sps,obj.BinNodeTankMinVol(b));
+                   fprintf(f,'\n%s%s%f%s%f%s%f%s%f%s%f%s%f',obj.BinNodeNameID{u},sps,obj.BinNodeElevations(u),sps,obj.BinNodeTankInitialLevel(b),sps,obj.BinNodeTankMinimumWaterLevel(b),...
+                       sps,obj.BinNodeTankMaximumWaterLevel(b),sps,obj.BinNodeTankDiameter(b),sps,obj.BinNodeTankMinimumWaterVolume(b));
                    b=b+1;
                end
             % % /*Write [PIPES] section */
@@ -5988,11 +5992,11 @@ classdef epanet <handle
                         value.BinNodeTankNameID={};
                         value.BinNodeTankIndex=[];
                         value.BinNodeTankElevation=[];
-                        value.BinNodeTankInitLevel=[]; 
-                        value.BinNodeTankMinLevel=[];  
-                        value.BinNodeTankMaxLevel=[]; 
+                        value.BinNodeTankInitialLevel=[]; 
+                        value.BinNodeTankMinimumWaterLevel=[];  
+                        value.BinNodeTankMaximumWaterLevel=[]; 
                         value.BinNodeTankDiameter=[];  
-                        value.BinNodeTankMinVol=[];
+                        value.BinNodeTankMinimumWaterVolume=[];
                         continue;
                     elseif strcmpi(tok(1:5),'[PIPE')
                         value.BinNodeJunctionCount = length(value.BinNodeJunctionNameID); 
@@ -6094,11 +6098,11 @@ classdef epanet <handle
                     value.BinNodeTankNameID{p}=atline{1};
                     value.BinNodeTankIndex(p)=k;
                     value.BinNodeTankElevation(p)=str2num(atline{2});
-                    value.BinNodeTankInitLevel(p)=single(str2num(atline{3}));
-                    value.BinNodeTankMinLevel(p)=str2num(atline{4});
-                    value.BinNodeTankMaxLevel(p)=single(str2num(atline{5}));
+                    value.BinNodeTankInitialLevel(p)=single(str2num(atline{3}));
+                    value.BinNodeTankMinimumWaterLevel(p)=str2num(atline{4});
+                    value.BinNodeTankMaximumWaterLevel(p)=single(str2num(atline{5}));
                     value.BinNodeTankDiameter(p)=str2num(atline{6});
-                    value.BinNodeTankMinVol(p)=single(str2num(atline{7}));
+                    value.BinNodeTankMinimumWaterVolume(p)=single(str2num(atline{7}));
                     k=k+1;
                     p=p+1;
                     % Demands
@@ -6945,7 +6949,7 @@ classdef epanet <handle
                     end
                 end
             end
-        %     US Customary - SI metric
+            % US Customary - SI metric
             if find(strcmp(value.BinLinkFlowUnits, obj.TYPEUNITS))<6
                 value.BinUnits_US_Customary=1;
             else
@@ -9018,7 +9022,7 @@ function value = getBinParam(obj,sections,varargin)
     if strcmp(sections{1},'[SOURCES]')
         value.BinNodeSourcePatternIndex = nan(1,obj.BinNodeCount);
         value.BinNodeSourceQuality = nan(1,obj.BinNodeCount);
-        value.BinNodeSourceTypeCode = nan(1,obj.BinNodeCount);
+        value.BinNodeSourceTypeIndex = nan(1,obj.BinNodeCount);
         value.BinNodeSourceType = cell(1,obj.BinNodeCount);
         value.BinNodeSourcePatternNameID = cell(1,obj.BinNodeCount);
     else 
@@ -9096,8 +9100,8 @@ function value = getBinParam(obj,sections,varargin)
                            value.BinNodeSourcePatternNameID{indexNode}=atline{4};
                        end
                        value.BinNodeSourceQuality(indexNode)=str2num(atline{3});
-                       value.BinNodeSourceTypeCode(indexNode)=find((strcmpi(obj.TYPESOURCE,atline{2})-1)>-1)-1;
-                       value.BinNodeSourceType{indexNode}=obj.TYPESOURCE{value.BinNodeSourceTypeCode(indexNode)+1};
+                       value.BinNodeSourceTypeIndex(indexNode)=find((strcmpi(obj.TYPESOURCE,atline{2})-1)>-1)-1;
+                       value.BinNodeSourceType{indexNode}=obj.TYPESOURCE{value.BinNodeSourceTypeIndex(indexNode)+1};
                    end
                end
            end

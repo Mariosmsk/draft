@@ -8,8 +8,8 @@ clear;
 close all;
 
 % Create EPANET object using the INP file
-inpname='Net1.inp'; 
-% Net1 Net2 Net3 BWSN_Network_1 
+inpname='Net2.inp'; 
+% Net1 Net2 Net3 BWSN_Network_1 example
 
 % version='epanet2'; % version dev2.1
 % d=epanet(inpname,version);
@@ -63,8 +63,8 @@ bd2=d.getNodeBaseDemands
 bd2{1}
 
 d.getNodeDemandCategoriesNumber
-d.getNodeDemandCategoriesNumber(11)
-d.getNodeDemandCategoriesNumber(5:11)
+d.getNodeDemandCategoriesNumber(end)
+d.getNodeDemandCategoriesNumber(5:end)
 
 % ENgetdemandpattern - Retrieves the index of a demand pattern for a specific demand category of a node
 d.getNodeDemandPatternNameID{1}
@@ -116,7 +116,7 @@ d.getLinkPumpPatternNameID % EN_LINKPATTERN - ENgetlinkvalue
 d.getLinkPumpPatternIndex
 
 %% Controls
-d=epanet(inpname);
+d.loadEPANETFile(d.BinTempfile);
 Controls=d.getControls
 disp('Press any key to continue...')
 pause
@@ -325,57 +325,59 @@ values(2)=0.6;
 d.setNodeInitialQuality(values)
 d.getNodeInitialQuality
 
-values = d.getNodeTankInitialLevel
-values(end)=100; 
-d.setNodeTankInitialLevel(values)  
-d.getNodeTankInitialLevel
+if d.getNodeTankCount
+    values = d.getNodeTankInitialLevel
+    values(end)=100; 
+    d.setNodeTankInitialLevel(values)  
+    d.getNodeTankInitialLevel
 
-values = d.getNodeTankMixingModelType 
-d.getNodeTankMixingModelCode
-values{end}='MIX2';
-d.setNodeTankMixingModelType(values);
-d.getNodeTankMixingModelType 
-d.getNodeTankMixingModelCode
-values = d.getNodeTankMixingModelType 
-values{end}='FIFO';
-d.setNodeTankMixingModelType(values);
-d.getNodeTankMixingModelType 
-d.getNodeTankMixingModelCode
-values = d.getNodeTankMixingModelType 
-values{end}='LIFO';
-d.setNodeTankMixingModelType(values);
-d.getNodeTankMixingModelType 
-d.getNodeTankMixingModelCode
+    values = d.getNodeTankMixingModelType 
+    d.getNodeTankMixingModelCode
+    values{end}='MIX2';
+    d.setNodeTankMixingModelType(values);
+    d.getNodeTankMixingModelType 
+    d.getNodeTankMixingModelCode
+    values = d.getNodeTankMixingModelType 
+    values{end}='FIFO';
+    d.setNodeTankMixingModelType(values);
+    d.getNodeTankMixingModelType 
+    d.getNodeTankMixingModelCode
+    values = d.getNodeTankMixingModelType 
+    values{end}='LIFO';
+    d.setNodeTankMixingModelType(values);
+    d.getNodeTankMixingModelType 
+    d.getNodeTankMixingModelCode
 
-values = d.getNodeTankDiameter 
-values(end)= 60;
-d.setNodeTankDiameter(values) 
-d.getNodeTankDiameter 
+    values = d.getNodeTankDiameter 
+    values(end)= 60;
+    d.setNodeTankDiameter(values) 
+    d.getNodeTankDiameter 
 
-values = d.getNodeTankMinimumWaterLevel
-values(end)= 10;
-d.setNodeTankMinimumWaterLevel(values)  
-d.getNodeTankMinimumWaterLevel
+    values = d.getNodeTankMinimumWaterLevel
+    values(end)= 10;
+    d.setNodeTankMinimumWaterLevel(values)  
+    d.getNodeTankMinimumWaterLevel
 
-values = d.getNodeTankMinimumWaterVolume
-values(end)= 10;
-d.setNodeTankMinimumWaterVolume(values) 
-d.getNodeTankMinimumWaterVolume
+    values = d.getNodeTankMinimumWaterVolume
+    values(end)= 10;
+    d.setNodeTankMinimumWaterVolume(values) 
+    d.getNodeTankMinimumWaterVolume
 
-values = d.getNodeTankMaximumWaterLevel
-values(end)= 210;
-d.setNodeTankMaximumWaterLevel(values) 
-d.getNodeTankMaximumWaterLevel
+    values = d.getNodeTankMaximumWaterLevel
+    values(end)= 210;
+    d.setNodeTankMaximumWaterLevel(values) 
+    d.getNodeTankMaximumWaterLevel
 
-values = d.getNodeTankMinimumFraction
-values(end)= 0.5; %takes values 0-1
-d.setNodeTankMinimumFraction(values) 
-d.getNodeTankMinimumFraction
+    values = d.getNodeTankMinimumFraction
+    values(end)= 0.5; %takes values 0-1
+    d.setNodeTankMinimumFraction(values) 
+    d.getNodeTankMinimumFraction
 
-values = d.getNodeTankBulkReactionCoeff
-values(end)= 1; 
-d.setNodeTankBulkReactionCoeff(values) 
-d.getNodeTankBulkReactionCoeff
+    values = d.getNodeTankBulkReactionCoeff
+    values(end)= 1; 
+    d.setNodeTankBulkReactionCoeff(values) 
+    d.getNodeTankBulkReactionCoeff
+end
 
 d.getNodeSourceType
 d.setNodeSourceType(2,'MASS')
@@ -491,8 +493,7 @@ d.getQualityCode
 d.setQualityType('chem','mg/L')
 d.getQualityType
 d.getQualityCode
-tankid=d.getNodeTankNameID 
-d.setQualityType('trace',tankid{1})
+d.setQualityType('trace',d.NodeNameID{2})
 d.getQualityType
 d.getQualityCode
 d.saveInputFile([pwd,'\TEST_INP_TEMP.inp']);
@@ -506,13 +507,12 @@ d.writeLineInReportFile('Line-writting testing!!') % Check this! at the second t
 d.writeReport
 % open([d.BinTempfile(1:end-4),'.txt'])
 
-d.unload
 disp('Press any key to continue...')
 pause
 
 
 %% Report Preparation
-d=epanet(inpname);
+d.loadEPANETFile(d.BinTempfile);
 
 % Compute ranges (max - min) 
 d.setTimeStatisticsType('RANGE')
@@ -620,26 +620,23 @@ d.setReport('LINKS ALL')
 d.writeReport
 %open('TestReport7.txt'); 
 
-d.unload
 disp('Press any key to continue...')
 pause
 
 
 %% Create Hydraulics file
-
-d=epanet(inpname);
+d.loadEPANETFile(d.BinTempfile);
 
 d.solveCompleteHydraulics % Only call this ONLY once (see ENsolveH for more details)
 d.saveHydraulicFile([pwd,'\hydraulics.hyd'])
 d.useHydraulicFile([pwd,'\hydraulics.hyd'])
 d.saveHydraulicsOutputReportingFile
 
-d.unload
 disp('Press any key to continue...')
 pause
 
 %% Simulation Quality
-d=epanet(inpname);
+d.loadEPANETFile(d.BinTempfile);
 d.setQualityType('chem','mg/L')
 
 % Solve Hydraulics (outside the loop)
@@ -661,14 +658,13 @@ while (tleft>0)
     tleft = d.stepQualityAnalysisTimeLeft;
 end
 d.closeQualityAnalysis;
-d.unload
 disp('Press any key to continue...')
 pause
 %tstep=d.nextQualityAnalysisStep; %%% CHECK, DOES NOT SEEM TO CHANGE
 %WITH SETTIMEQUALITYSTEP
 
 %% Simulation Hydraulics
-d=epanet(inpname);
+d.loadEPANETFile(d.BinTempfile);
 d.setQualityType('chem','mg/L')
 
 
@@ -686,12 +682,10 @@ while (tstep>0)
     tstep=d.nextHydraulicAnalysisStep;
 end
 d.closeHydraulicAnalysis
-
-d.unload
 disp('Press any key to continue...')
 pause
 
-d=epanet(inpname);
+d.loadEPANETFile(d.BinTempfile);
 %% Test Plot
 d.plot('nodes','yes','links','yes','highlightnode',{'10','11'},'highlightlink',{'10'},'fontsize',8);
 disp('Press any key to continue...')

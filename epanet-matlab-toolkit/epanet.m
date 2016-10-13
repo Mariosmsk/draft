@@ -420,6 +420,7 @@ classdef epanet <handle
             % Bin functions
             if nargin==2
                 if strcmp(upper(varargin{2}),'BIN')
+                    obj.LibEPANET = '';
                     obj.BinTempfile=[obj.InputFile(1:end-4),'_temp.inp'];
                     copyfile(obj.InputFile,obj.BinTempfile);
                     value=obj.getBinCurvesInfo;

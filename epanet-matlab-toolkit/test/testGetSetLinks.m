@@ -8,8 +8,8 @@ clear;
 close all;
 
 % Create EPANET object using the INP file
-inpname='Net1.inp'; % Net1 Net2
-% net2-cl2 Net3 BWSN_Network_1 
+inpname='Net1.inp';  
+% Net1 Net2 Net3 BWSN_Network_1 
 d=epanet(inpname);
 
 %% *Get Links Data (EXAMPLES)*

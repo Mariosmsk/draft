@@ -9,7 +9,7 @@ close all;
 
 % Create EPANET object using the INP file
 inpname='Net1.inp'; 
-% Net1 net2-cl2 Net2 Net3 BWSN_Network_1 
+% Net1 Net2 Net3 BWSN_Network_1 
 
 % version='epanet2'; % version dev2.1
 % d=epanet(inpname,version);
@@ -116,6 +116,7 @@ d.getLinkPumpPatternNameID % EN_LINKPATTERN - ENgetlinkvalue
 d.getLinkPumpPatternIndex
 
 %% Controls
+d=epanet(inpname);
 Controls=d.getControls
 disp('Press any key to continue...')
 pause
@@ -496,15 +497,12 @@ d.getQualityType
 d.getQualityCode
 d.saveInputFile([pwd,'\TEST_INP_TEMP.inp']);
 
-
+% write line in report file
 % Solve hydraulics 
 d.solveCompleteHydraulics % solves internally the hydraulics (does not return something)
-d.saveHydraulicsOutputReportingFile %creates a BIN file (see EPANET documentation)
-
 % Solve quality
 d.solveCompleteQuality
-
-d.writeLineInReportFile('Line-writting testing!!')
+d.writeLineInReportFile('Line-writting testing!!') % Check this! at the second time is work
 d.writeReport
 % open([d.BinTempfile(1:end-4),'.txt'])
 
@@ -592,7 +590,7 @@ d.writeReport
 
 d.setReportFormatReset
 d.setReport('FILE TestReport4.txt'); 
-d.setReport('STATUS YES') 
+d.setReport('STATUS YES')   % is not appear - check
 d.writeReport
 %open('TestReport4.txt')
 

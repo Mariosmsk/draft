@@ -1,4 +1,4 @@
-%% EPANET-Matlab Class Test Part 1
+%% EPANET-Matlab Toolkit Test Part 1
 % This file is provided to ensure that all functions can be executed
 % correctly.
 % Press F10 for step-by-step execution. You may also use the breakpoints, 
@@ -8,9 +8,8 @@ clear;
 close all;
 
 % Create EPANET object using the INP file
-%d=epanet('Net1_Rossman2000.inp');
 inpname='Net1.inp'; 
-% Net1 net2-cl2 Net3 BWSN_Network_1 
+% Net1 net2-cl2 Net2 Net3 BWSN_Network_1 
 
 % version='epanet2'; % version dev2.1
 % d=epanet(inpname,version);

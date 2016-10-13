@@ -1221,8 +1221,10 @@ classdef epanet <handle
         function value = getNodeSourceQuality(obj, varargin)
             %Retrieves the value of all nodes source quality
             indices = getNodeIndices(obj,varargin);j=1;
+            value = zeros(1, length(indices));
             for i=indices
                 [obj.Errcode, value(j)] = ENgetnodevalue(i,5,obj.LibEPANET); 
+                if isnan(value(j)), value(j)=0; end
                 if obj.Errcode==203, error(obj.getError(obj.Errcode)), return; end   
                 j=j+1;
             end
@@ -1254,7 +1256,7 @@ classdef epanet <handle
                 if ~isnan(temp)
                     value(j)=obj.TYPESOURCE(temp+1);
                 else
-                    value{j}=temp;
+                    value{j}=[];
                 end
                 j=j+1;
             end
@@ -7143,9 +7145,7 @@ function [Errcode, value] = ENgetnodevalue(index, paramcode,LibEPANET)
     index=int32(index);
     paramcode=int32(paramcode);
     [Errcode, value]=calllib(LibEPANET,'ENgetnodevalue',index, paramcode,value);
-    if Errcode==240
-        value=NaN;
-    end
+    if Errcode==240, value=NaN; end
 end
 function [Errcode, value] = ENgetbasedemand(index,numdemands,LibEPANET)
     %epanet20100

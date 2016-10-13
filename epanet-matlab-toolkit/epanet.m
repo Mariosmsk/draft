@@ -772,15 +772,11 @@ classdef epanet <handle
                 end
             else
                 k=1;
-                if ~isempty(varargin{1})
-                    value{length(varargin{1})}=[];
-                    for i=varargin{1}
-                        [obj.Errcode, value{k}]=ENgetlinkid(i,obj.LibEPANET);
-                        if obj.Errcode==204, error(obj.getError(obj.Errcode)), return; end   
-                        k=k+1;
-                    end
-                else
-                    value=[];
+                if isempty(varargin{1}), varargin{1}=0; end
+                for i=varargin{1}
+                    [obj.Errcode, value{k}]=ENgetlinkid(i,obj.LibEPANET);
+                    if obj.Errcode==204, value=[];  return; end   
+                    k=k+1;
                 end
             end
         end
@@ -1033,11 +1029,11 @@ classdef epanet <handle
                     [obj.Errcode, value{i}]=ENgetnodeid(i,obj.LibEPANET);
                 end
             else
+                if isempty(varargin{1}), varargin{1}=0; end
                 k=1;
-                value{length(varargin{1})}=[];
                 for i=varargin{1}
                     [obj.Errcode, value{k}]=ENgetnodeid(i,obj.LibEPANET);
-                    if obj.Errcode==203, value=NaN; return; end   
+                    if obj.Errcode==203, value=[]; return; end   
                     k=k+1;
                 end
             end
@@ -1066,21 +1062,13 @@ classdef epanet <handle
         end
         function value = getNodeReservoirIndex(obj)
             %Retrieves the indices of reservoirs
-            if obj.getNodeReservoirCount
-                tmpNodeTypes=obj.getNodeType;
-                value = find(strcmp(tmpNodeTypes,'RESERVOIR'));
-            else
-                value=0;
-            end
+            tmpNodeTypes=obj.getNodeType;
+            value = find(strcmp(tmpNodeTypes,'RESERVOIR'));
         end
         function value = getNodeJunctionIndex(obj)
             %Retrieves the indices of junctions
-            if obj.getNodeJunctionCount
-                tmpNodeTypes=obj.getNodeType;
-                value = find(strcmp(tmpNodeTypes,'JUNCTION'));
-            else
-                value=0;
-            end
+            tmpNodeTypes=obj.getNodeType;
+            value = find(strcmp(tmpNodeTypes,'JUNCTION'));
         end
         function value = getNodeType(obj, varargin)
             %Retrieves the node-type code for all nodes
@@ -1464,12 +1452,8 @@ classdef epanet <handle
         end
         function value = getNodeTankIndex(obj)
             %Retrieves the tank index
-            if obj.getNodeTankCount
-                tmpNodeTypes=obj.getNodeType;
-                value = find(strcmp(tmpNodeTypes,'TANK'));
-            else
-                value=0;
-            end
+            tmpNodeTypes=obj.getNodeType;
+            value = find(strcmp(tmpNodeTypes,'TANK'));
         end
         function value = getNodeTankNameID(obj)
             %Retrieves the tank id

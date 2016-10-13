@@ -1,4 +1,4 @@
-%% EPANET-Matlab Class Test Part 3
+%% EPANET-Matlab Toolkit Test Part 5
 % This file is provided to ensure that all functions can be executed
 % correctly.
 % Press F10 for step-by-step execution. You may also use the breakpoints, 
@@ -10,7 +10,7 @@ clear class;
 
 % Create EPANET object using the INP file
 inpname='Net1.inp';
-%Net1 Net3 net2-cl2 BWSN_Network_1
+%Net1 Net2 Net3 net2-cl2 BWSN_Network_1
 tic;d=epanet(inpname);toc
 d.addPattern('NewPat2', [0.8, 1.1, 1.4, 1.1, 0.8, 0.7]); 
 d.BinUpdateClass; % must be run if use Bin functions
@@ -255,20 +255,20 @@ if d.BinNodeTankCount
     errcode=d.setBinNodeTankElevation(tankElevation);
     d.getNodeElevations
     
-    tankInitlevel=d.BinNodeTankInitLevel;
+    tankInitlevel=d.BinNodeTankInitialLevel;
     tankInitlevel(end)=110;
-    errcode=d.setBinNodeTankInitLevel(tankInitlevel);
+    errcode=d.setBinNodeTankInitialLevel(tankInitlevel);
     d.getNodeTankInitialLevel
     
     d=epanet(inpname);d.BinUpdateClass
-    tankMinlevel=d.BinNodeTankMinLevel;
+    tankMinlevel=d.BinNodeTankMinimumWaterLevel;
     tankMinlevel(end)=tankMinlevel(end)+5;%5
-    errcode=d.setBinNodeTankMinLevel(tankMinlevel);
-    d.getNodeTankMinimumWaterLevel
+    errcode=d.setBinNodeTankMinimumWaterLevel(tankMinlevel);
+    d.getNodeTankMinimumWaterLevel	
     
-    tankMaxlevel=d.BinNodeTankMaxLevel;
+    tankMaxlevel=d.BinNodeTankMaximumWaterLevel;
     tankMaxlevel(end)=300;
-    errcode=d.setBinNodeTankMaxLevel(tankMaxlevel);    
+    errcode=d.setBinNodeTankMaximumWaterLevel(tankMaxlevel);    
     d.getNodeTankMaximumWaterLevel
 
     tankDiameter=d.BinNodeTankDiameter;
@@ -276,24 +276,24 @@ if d.BinNodeTankCount
     errcode=d.setBinNodeTankDiameter(tankDiameter); %bug
     d.getNodeTankDiameter
     
-    tankMinvol=d.BinNodeTankMinVol;
+    tankMinvol=d.BinNodeTankMinimumWaterVolume;
     tankMinvol(end)=10;
-    errcode=d.setBinNodeTankMinVol(tankMinvol);
+    errcode=d.setBinNodeTankMinimumWaterVolume(tankMinvol);
     d.getNodeTankMinimumWaterVolume
     case1tank=toc
     
     tic
     tankElevation=d.BinNodeTankElevation;
     tankElevation(end)=100;
-    tankInitlevel=d.BinNodeTankInitLevel;
+    tankInitlevel=d.BinNodeTankInitialLevel;
     tankInitlevel(end)=550;
-    tankMinlevel=d.BinNodeTankMinLevel;
+    tankMinlevel=d.BinNodeTankMinimumWaterLevel;
     tankMinlevel(end)=250;    
-    tankMaxlevel=d.BinNodeTankMaxLevel;
+    tankMaxlevel=d.BinNodeTankMaximumWaterLevel;
     tankMaxlevel(end)=3000;
     tankDiameter=d.BinNodeTankDiameter;
     tankDiameter(end)=1000;
-    tankMinvol=d.BinNodeTankMinVol;
+    tankMinvol=d.BinNodeTankMinimumWaterVolume;
     tankMinvol(end)=100;
 errcode=d.setBinNodeTankParameters('elevation',tankElevation,'initlevel',tankInitlevel,'minlevel',tankMinlevel,'maxlevel',tankMaxlevel,'diameter',tankDiameter,'minvol',tankMinvol);
     d.getNodeElevations
@@ -727,7 +727,6 @@ pause
 d.BinNodeSourcePatternIndex
 d.BinNodeSourceQuality
 d.BinNodeSourceTypeIndex
-d.BinNodeSourceTypeCode
 d.BinNodeSourceType
 d.BinNodeSourcePatternNameID
 
@@ -892,7 +891,6 @@ disp('Press any key to continue...')
 pause
 
 
-
 %% Run epanet2d.exe 
 % Computes quality and hydraulics
 d.getBinComputedAllParameters
@@ -901,146 +899,168 @@ disp('Press any key to continue...')
 pause
 
 
-
 %% OTHER PROPERTIES
 d.BinUpdateClass
 
 d.InputFile
-d.BinTempfile
-d.BinNodeJunctionNameID
-d.BinNodeReservoirNameID
-d.BinNodeTankNameID
-d.BinNodeNameID
-d.BinNodeType
-d.BinNodeReservoirIndex
-d.BinNodeTankIndex
-d.BinNodeJunctionIndex
-d.BinNodeElevations
-d.BinNodeTankElevation
-d.BinNodeTankInitLevel
-d.BinNodeTankMinLevel
-d.BinNodeTankMaxLevel
-d.BinNodeTankDiameter
-d.BinNodeTankMinVol
-d.BinNodeTankMixID
-d.BinNodeTankMixModel
-d.BinNodeTankMinimumFraction
-d.BinNodeReservoirElevation
-d.BinNodeJunctionElevation
-d.BinNodeResDemandPatternNameID
-d.BinNodeCount  
-d.BinNodeJunctionCount 
-d.BinNodeReservoirCount 
-d.BinNodeTankCount
-d.BinNodeTankReservoirCount   
-d.BinNodeSourceTypeCode
-d.BinNodeSourceType
-d.BinNodeSourcePatternIndex
-d.BinNodeSourcePatternNameID
-d.BinNodeSourceQuality
-d.BinNodeSourceTypeIndex
-d.BinNodeJunctionsBaseDemands
-d.BinNodeDemandPatternNameID
-d.BinNodeInitialQuality
-d.BinNodeCoordinates
-d.BinNodeBaseDemands
+d.BinTempfile                
 
-d.BinPatternNameID
-d.BinPatternLengths
-d.BinPatternValue 
-d.BinPatternMatrix
-d.BinPatternCount
-
-d.BinLinkNameID
-d.BinLinkType
-d.BinLinkPipeNameID
-d.BinLinkPumpNameID
-d.BinLinkValveNameID
-d.BinLinkInitialStatusNameID
-d.BinLinkInitialStatus
-d.BinLinkPumpPatterns
-d.BinLinkPumpCurveNameID
-d.BinLinkPipeIndex
-d.BinLinkPumpIndex
-d.BinLinkValveIndex
-d.BinLinkFromNode
-d.BinLinkToNode
-d.BinLinkCount
-d.BinLinkPipeCount
-d.BinLinkPumpCount
-d.BinLinkValveCount
-d.BinLinkPipeLengths
-d.BinLinkPipeDiameters
-d.BinLinkPipeRoughness
-d.BinLinkPipeMinorLoss
-d.BinLinkValveDiameters
-d.BinLinkValveType
-d.BinLinkValveSetting
-d.BinLinkValveMinorLoss
-d.BinLinkValveStatus
-d.BinLinkValveStatusNameID
-d.BinLinkPipeStatus
-d.BinLinkPumpStatusNameID   
-d.BinLinkPumpStatus  
-d.BinLinkPumpPower
-d.BinLinkPumpNameIDPower
-d.BinLinkSettings
-d.BinLinkDiameters
-d.BinLinkLengths
-d.BinLinkRoughnessCoeff
-d.BinLinkGlobalWallReactionCoeff
-d.BinLinkGlobalBulkReactionCoeff
-d.BinLinkWallReactionCoeff
-d.BinLinkBulkReactionCoeff
-d.BinCurveNameID %ID name of curves
-d.BinCurveXvalue %X-value of curves
-d.BinCurveYvalue %Y-value of curves
-d.BinCurveAllLines
-d.BinCurveTypes % Type of curves 
-d.BinCurveCount % Number of curves
-
-d.BinControlsInfo
 d.BinControlLinksID
 d.BinControlNodesID
 d.BinControlRulesCount
+d.BinControlsInfo
 
-d.BinRulesControlsInfo
-d.BinRulesControlLinksID
-d.BinRulesControlNodesID
-d.BinRulesCount
-
-d.BinTimeSimulationDuration
-d.BinTimeHydraulicStep
-d.BinTimeQualityStep
-d.BinTimePatternStep
-d.BinTimePatternStart
-d.BinTimeReportingStep
-d.BinTimeReportingStart
-d.BinTimeStatisticsIndex
-d.BinTimeStatistics
-
-d.BinOptionsSpecificGravity
-d.BinOptionsViscosity
-d.BinOptionsMaxTrials
-d.BinOptionsAccuracyValue
-d.BinOptionsUnbalanced
-d.BinOptionsPattern
-d.BinOptionsPatternDemandMultiplier
-d.BinOptionsEmitterExponent
-d.BinQualityType% Water quality analysis code (None:0/Chemical:1/Age:2/Trace:3)
-d.BinQualityCode
-d.BinQualityTraceNodeIndex
-d.BinQualityTraceNodeID
-d.BinOptionsDiffusivity
-
-d.BinCountStatuslines
 d.BinCountInitialQualitylines
-d.BinCountReactionlines
 d.BinCountPatternlines
-d.BinUnits_SI_Metric
-d.BinUnits_US_Customary
-d.BinQualityUnits
+d.BinCountReactionlines
+d.BinCountStatuslines
 
+d.BinCurveAllLines
+d.BinCurveCount
+d.BinCurveNameID
+d.BinCurveTypes
+d.BinCurveXvalue
+d.BinCurveYvalue
+
+
+d.BinLinkCount
+d.BinLinkFlowUnits
+d.BinLinkNameID
+
+d.BinLinkDiameters
+d.BinLinkInitialStatus
+d.BinLinkInitialStatusNameID
+d.BinLinkLengths
+d.BinLinkRoughnessCoeff       
+d.BinLinkSettings             
+d.BinLinkType  
+
+d.BinLinkToNode  
+d.BinLinkFromNode
+
+d.BinLinkBulkReactionCoeff
+d.BinLinkWallReactionCoeff   
+d.BinLinkGlobalBulkReactionCoeff
+d.BinLinkGlobalWallReactionCoeff
+
+d.BinLinkPipeCount   
+d.BinLinkPipeIndex            
+d.BinLinkPipeNameID           
+
+d.BinLinkPipeDiameters        
+d.BinLinkPipeLengths          
+d.BinLinkPipeMinorLoss        
+d.BinLinkPipeRoughness        
+d.BinLinkPipeStatus   
+
+d.BinLinkPumpCount           
+d.BinLinkPumpCurveNameID      
+d.BinLinkPumpIndex          
+d.BinLinkPumpNameID          
+d.BinLinkPumpNameIDPower   
+
+d.BinLinkPumpPatterns         
+d.BinLinkPumpPower            
+d.BinLinkPumpStatus           
+d.BinLinkPumpStatusNameID  
+
+d.BinLinkValveCount  
+d.BinLinkValveIndex          
+d.BinLinkValveNameID         
+
+d.BinLinkValveDiameters     
+d.BinLinkValveMinorLoss     
+d.BinLinkValveSetting      
+d.BinLinkValveStatus          
+d.BinLinkValveStatusNameID    
+d.BinLinkValveType  
+
+d.BinNodeCount               
+d.BinNodeNameID           
+d.BinNodeBaseDemands         
+d.BinNodeCoordinates          
+d.BinNodeDemandPatternNameID  
+d.BinNodeElevations           
+d.BinNodeInitialQuality   
+d.BinNodeType               
+
+d.BinNodeJunctionCount 
+d.BinNodeJunctionIndex        
+d.BinNodeJunctionNameID 
+d.BinNodeJunctionElevation    
+d.BinNodeJunctionsBaseDemands
+d.BinNodeJunctionsBaseDemandsID
+d.BinNodePressureUnits    
+
+d.BinNodeResDemandPatternNameID
+d.BinNodeReservoirCount       
+d.BinNodeReservoirElevation   
+d.BinNodeReservoirIndex       
+d.BinNodeReservoirNameID 
+
+d.BinNodeSourcePatternIndex   
+d.BinNodeSourcePatternNameID
+d.BinNodeSourceQuality        
+d.BinNodeSourceType        
+d.BinNodeSourceTypeIndex   
+
+d.BinNodeTankCount         
+d.BinNodeTankDiameter         
+d.BinNodeTankElevation        
+d.BinNodeTankIndex           
+d.BinNodeTankInitialLevel     
+d.BinNodeTankMaximumWaterLevel
+d.BinNodeTankMinimumFraction  
+d.BinNodeTankMinimumWaterLevel
+d.BinNodeTankMinimumWaterVolume
+d.BinNodeTankMixID           
+d.BinNodeTankMixModel        
+d.BinNodeTankNameID           
+d.BinNodeTankReservoirCount   
+
+d.BinOptionsAccuracyValue     
+d.BinOptionsDiffusivity       
+d.BinOptionsEmitterExponent   
+d.BinOptionsHeadloss         
+d.BinOptionsMaxTrials         
+d.BinOptionsPattern           
+d.BinOptionsPatternDemandMultiplier
+d.BinOptionsQualityTolerance  
+d.BinOptionsSpecificGravity   
+d.BinOptionsUnbalanced        
+d.BinOptionsViscosity    
+
+d.BinPatternCount            
+d.BinPatternLengths           
+d.BinPatternMatrix            
+d.BinPatternNameID            
+d.BinPatternValue     
+
+d.BinQualityCode              
+d.BinQualityTraceNodeID    
+d.BinQualityTraceNodeIndex   
+d.BinQualityType            
+d.BinQualityUnits      
+
+d.BinRulesControlLinksID      
+d.BinRulesControlNodesID    
+d.BinRulesControlsInfo      
+d.BinRulesCount  
+
+d.BinTimeHydraulicStep       
+d.BinTimePatternStart         
+d.BinTimePatternStep          
+d.BinTimeQualityStep         
+d.BinTimeReportingStart       
+d.BinTimeReportingStep       
+d.BinTimeSimulationDuration   
+d.BinTimeStatistics          
+d.BinTimeStatisticsIndex    
+
+d.BinUnits_US_Customary     
+d.BinUnits_SI_Metric   
+
+d.BinUnits                    
 d.BinUnits.BinLinkFlowUnits
 d.BinUnits.BinQualityUnits
 d.BinUnits.BinNodePressureUnits
@@ -1049,6 +1069,7 @@ d.BinUnits.BinLinkPipeDiameterUnits
 d.BinUnits.BinNodeTankDiameterUnits
 d.BinUnits.BinEnergyEfficiencyUnits
 d.BinUnits.BinNodeElevationUnits
+d.BinUnits.BinNodeDemandUnits
 d.BinUnits.BinNodeEmitterCoefficientUnits
 d.BinUnits.BinEnergyUnits
 d.BinUnits.BinLinkFrictionFactorUnits

@@ -1,4 +1,4 @@
-%% EPANET-Matlab Class Test Part 2
+%% EPANET-Matlab Toolkit Test Part 4
 % This file is provided to ensure that all functions can be executed
 % correctly.
 % Press F10 for step-by-step execution. You may also use the breakpoints, 
@@ -12,12 +12,31 @@ clear;
 close all;clear class;
 
 % Create EPANET object using the INP file
-inpname='example.inp'; %net2-cl2 example
+inpname='net2-cl2.inp'; %net2-cl2 example
 
 %% MSX Functions
 d=epanet(inpname);
 msxname = [inpname(1:end-4),'.msx'];
 d.loadMSXFile(msxname);
+
+
+%% MSX PLOTS
+lll=d.getMSXComputedQualityLink
+figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(lll.Time,lll.Quality{1}(:,i),'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
+
+nnn=d.getMSXComputedQualityNode
+figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(nnn.Time,nnn.Quality{1}(:,i),'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
+
+d.plotMSXSpeciesNodeConcentration(1,1:d.MSXSpeciesCount)
+d.plotMSXSpeciesNodeConcentration(2,1:d.MSXSpeciesCount)
+d.plotMSXSpeciesNodeConcentration(3,1:d.MSXSpeciesCount)
+d.plotMSXSpeciesNodeConcentration(4,1:d.MSXSpeciesCount)
+d.plotMSXSpeciesNodeConcentration(5,1:d.MSXSpeciesCount)
+d.getMSXComputedQualityLink(1,1:d.MSXSpeciesCount)%index link, index species
+d.plotMSXSpeciesLinkConcentration(1,1:d.MSXSpeciesCount)
+disp('Press any key to continue...')
+pause
+
 
 % New functions - Read MSX File
 d.getMSXSolver
@@ -99,24 +118,6 @@ d.setTimeHydraulicStep(3600)
 d.setTimeQualityStep(3600)
 d.getMSXComputedQualityNode(1)%index node
 d.getMSXComputedQualityNode(1,1)%index node, index species
-disp('Press any key to continue...')
-pause
-
-
-%% MSX PLOTS
-lll=d.getMSXComputedQualityLink
-figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(lll.Time,lll.Quality{1}(:,i),'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
-
-nnn=d.getMSXComputedQualityNode
-figure;cmap=hsv(5);for i=1:d.getMSXSpeciesCount;plot(nnn.Time,nnn.Quality{1}(:,i),'Color',cmap(i,:));hold on; end; legend(d.MSXSpeciesNameID)
-
-d.plotMSXSpeciesNodeConcentration(1,1:d.MSXSpeciesCount)
-d.plotMSXSpeciesNodeConcentration(2,1:d.MSXSpeciesCount)
-d.plotMSXSpeciesNodeConcentration(3,1:d.MSXSpeciesCount)
-d.plotMSXSpeciesNodeConcentration(4,1:d.MSXSpeciesCount)
-d.plotMSXSpeciesNodeConcentration(5,1:d.MSXSpeciesCount)
-d.getMSXComputedQualityLink(1,1:d.MSXSpeciesCount)%index link, index species
-d.plotMSXSpeciesLinkConcentration(1,1:d.MSXSpeciesCount)
 disp('Press any key to continue...')
 pause
 
@@ -228,7 +229,10 @@ d.setMSXPatternValue(1,1,2);
 d.getMSXPattern 
 
 d.setMSXPattern(1,[1 0.5 0.8 2 1.5]); % node index, values
-% or d.setMSXPattern('testpat',[1 1 1 1 1.5]); nodeID , values
+d.getMSXPattern 
+
+d.setMSXPattern(d.getMSXPatternsNameID{1},[1 1 1 1 1.5]); % nodeID , values
+d.getMSXPattern 
 
 d.getMSXPattern 
 d.getMSXPatternValue(1,5) 

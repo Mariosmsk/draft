@@ -39,39 +39,56 @@ pause
 
 
 % New functions - Read MSX File
-d.getMSXSolver
-d.getMSXAreaUnits
-d.getMSXRateUnits
-d.getMSXRtol
-d.getMSXAtol
 d.getMSXTimeStep
+d.setMSXTimeStep(3600) 
+d.getMSXTimeStep
+
+d.getMSXAreaUnits
+d.setMSXAreaUnitsFT2
+d.getMSXAreaUnits
+d.setMSXAreaUnitsM2
+d.getMSXAreaUnits
+d.setMSXAreaUnitsCM2
+d.getMSXAreaUnits
+
+d.getMSXRateUnits
+d.setMSXRateUnitsSEC
+d.getMSXRateUnits
+d.setMSXRateUnitsMIN
+d.getMSXRateUnits
+d.setMSXRateUnitsHR
+d.getMSXRateUnits
+d.setMSXRateUnitsDAY
+d.getMSXRateUnits
+
+d.getMSXSolver
+d.setMSXSolverEUL
+d.getMSXSolver
+d.setMSXSolverRK5
+d.getMSXSolver
+d.setMSXSolverROS2
+d.getMSXSolver
+ 
 d.getMSXCoupling
+d.setMSXCouplingFULL
+d.getMSXCoupling
+d.setMSXCouplingNONE
+d.getMSXCoupling
+
+d.getMSXCompiler
+d.setMSXCompilerVC % depends on the C compiler you are using
+d.getMSXCompiler
+d.setMSXCompilerGC % depends on the C compiler you are using
+d.getMSXCompiler
+d.setMSXCompilerNONE % depends on the C compiler you are using
 d.getMSXCompiler
 
-d.setMSXTimeStep(3600) 
-
-d.setMSXAreaUnitsFT2
-d.setMSXAreaUnitsM2
-d.setMSXAreaUnitsCM2
-
-d.setMSXRateUnitsSEC
-d.setMSXRateUnitsMIN
-d.setMSXRateUnitsHR
-d.setMSXRateUnitsDAY
-
-d.setMSXSolverEUL
-d.setMSXSolverRK5
-d.setMSXSolverROS2
- 
-d.setMSXCouplingFULL
-d.setMSXCouplingNONE
-
-d.setMSXCompilerVC % depends on the C compiler you are using
-d.setMSXCompilerGC % depends on the C compiler you are using
-d.setMSXCompilerNONE % depends on the C compiler you are using
-
+d.getMSXAtol
 d.setMSXAtol(0.1)
+d.getMSXAtol
+d.getMSXRtol
 d.setMSXRtol(0.2)
+d.getMSXRtol
 
 %% GET PARAMETERS
 d.getMSXEquationsTerms
@@ -145,12 +162,6 @@ disp('Press any key to continue...')
 pause
 
 % Different way to write the report (the "bug" above does not appear)
-d.runMSXexe
-open([d.MSXTempFile(1:end-4),'.txt']);
-
-disp('Press any key to continue...')
-pause
-
 rptmsx='reportmsx.txt';
 d.writeMSXReportExe(rptmsx);
 open(rptmsx);

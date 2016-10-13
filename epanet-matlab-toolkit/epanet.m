@@ -2922,16 +2922,20 @@ classdef epanet <handle
                     if t<3600 || t==3600
                         i=1;
                         for nl=ss
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXNodeInitqualValue{nl}(j);
+                                value.Quality{i}(k,g)=obj.getMSXNodeInitqualValue{nl}(j);
+                                g=g+1;
                             end
                             i=i+1;
                         end
                     else
                         i=1;
                         for nl=ss
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(0, nl, j);%node code0
+                                value.Quality{i}(k,g)=obj.getMSXSpeciesConcentration(0, nl, j);%node code0
+                                g=g+1;
                             end
                             i=i+1;
                         end
@@ -2940,16 +2944,20 @@ classdef epanet <handle
                     if t<3600 || t==3600
                         i=1;
                         for nl=ss
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXNodeInitqualValue{(nl)}(j);
+                                value.Quality{i}(k,g)=obj.getMSXNodeInitqualValue{(nl)}(j);
+                                g=g+1;
                             end
                             i=i+1;
                         end
                     else
                         i=1;
                         for nl=ss
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(0, (nl), j);%node code0
+                                value.Quality{i}(k,g)=obj.getMSXSpeciesConcentration(0, (nl), j);%node code0
+                                g=g+1;
                             end
                             i=i+1;
                         end
@@ -2991,16 +2999,20 @@ classdef epanet <handle
                     if t<3600 || t==3600
                         i=1;
                         for nl=ss
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXLinkInitqualValue{nl}(j);
+                                value.Quality{i}(k,g)=obj.getMSXLinkInitqualValue{nl}(j);
+                                g=g+1;
                             end
                             i=i+1;
                         end
                     else
                         i=1;
-                        for nl=ss                        
+                        for nl=ss  
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(1, nl, j);
+                                value.Quality{i}(k,g)=obj.getMSXSpeciesConcentration(1, nl, j);
+                                g=g+1;
                             end
                             i=i+1;
                         end
@@ -3009,16 +3021,20 @@ classdef epanet <handle
                     if t<3600 || t==3600
                         i=1;
                         for nl=ss
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXLinkInitqualValue{(nl)}(j);
+                                value.Quality{i}(k,g)=obj.getMSXLinkInitqualValue{(nl)}(j);
+                                g=g+1;
                             end
                             i=i+1;
                         end
                     else
                         i=1;
                         for nl=ss
+                            g=1;
                             for j=uu
-                                value.Quality{i}(k,j)=obj.getMSXSpeciesConcentration(1, (nl), j);%link code1
+                                value.Quality{i}(k,g)=obj.getMSXSpeciesConcentration(1, (nl), j);%link code1
+                                g=g+1;
                             end
                             i=i+1;
                         end
@@ -8063,21 +8079,21 @@ while 1
             end
         end
         if strcmp(upper(atline{1}),'TIMESTEP')
-            value.timestep=str2num(atline{2});return;
+            value.timestep=str2num(atline{2});%return;
         elseif strcmp(upper(atline{1}),'AREA_UNITS')
-            value.areaunits=atline{2};return;
+            value.areaunits=atline{2};%return;
         elseif strcmp(upper(atline{1}),'RATE_UNITS')
-            value.rateunits=atline{2};return;
+            value.rateunits=atline{2};%return;
         elseif strcmp(upper(atline{1}),'SOLVER')
-            value.solver=atline{2};return;
+            value.solver=atline{2};%return;
         elseif strcmp(upper(atline{1}),'RTOL')
-            value.rtol=str2num(atline{2});return;      
+            value.rtol=str2num(atline{2});%return; 
         elseif strcmp(upper(atline{1}),'ATOL')
-            value.atol=str2num(atline{2});return;      
+            value.atol=str2num(atline{2});%return;   
         elseif strcmp(upper(atline{1}),'COUPLING')
-            value.coupling=atline{2};return;     
+            value.coupling=atline{2};%return;    
         elseif strcmp(upper(atline{1}),'COMPILER')
-            value.compiler=atline{2};return;  
+            value.compiler=atline{2};%return;
         end
     end
 end

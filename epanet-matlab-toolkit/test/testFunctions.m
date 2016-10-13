@@ -48,7 +48,6 @@ d.getCurveLengths('NewCur2')
 d.getCurveIndex
 d.getCurveIndex('NewCur1')
 
-indexCurve=2
 pointindex=2
 tmppoints=d.getCurveValue(indexCurve,pointindex)
 d.setCurveValue(indexCurve,pointindex,tmppoints+100)
@@ -68,8 +67,8 @@ d.getNodeDemandCategoriesNumber(11)
 d.getNodeDemandCategoriesNumber(5:11)
 
 % ENgetdemandpattern - Retrieves the index of a demand pattern for a specific demand category of a node
-d.getNodeDemandPatternNameID
-d.getNodeDemandPatternIndex
+d.getNodeDemandPatternNameID{1}
+d.getNodeDemandPatternIndex{1}
 
 % ENgetaveragepatternvalue - Retrieves the average value of a pattern
 d.getPatternAverageValue
@@ -87,30 +86,35 @@ nodeCoords{2}(indexNode)=nodeCoords{2}(indexNode)+20;%Y
 d.setNodeCoordinates(nodeCoords)
 d.plot;
 
+% Qualyti Info
 d.getQualityInfo
 
 % Others
 n=d.getComputedHydraulicTimeSeries; % EN_TANKVOLUME - ENgetnodevalue
 n.TankVolume(:,d.NodeTankIndex)
 
-d.TimeStartTime % EN_STARTTIME  - ENgettimeparam
-d.TimeHTime % EN_HTIME - ENgettimeparam
-d.TimeHaltFlag % EN_HALTFLAG - ENgettimeparam
-d.TimeNextEvent %find the lesser of the hydraulic time step length, or the time to next fill/empty
-d.NodeTankMaximumWaterVolume % EN_MAXVOLUME - ENgetnodevalue
-%d.CurvesInfo bug in epanet20013 energopoiisi sto prwto run
+% EN_STARTTIME  - ENgettimeparam
+d.getTimeStartTime
 
+% EN_HTIME - ENgettimeparam
+d.getTimeHTime 
 
-d.LinkPumpPatternNameID
-d.LinkPumpPatternIndex
+% EN_HALTFLAG - ENgettimeparam
+d.getTimeHaltFlag
+
+%find the lesser of the hydraulic time step length, or the time to next fill/empty
+d.getTimeNextEvent
+
+% EN_MAXVOLUME - ENgetnodevalue
+d.getNodeTankMaximumWaterVolume 
+
+% Curves Info
+d.getCurvesInfo
+
+% Pump pattern
 d.getLinkPumpPatternNameID % EN_LINKPATTERN - ENgetlinkvalue
 d.getLinkPumpPatternIndex
 
-
-
-
-% inpname='Net1.inp';
-d=epanet(inpname);
 %% Controls
 Controls=d.getControls
 disp('Press any key to continue...')
@@ -138,7 +142,7 @@ for e=[0:6,101:106,110,120,200,202:207,223:224, 240:241, 250:251, 301:309]
 end
 
 
-%%
+%% Get Functions
 d.getFlowUnits
 d.getLinkNameID
 d.getLinkPipeNameID
@@ -232,9 +236,9 @@ d.getVersion
 
 %% To check
 d.getTimeReportingPeriods% Check this
-d.getNodeTankMixZoneVolume % ok 6/3/2015
-d.getNodeTankDiameter% bug: Produces a different diameter % fix in epanet20013 - ok 6/3/2015
-d.getNodeTankInitialWaterVolume % ok 6/3/2015
+d.getNodeTankMixZoneVolume % OK
+d.getNodeTankDiameter% bug: Produces a different diameter % fix in dev.2.1 OK now
+d.getNodeTankInitialWaterVolume % OK
 
 
 %% Simulate all
@@ -303,7 +307,7 @@ d.getNodeElevations
 values = d.getNodeBaseDemands
 values{1}(2)=160; %values(2)
 d.setNodeBaseDemands(values)
-d.getNodeBaseDemands
+d.getNodeBaseDemands{1}
 
 values = d.getNodePatternIndex
 values(2)=0;
@@ -493,8 +497,16 @@ d.getQualityCode
 d.saveInputFile([pwd,'\TEST_INP_TEMP.inp']);
 
 
-d.writeLineInReportFile('Line-writting testing')
-%open('temp.txt'); % bug, write in status report > tmprpt.txt
+% Solve hydraulics 
+d.solveCompleteHydraulics % solves internally the hydraulics (does not return something)
+d.saveHydraulicsOutputReportingFile %creates a BIN file (see EPANET documentation)
+
+% Solve quality
+d.solveCompleteQuality
+
+d.writeLineInReportFile('Line-writting testing!!')
+d.writeReport
+% open([d.BinTempfile(1:end-4),'.txt'])
 
 d.unload
 disp('Press any key to continue...')
@@ -506,10 +518,14 @@ d=epanet(inpname);
 
 % Compute ranges (max - min) 
 d.setTimeStatisticsType('RANGE')
+d.getTimeStatisticsType
 d.setTimeStatisticsType('MINIMUM')
+d.getTimeStatisticsType
 % StatisticsType('AVERAGE')
 d.setTimeStatisticsType('NONE')
+d.getTimeStatisticsType
 d.setTimeStatisticsType('MAXIMUM')
+d.getTimeStatisticsType
 
 
 % Solve hydraulics 

@@ -7083,12 +7083,11 @@ classdef epanet <handle
                             if strcmp(upper(atline{3}),'HOURS')
                                 secnd=str2num(r)*3600;
                             end
-                        else
-                            if isempty(min), min=0; end
-    %                         if isempty(secnd1), secnd1=0; end
-                            min=str2num(r);
-                            secnd=single(min*60);%+secnd1;
                         end
+                        if isempty(min), min=0; end
+%                         if isempty(secnd1), secnd1=0; end
+                        min=str2num(r);
+                        secnd=single(min*60);%+secnd1;
                     elseif ~sum(r==':') && ~sum(r=='.')
                         secnd=single(str2num(r)*3600);
                     end

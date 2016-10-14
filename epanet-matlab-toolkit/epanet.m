@@ -5619,7 +5619,7 @@ classdef epanet <handle
                             atlines{uu}=a{tt}; uu=uu+1;
                         end
                    end
-                   if ~isempty(MixModel) && ll<obj.BinNodeTankIndex
+                   if ~isempty(MixModel) && ll<=obj.BinNodeTankIndex
                        atlines{2} = num2str(MixModel{ll});  
                        newlines=[];
                        for pp=1:length(atlines)
@@ -5627,7 +5627,7 @@ classdef epanet <handle
                        end
                        tlines{i}=newlines;
                    end
-                   if ~isempty(MixFraction) && ll<obj.BinNodeTankIndex
+                   if ~isempty(MixFraction) && ll<=obj.BinNodeTankIndex
                        atlines{3} = num2str(MixFraction(ll)); 
                        newlines=[];
                        for pp=1:length(atlines)

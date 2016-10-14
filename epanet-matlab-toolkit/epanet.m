@@ -7363,7 +7363,7 @@ tstep = double(tstep);
 end
 function [Errcode] = ENopen(inpname,repname,binname,LibEPANET) %DE
     Errcode=calllib(LibEPANET,'ENopen',inpname,repname,binname);
-    if Errcode
+    if Errcode && Errcode~=200
        [~,errmsg] = calllib(LibEPANET,'ENgeterror',Errcode,char(32*ones(1,79)),79);
        warning(errmsg);
     end

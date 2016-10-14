@@ -186,13 +186,13 @@ d.getNodeElevations
 basedemands=d.BinNodeJunctionsBaseDemands;
 basedemands(end)=323;
 errcode=d.setBinNodeJunctionsBaseDemands(basedemands);
-d.getNodeBaseDemands
+d.getNodeBaseDemands{1}
 
 patterns=d.BinNodeDemandPatternNameID;
 % patternsid=d.BinPatternNameID;
 errcode=d.addBinPattern('new',1:0.1:2);
-patterns{end}='new';
-errcode=d.setBinNodeDemandPatternNameID(patterns);
+patterns{1}='new';
+errcode=d.setBinNodeDemandPatternNameID(patterns); %No for Reservoirs (use setBinNodeResDemandPatternNameID)
 d.getPatternNameID(d.getNodePatternIndex)
 case1node=toc
 disp('Press any key to continue...')
@@ -204,12 +204,12 @@ elevations=d.BinNodeJunctionElevation;
 elevations(end)=2002;
 basedemands=d.BinNodeJunctionsBaseDemands;
 basedemands(end)=325;
-patterns=d.BinNodeDemandPatternNameID;
+patterns=d.getPatternNameID(d.getNodePatternIndex);
 errcode=d.addBinPattern('new1',1:0.1:2);
-patterns{end}='new1';
+patterns{2}='new1';
 d.setBinNodeJunctionsParameters('elevation',elevations,'basedemand',basedemands,'demandpattern',patterns);
 d.getNodeElevations
-d.getNodeBaseDemands
+d.getNodeBaseDemands{1}
 d.getPatternNameID(d.getNodePatternIndex)
 case2node=toc
 disp('Press any key to continue...')
@@ -232,6 +232,7 @@ if d.NodeReservoirCount
     disp('Press any key to continue...')
     pause
 
+    d.BinUpdateClass
     tic
     elevationsReservoirs=d.BinNodeReservoirElevation;
     elevationsReservoirs(end)=190;
@@ -436,7 +437,7 @@ newElevation=500; %ft
 ToNodeID='11'; 
 newPumpID='PU2';
 Code='PUMP';
-newCurveIDofPump='C-1'; 
+newCurveIDofPump='C-1n'; 
 newCurveXvalue=1500;
 newCurveYvalue=250;
 [errcode]=d.addBinReservoir(newID,x,y,newElevation,newPumpID,...
@@ -460,7 +461,7 @@ MinVol=0;
 newPumpID='PU3';
 ToNodeID='32'; 
 Code='PUMP';
-newCurveIDofPump='C-1'; 
+newCurveIDofPump='C-1n2'; 
 newCurveXvalue=[1500 1800 2000];
 newCurveYvalue=[250 200 0];
 errcode=d.addBinTank(newID,x,y,MaxLevel,Diameter,Initlevel,newElevation,initqual,MinLevel,MinVol,newPumpID,...
@@ -502,7 +503,7 @@ Code='PSV';
 newValveSetting=15; 
 [errcode]=d.addBinReservoir(newID,x,y,newElevation,newValveID,...
 ToNodeID,newValveDiameter,newValveSetting,Code);
-d.Binplot('nodes','yes','highlightlink',{'PU2'},'fontsize',10);
+d.Binplot('nodes','yes','highlightlink',{'V2psv'},'fontsize',10);
 if errcode
     [errcode]=d.removeBinNodeID('S3');
 end
@@ -565,7 +566,7 @@ d.plot('nodes','yes','highlightlink',{'V4'},'fontsize',8);
 %TCV
 errcode=d.addBinValveTCV('V5','32','13',newValveDiameter,newValveSetting);
 d.plot('nodes','yes','highlightlink',{'V5'},'fontsize',8);
-d.getBinComputedAllParameters  %"Run was successful."
+d.getBinComputedAllParameters  %"Run was unsuccessful."
 d.getComputedHydraulicTimeSeries
 % %GPV
 errcode=d.addBinValveGPV('V6','11','22',newValveDiameter,newValveSetting); %%%%%%%%%%%%ERROR
@@ -617,11 +618,11 @@ end
 pp=LinksInfo.BinLinkWallReactionCoeff;
 pp2=LinksInfo.BinLinkBulkReactionCoeff;
 errcode=d.setBinLinkReactionCoeff('wall',pp,'bulk',pp2);
+d.getLinkBulkReactionCoeff
+d.getLinkWallReactionCoeff
 
 errcode=d.setBinLinkGlobalWallReactionCoeff(1.99)
 errcode=d.setBinLinkGlobalBulkReactionCoeff(2)
-isequal(d.getLinkBulkReactionCoeff,LinksInfo.BinLinkBulkReactionCoeff)
-isequal(d.getLinkWallReactionCoeff,LinksInfo.BinLinkWallReactionCoeff)
 disp('Press any key to continue...')
 pause
 
@@ -654,6 +655,13 @@ n=d.BinNodeNameID;
 errcode=d.setBinQualityTrace(n{2})
 d.getQualityType
 d.getQualityTraceNodeIndex
+
+species = 'Chlorine'; 
+units = 'mg/L';
+errcode = d.setBinQualType(species,units)
+d.getQualityInfo.QualityChemName
+d.getQualityInfo.QualityChemUnits
+
 disp('Press any key to continue...')
 pause
 
@@ -703,8 +711,8 @@ pause
 %% ADD, GET, REMOVE CURVES
 d.getBinCurvesInfo.BinCurveCount
 d.getCurveCount
-errcode=d.addBinCurvePump('C-1',[1500 1800 2000],[250 200 0])%Flow-Head
-errcode=d.addBinCurveEfficiency('C-2',[1500 1800 2000],[250 200 0])%Flow-Efficiency
+errcode=d.addBinCurvePump('C-1n3',[1500 1800 2000],[250 200 0])%Flow-Head
+errcode=d.addBinCurveEfficiency('C-2n',[1500 1800 2000],[250 200 0])%Flow-Efficiency
 errcode=d.addBinCurveVolume('C33',[1500 1800 2000],[250 200 0])%Heigh-Volume
 errcode=d.addBinCurveHeadloss('C44',[1500 1800 2000],[250 200 0])%Flow-Headloss
 d.getBinCurvesInfo

@@ -778,15 +778,17 @@ if strcmp(inpname,'BWSN_Network_1.inp')
         t=d.BinLinkValveType;
         t{index}='TCV';
         s=d.BinLinkValveSetting;
-        s(index)=0.1;
+        s(index)=10;
         statuss=d.BinLinkValveStatus;
         statuss{index}='closed';
         errcode=d.setBinLinkValvesParameters('minorloss',m,'diameter',dv,'type',t,'setting',s,'status',statuss);
         LinkValveIndex=d.getLinkValveIndex;
         LinkType=d.getLinkType;
         LinkType(LinkValveIndex(index))
-        d.getLinkInitialStatus
-        d.getLinkInitialSetting
+        d.getLinkMinorLossCoeff(LinkValveIndex)
+        d.getLinkDiameter(LinkValveIndex)
+        d.getLinkInitialSetting(LinkValveIndex) % bug here! check
+        d.getLinkInitialStatus(LinkValveIndex)
         disp('Press any key to continue...')
         pause
     end
@@ -824,7 +826,6 @@ d.getBinNodeSourceInfo
 d.getBinCurvesInfo
 d.getBinOptionsInfo
 d.getBinTimesInfo
-d.getBinComputedAllParameters
 d.getBinPatternsInfo
 d.getBinLinksInfo
 d.BinUpdateClass

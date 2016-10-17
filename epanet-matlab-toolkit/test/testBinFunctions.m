@@ -188,11 +188,11 @@ basedemands(end)=323;
 errcode=d.setBinNodeJunctionsBaseDemands(basedemands);
 d.getNodeBaseDemands{1}
 
-patterns=d.BinNodeDemandPatternNameID;
+patterns=d.BinNodeJunDemandPatternNameID;
 % patternsid=d.BinPatternNameID;
 errcode=d.addBinPattern('new',1:0.1:2);
 patterns{1}='new';
-errcode=d.setBinNodeDemandPatternNameID(patterns); %No for Reservoirs (use setBinNodeResDemandPatternNameID)
+errcode=d.setBinNodeJunDemandPatternNameID(patterns); %No for Reservoirs (use setBinNodeResDemandPatternNameID)
 d.getPatternNameID(d.getNodePatternIndex)
 case1node=toc
 disp('Press any key to continue...')
@@ -988,7 +988,7 @@ d.BinNodeCount
 d.BinNodeNameID           
 d.BinNodeBaseDemands         
 d.BinNodeCoordinates          
-d.BinNodeDemandPatternNameID  
+d.BinNodeJunDemandPatternNameID  
 d.BinNodeElevations           
 d.BinNodeInitialQuality   
 d.BinNodeType               

@@ -443,7 +443,7 @@ The `EPANET-Matlab Toolkit` is based/inspired on the [EPANET-Matlab Toolkit](htt
 |setBinLinkPumpStatus|Sets the values of pump status|
 |setBinLinkReactionCoeff|Sets the values of bulk and wall reaction coeff.|
 |setBinLinkValvesParameters|Sets the values of valve parameters (diameters, types, settings, minor losses)|
-|setBinNodeDemandPatternNameID|Sets the names of demand pattern IDs|
+|setBinNodeJunDemandPatternNameID|Sets the names of demand pattern IDs for junctions|
 |setBinNodeInitialQuality|Sets the values of initial qualities|
 |setBinNodeJunctionElevation|Sets the values of elevations for junctions|
 |setBinNodeJunctionsBaseDemands|Sets the values of base demands|

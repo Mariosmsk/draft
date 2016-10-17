@@ -18,48 +18,48 @@ tic;d=epanet(inpname,'Bin');toc
 d.getBinOptionsInfo
 d.getBinNodeCoordinates
 
-errcode=d.setBinFlowUnitsLPM % Net1.. GPM to LPM
+d.setBinFlowUnitsLPM % Net1.. GPM to LPM
 d.getBinOptionsInfo 
 tic;d.getBinComputedAllParameters
 toc
 
 % similar
-errcode=d.setBinFlowUnitsGPM % Net1.. LPM to GPM
+d.setBinFlowUnitsGPM % Net1.. LPM to GPM
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsCFS % Net1.. GPM to CFS 
+d.setBinFlowUnitsCFS % Net1.. GPM to CFS 
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsMGD % Net1.. CFS to MGD
+d.setBinFlowUnitsMGD % Net1.. CFS to MGD
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsIMGD% Net1.MGD to IMGD
+d.setBinFlowUnitsIMGD% Net1.MGD to IMGD
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsAFD % Net1.. IMGD to AFD
+d.setBinFlowUnitsAFD % Net1.. IMGD to AFD
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsLPS % Net1.. AFD to LPS
+d.setBinFlowUnitsLPS % Net1.. AFD to LPS
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsLPM % Net1.. LPS to LPM    
+d.setBinFlowUnitsLPM % Net1.. LPS to LPM    
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters 
 
-errcode=d.setBinFlowUnitsMLD % Net1.. LPM to MLD
+d.setBinFlowUnitsMLD % Net1.. LPM to MLD
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsCMD % Net1.. MLD to CMD
+d.setBinFlowUnitsCMD % Net1.. MLD to CMD
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
-errcode=d.setBinFlowUnitsCMH % Net1.. CMD to CMH
+d.setBinFlowUnitsCMH % Net1.. CMD to CMH
 d.getBinOptionsInfo 
 d.getBinComputedAllParameters  
 
@@ -67,21 +67,21 @@ disp('Press any key to continue...')
 pause
 
 % HeadlossFormula
-errcode=d.setBinHeadlossDW
+d.setBinHeadlossDW
 d.getBinOptionsInfo
 d.getBinComputedAllParameters 
 
-errcode=d.setBinHeadlossCM
+d.setBinHeadlossCM
 d.getBinOptionsInfo
 d.getBinComputedAllParameters  
 
-errcode=d.setBinHeadlossHW
+d.setBinHeadlossHW
 d.getBinOptionsInfo
 d.getBinComputedAllParameters 
 
 disp('Press any key to continue...')
 pause
-errcode=d.setBinFlowUnitsGPM;
+d.setBinFlowUnitsGPM;
 d.getBinOptionsInfo 
 
 %% GET, SET PIPES PARAMETERS
@@ -90,25 +90,30 @@ d.getBinOptionsInfo
 tic;
 Diameters=d.BinLinkPipeDiameters;
 Diameters(end)=300;
-errcode=d.setBinLinkPipeDiameters(Diameters);
+d.setBinLinkPipeDiameters(Diameters);
+l=d.getBinLinksInfo;
+l.BinLinkPipeDiameters
 
 lengths=d.BinLinkPipeLengths;
 lengths(end)=1111111;
-errcode=d.setBinLinkPipeLengths(lengths);
+d.setBinLinkPipeLengths(lengths);
+l.BinLinkPipeLengths
 
 roughness=d.BinLinkPipeRoughness;
 roughness(end)=222;
-errcode=d.setBinLinkPipeRoughness(roughness);
+d.setBinLinkPipeRoughness(roughness);
+l.BinLinkPipeRoughness
 
 minorloss=d.BinLinkPipeMinorLoss;
 minorloss(end)=10;
-errcode=d.setBinLinkPipeMinorLoss(minorloss);
+d.setBinLinkPipeMinorLoss(minorloss);
+l.BinLinkPipeMinorLoss
 
 status=d.BinLinkPipeStatus;
 status{end}='closed';
-errcode=d.setBinLinkPipeStatus(status);
+d.setBinLinkPipeStatus(status);
+l.BinLinkPipeStatus
 case1=toc
-d.getBinLinksInfo
 disp('Press any key to continue...')
 pause
 
@@ -123,8 +128,11 @@ lengths(end)=1111111*10;
 roughness=d.BinLinkPipeRoughness;
 roughness(end)=222*20;
 
-errcode=d.setBinLinkPipesParameters('diameter',Diameters,'length',lengths,'roughness',roughness);
-d.getBinLinksInfo
+d.setBinLinkPipesParameters('diameter',Diameters,'length',lengths,'roughness',roughness);
+l=d.getBinLinksInfo;
+l.BinLinkPipeDiameters
+l.BinLinkPipeLengths
+l.BinLinkPipeRoughness
 
 minorloss=d.BinLinkPipeMinorLoss;
 minorloss(end)=0;
@@ -132,8 +140,11 @@ minorloss(end)=0;
 status=d.BinLinkPipeStatus;
 status{end}='Open';
 
-errcode=d.setBinLinkPipesParameters('minorloss',minorloss,'status',status);
-d.getBinLinksInfo
+d.setBinLinkPipesParameters('minorloss',minorloss,'status',status);
+l=d.getBinLinksInfo;
+l.BinLinkPipeMinorLoss
+l.BinLinkPipeStatus
+
 case2=toc
 disp('Press any key to continue...')
 pause
@@ -147,21 +158,23 @@ d.getBinNodesInfo
 toc
 elevations=d.BinNodeJunctionElevation;
 elevations(end)=20;
-errcode=d.setBinNodeJunctionElevation(elevations);
+d.setBinNodeJunctionElevation(elevations);
 
 basedemands=d.BinNodeJunctionsBaseDemands;
 basedemands(end)=323;
-errcode=d.setBinNodeJunctionsBaseDemands(basedemands);
+d.setBinNodeJunctionsBaseDemands(basedemands);
 
-patterns=d.BinNodeDemandPatternNameID;
+patterns=d.BinNodeJunDemandPatternNameID;
 % patternsid=d.BinPatternNameID;
-errcode=d.addBinPattern('new',1:0.1:2);
-patterns{end}='new';
-errcode=d.setBinNodeDemandPatternNameID(patterns);
-pp=d.getBinNodesInfo
-pp.BinNodeJunctionElevation
-pp.BinNodeJunctionsBaseDemands
-pp.BinNodeDemandPatternNameID
+d.addBinPattern('new',1:0.1:2);
+patterns{1}='new';
+d.setBinNodeJunDemandPatternNameID(patterns);
+
+n=d.getBinNodesInfo;
+n.BinNodeJunctionElevation
+n.BinNodeJunctionsBaseDemands
+n.BinNodeJunDemandPatternNameID
+
 case1node=toc
 disp('Press any key to continue...')
 pause
@@ -172,14 +185,15 @@ elevations=d.BinNodeJunctionElevation;
 elevations(end)=2002;
 basedemands=d.BinNodeJunctionsBaseDemands;
 basedemands(end)=325;
-patterns=d.BinNodeDemandPatternNameID;
-errcode=d.addBinPattern('new1',1:0.1:2);
+patterns=n.BinNodeJunDemandPatternNameID;
+d.addBinPattern('new1',1:0.1:2);
 patterns{end}='new1';
 d.setBinNodeJunctionsParameters('elevation',elevations,'basedemand',basedemands,'demandpattern',patterns);
-pp=d.getBinNodesInfo
-pp.BinNodeJunctionElevation
-pp.BinNodeJunctionsBaseDemands
-pp.BinNodeDemandPatternNameID
+n=d.getBinNodesInfo;
+n.BinNodeJunctionElevation
+n.BinNodeJunctionsBaseDemands
+n.BinNodeJunDemandPatternNameID
+
 case2node=toc
 disp('Press any key to continue...')
 pause
@@ -191,15 +205,14 @@ if d.BinNodeReservoirCount
     tic
     elevationsReservoirs=d.BinNodeReservoirElevation;
     elevationsReservoirs(end)=15;
-    errcode=d.setBinNodeReservoirElevation(elevationsReservoirs)
-    pp=d.getBinNodesInfo
-    pp.BinNodeReservoirElevation
+    d.setBinNodeReservoirElevation(elevationsReservoirs)
 
     patres=d.BinNodeResDemandPatternNameID;
     patres{end}='new';
-    errcode=d.setBinNodeResDemandPatternNameID(patres);
-    pp=d.getBinNodesInfo
-    pp.BinNodeDemandPatternNameID
+    d.setBinNodeResDemandPatternNameID(patres);
+    n=d.getBinNodesInfo;
+    n.BinNodeReservoirElevation
+    n.BinNodeResDemandPatternNameID
     caseres1=toc
     disp('Press any key to continue...')
     pause
@@ -208,12 +221,12 @@ if d.BinNodeReservoirCount
     elevationsReservoirs=d.BinNodeReservoirElevation;
     elevationsReservoirs(end)=190;
     patres=d.BinNodeResDemandPatternNameID;
-    errcode=d.addBinPattern('pat2',1:0.1:2);
+    d.addBinPattern('pat2',1:0.1:2);
     patres{end}='pat2';
-    errcode=d.setBinNodeReservoirParameters('elevation',elevationsReservoirs,'pattern',patres);
-    pp=d.getBinNodesInfo
-    pp.BinNodeReservoirElevation
-    pp.BinNodeDemandPatternNameID
+    d.setBinNodeReservoirParameters('elevation',elevationsReservoirs,'pattern',patres);
+    n=d.getBinNodesInfo;
+    n.BinNodeReservoirElevation
+    n.BinNodeResDemandPatternNameID
     caseres2=toc
     disp('Press any key to continue...')
     pause
@@ -225,34 +238,34 @@ if d.BinNodeTankCount
     tic
     tankElevation=d.BinNodeTankElevation;
     tankElevation(end)= tankElevation(end)+10;
-    errcode=d.setBinNodeTankElevation(tankElevation);
+    d.setBinNodeTankElevation(tankElevation);
     
     tankInitlevel=d.BinNodeTankInitialLevel;
     tankInitlevel(end)=110;
-    errcode=d.setBinNodeTankInitialLevel(tankInitlevel);
+    d.setBinNodeTankInitialLevel(tankInitlevel);
     
     tankMinlevel=d.BinNodeTankMinimumWaterLevel;
     tankMinlevel(end)=tankMinlevel(end)+5;%5
-    errcode=d.setBinNodeTankMinimumWaterLevel(tankMinlevel);
+    d.setBinNodeTankMinimumWaterLevel(tankMinlevel);
     
     tankMaxlevel=d.BinNodeTankMaximumWaterLevel;
     tankMaxlevel(end)=300;
-    errcode=d.setBinNodeTankMaximumWaterLevel(tankMaxlevel);    
+    d.setBinNodeTankMaximumWaterLevel(tankMaxlevel);    
 
     tankDiameter=d.BinNodeTankDiameter;
     tankDiameter(end)=60;
-    errcode=d.setBinNodeTankDiameter(tankDiameter); %bug
+    d.setBinNodeTankDiameter(tankDiameter); %bug
     
     tankMinvol=d.BinNodeTankMinimumWaterVolume;
     tankMinvol(end)=10;
-    errcode=d.setBinNodeTankMinimumWaterVolume(tankMinvol);
-    pp=d.getBinNodesInfo
-    pp.BinNodeTankElevation
-    pp.BinNodeTankInitialLevel
-    pp.BinNodeTankMinimumWaterLevel
-    pp.BinNodeTankMaximumWaterLevel
-    pp.BinNodeTankDiameter
-    pp.BinNodeTankMinimumWaterVolume
+    d.setBinNodeTankMinimumWaterVolume(tankMinvol);
+    n=d.getBinNodesInfo;
+    n.BinNodeTankElevation
+    n.BinNodeTankInitialLevel
+    n.BinNodeTankMinimumWaterLevel
+    n.BinNodeTankMaximumWaterLevel
+    n.BinNodeTankDiameter
+    n.BinNodeTankMinimumWaterVolume
     case1tank=toc
     
     tic
@@ -268,24 +281,24 @@ if d.BinNodeTankCount
     tankDiameter(end)=1000;
     tankMinvol=d.BinNodeTankMinimumWaterVolume;
     tankMinvol(end)=100;
-errcode=d.setBinNodeTankParameters('elevation',tankElevation,'initlevel',tankInitlevel,'minlevel',tankMinlevel,'maxlevel',tankMaxlevel,'diameter',tankDiameter,'minvol',tankMinvol);
-    pp=d.getBinNodesInfo
-    pp.BinNodeTankElevation
-    pp.BinNodeTankInitialLevel
-    pp.BinNodeTankMinimumWaterLevel
-    pp.BinNodeTankMaximumWaterLevel
-    pp.BinNodeTankDiameter
-    pp.BinNodeTankMinimumWaterVolume
+d.setBinNodeTankParameters('elevation',tankElevation,'initlevel',tankInitlevel,'minlevel',tankMinlevel,'maxlevel',tankMaxlevel,'diameter',tankDiameter,'minvol',tankMinvol);
+    n=d.getBinNodesInfo;
+    n.BinNodeTankElevation
+    n.BinNodeTankInitialLevel
+    n.BinNodeTankMinimumWaterLevel
+    n.BinNodeTankMaximumWaterLevel
+    n.BinNodeTankDiameter
+    n.BinNodeTankMinimumWaterVolume
     case2tank=toc     
     
     tankMixModel=d.getBinNodesInfo.BinNodeTankMixModel
     tankMixModel{1}='2Comp'; % Constants for mixing models: 'MIX1','2Comp', 'FIFO','LIFO' (2Comp=MIX2)
 
     tankMixFraction(1)=2;
-    errcode=d.setBinNodeTankParameters('mixmodel',tankMixModel,'mixfraction',tankMixFraction); % Bug on mixfraction
-    pp=d.getBinNodesInfo
-    pp.BinNodeTankMinimumFraction
-    pp.BinNodeTankMixModel
+    d.setBinNodeTankParameters('mixmodel',tankMixModel,'mixfraction',tankMixFraction); % Bug on mixfraction
+    n=d.getBinNodesInfo;
+    n.BinNodeTankMinimumFraction
+    n.BinNodeTankMixModel
     disp('Press any key to continue...')
     pause
 end
@@ -331,7 +344,7 @@ newLength=1000; %ft
 newDiameter=10; %in
 newRoughness=100;
 Code='PIPE';
-errcode=d.addBinJunction(newID,x,y,newElevation,newBaseDemand,newDemandPattern,newPipeID,...
+d.addBinJunction(newID,x,y,newElevation,newBaseDemand,newDemandPattern,newPipeID,...
 ToNodeID,newLength,newDiameter,newRoughness,Code);
 
 % [errcode]=addBinPipe(newLink,fromNode,toNode,newLength,newDiameter,newRoughness)
@@ -367,15 +380,15 @@ newLength=1000; %ft
 newDiameter=10; %in
 newRoughness=100;
 Code='PIPE';
-errcode=d.addBinTank('T1',x,y,MaxLevel,Diameter,Initlevel,newElevation,initqual,MinLevel,MinVol,newPipeID,...
+d.addBinTank('T1',x,y,MaxLevel,Diameter,Initlevel,newElevation,initqual,MinLevel,MinVol,newPipeID,...
 ToNodeID,newLength,newDiameter,newRoughness,Code);
 d.Binplot('nodes','yes','links','yes');
 
 % Remove Tank
-errcode=d.removeBinNodeID('T1');
+d.removeBinNodeID('T1');
 d.Binplot('nodes','yes','links','yes');
 
-errcode=d.addBinPipe('pp1','23','32',1000,10,100);
+d.addBinPipe('pp1','23','32',1000,10,100);
 d.Binplot('nodes','yes','highlightlink',{'pp1'},'fontsize',8);
 disp('Press any key to continue...')
 %pause
@@ -395,7 +408,7 @@ newCurveIDofPump='C-1';
 newCurveXvalue=1500;
 newCurveYvalue=250;
 newCurveType='PUMP'; % PUMP, EFFICIENCY, VOLUME, HEADLOSS            
-errcode=d.addBinJunction(newID,x,y,newElevation,newBaseDemand,newDemandPattern,newPumpID,...
+d.addBinJunction(newID,x,y,newElevation,newBaseDemand,newDemandPattern,newPumpID,...
 ToNodeID,newCurveIDofPump,newCurveXvalue,newCurveYvalue,newCurveType,'PUMP');
 d.Binplot('nodes','yes','highlightlink',{'PU1'},'fontsize',10);
 
@@ -406,7 +419,7 @@ newElevation=500; %ft
 ToNodeID='11'; 
 newPumpID='PU2';
 Code='PUMP';
-newCurveIDofPump='C-1'; 
+newCurveIDofPump='C-1n'; 
 newCurveXvalue=1500;
 newCurveYvalue=250;
 [errcode]=d.addBinReservoir(newID,x,y,newElevation,newPumpID,...
@@ -430,17 +443,17 @@ MinVol=0;
 newPumpID='PU3';
 ToNodeID='32'; 
 Code='PUMP';
-newCurveIDofPump='C-1'; 
+newCurveIDofPump='C-1n2'; 
 newCurveXvalue=[1500 1800 2000];
 newCurveYvalue=[250 200 0];
-errcode=d.addBinTank(newID,x,y,MaxLevel,Diameter,Initlevel,newElevation,initqual,MinLevel,MinVol,newPumpID,...
+d.addBinTank(newID,x,y,MaxLevel,Diameter,Initlevel,newElevation,initqual,MinLevel,MinVol,newPumpID,...
 ToNodeID,newCurveIDofPump,newCurveXvalue,newCurveYvalue,newCurveType,Code);
 d.Binplot('nodes','yes','links','yes');
 
 % add pump and add curve
-errcode=d.addBinPump('PUMP1','21','32','C-2',1955,250,'PUMP') % CurveType: PUMP, EFFICIENCY, VOLUME, HEADLOSS            
+d.addBinPump('PUMP1','21','32','C-2',1955,250,'PUMP') % CurveType: PUMP, EFFICIENCY, VOLUME, HEADLOSS            
 power=18;
-errcode=d.addBinPump('PUMP2','12','23',power) % POWER PUMP        
+d.addBinPump('PUMP2','12','23',power) % POWER PUMP        
 d.Binplot('nodes','yes','highlightlink',{'PUMP1','PUMP2'},'fontsize',10);
 
 
@@ -457,7 +470,7 @@ newValveID='V1prv';
 newValveDiameter=100; 
 Code='PRV'; 
 newValveSetting=15; 
-errcode=d.addBinJunction(newID,x,y,newElevation,newBaseDemand,newDemandPattern,newValveID,...
+d.addBinJunction(newID,x,y,newElevation,newBaseDemand,newDemandPattern,newValveID,...
 ToNodeID,newValveDiameter,newValveSetting,Code);
 d.Binplot('nodes','yes','highlightlink',{'V1prv'},'fontsize',10);
 
@@ -470,12 +483,11 @@ newValveID='V2psv';
 newValveDiameter=100; 
 Code='PSV'; 
 newValveSetting=15; 
-[errcode]=d.addBinReservoir(newID,x,y,newElevation,newValveID,...
+d.addBinReservoir(newID,x,y,newElevation,newValveID,...
 ToNodeID,newValveDiameter,newValveSetting,Code);
-d.Binplot('nodes','yes','highlightlink',{'PU2'},'fontsize',10);
-if errcode
-    [errcode]=d.removeBinNodeID('S3');
-end
+d.Binplot('nodes','yes','highlightlink',{'V2psv'},'fontsize',10);
+d.removeBinNodeID('S3');
+    
 % Add Tank + PBV
 newID='T3';
 [x,y]=ginput(1);
@@ -490,7 +502,7 @@ newValveID='V3pbv';
 newValveDiameter=100; 
 Code='PBV'; 
 newValveSetting=15; 
-errcode=d.addBinTank(newID,x,y,MaxLevel,Diameter,Initlevel,newElevation,initqual,MinLevel,MinVol,newValveID,...
+d.addBinTank(newID,x,y,MaxLevel,Diameter,Initlevel,newElevation,initqual,MinLevel,MinVol,newValveID,...
 ToNodeID,newValveDiameter,newValveSetting,Code);
 d.Binplot('nodes','yes','links','yes');
 disp('Press any key to continue...')
@@ -499,16 +511,16 @@ pause
 
 %% Remove NODE, LINK - functions
 % Remove node
-[errcode]=d.removeBinNodeID('J3');
-[errcode]=d.removeBinNodeID('T3');
+d.removeBinNodeID('J3');
+d.removeBinNodeID('T3');
 d.Binplot('nodes','yes','links','yes');
 
 % Remove Link
 d.Binplot('highlightlink',{'121'})
-errcode=d.removeBinLinkID('121')
+d.removeBinLinkID('121')
 d.Binplot('nodes','yes','highlightlink',{'PUMP1','PU1'},'fontsize',10);
-errcode=d.removeBinLinkID('PUMP1')
-errcode=d.removeBinLinkID('PU1');d.Binplot('nodes','yes','links','yes');
+d.removeBinLinkID('PUMP1')
+d.removeBinLinkID('PU1');d.Binplot('nodes','yes','links','yes');
 %Warning: Node J2 disconnected. 
 
 %VALVES
@@ -518,29 +530,29 @@ toNode='J2';
 fromNode='22';
 newValveDiameter=110;
 newValveSetting=10; 
-errcode=d.addBinValvePRV(newValveID,fromNode,toNode,newValveDiameter,newValveSetting);
+d.addBinValvePRV(newValveID,fromNode,toNode,newValveDiameter,newValveSetting);
 d.Binplot('nodes','yes','links','yes','highlightlink',{'V1'},'highlightnode',{'J1'})
-errcode=d.removeBinNodeID('J1');
+d.removeBinNodeID('J1');
 d.Binplot('nodes','yes','links','yes');
 %PSV 
-errcode=d.addBinValvePSV('V2','32','10',newValveDiameter,newValveSetting);
+d.addBinValvePSV('V2','32','10',newValveDiameter,newValveSetting);
 d.Binplot('nodes','yes','highlightlink',{'V2','V1'},'fontsize',8);
 %PBV
-errcode=d.addBinValvePBV('V3','12','23',newValveDiameter,newValveSetting);
+d.addBinValvePBV('V3','12','23',newValveDiameter,newValveSetting);
 d.Binplot('nodes','yes','highlightlink',{'V3'},'fontsize',8);
 % FCV
-errcode=d.addBinValveFCV('V4','21','10',newValveDiameter,newValveSetting);
+d.addBinValveFCV('V4','21','10',newValveDiameter,newValveSetting);
 d.Binplot('nodes','yes','highlightlink',{'V4'},'fontsize',8);
 %TCV
-errcode=d.addBinValveTCV('V5','32','13',newValveDiameter,newValveSetting);
+d.addBinValveTCV('V5','32','13',newValveDiameter,newValveSetting);
 d.Binplot('nodes','yes','highlightlink',{'V5'},'fontsize',8);
 d.getBinComputedAllParameters  %"Run was successful."
 % %GPV
-errcode=d.addBinValveGPV('V6','11','22',newValveDiameter,newValveSetting); %%%%%%%%%%%%ERROR
-if errcode
-    d.Binplot('nodes','yes','highlightlink',{'V6'},'fontsize',8);
-    errcode=d.removeBinLinkID('V6');
-end
+d.addBinValveGPV('V6','11','22',newValveDiameter,newValveSetting); %%%%%%%%%%%%ERROR
+
+d.Binplot('nodes','yes','highlightlink',{'V6'},'fontsize',8);
+d.removeBinLinkID('V6');
+
 d.Binplot;
 disp('Press any key to continue...')
 pause
@@ -553,8 +565,8 @@ end
 % section [RULES]
 if strcmp(inpname,'BWSN_Network_1.inp')
     p=d.getBinRulesControlsInfo
-    errcode=d.removeBinRulesControlLinkID(p.BinRulesControlLinksID{4}{3}); % PUMP-170
-    errcode=d.removeBinRulesControlNodeID(p.BinRulesControlNodesID{4}{2}); % TANK-131
+    d.removeBinRulesControlLinkID(p.BinRulesControlLinksID{4}{3}); % PUMP-170
+    d.removeBinRulesControlNodeID(p.BinRulesControlNodesID{4}{2}); % TANK-131
     v=d.getBinRulesControlsInfo
     disp('Press any key to continue...')
     pause
@@ -570,8 +582,8 @@ if LinksInfo.BinLinkPumpCount
     ps=LinksInfo.BinLinkPumpStatus;
     idpumps=LinksInfo.BinLinkPumpStatusNameID;
     ps{1}='Closed';
-    errcode=d.setBinLinkPumpStatus(ps) 
-    pppnew=d.getBinLinksInfo
+    d.setBinLinkPumpStatus(ps) 
+    pppnew=d.getBinLinksInfo;
     pppnew.BinLinkInitialStatus
     pppnew.BinLinkPumpStatus
     disp('Press any key to continue...')
@@ -584,10 +596,10 @@ end
 % SECTION [REACTIONS]
 pp=LinksInfo.BinLinkWallReactionCoeff*0;
 pp2=LinksInfo.BinLinkBulkReactionCoeff*0;
-errcode=d.setBinLinkReactionCoeff('wall',pp,'bulk',pp2);
+d.setBinLinkReactionCoeff('wall',pp,'bulk',pp2);
 
-errcode=d.setBinLinkGlobalWallReactionCoeff(1.99)
-errcode=d.setBinLinkGlobalBulkReactionCoeff(2)
+d.setBinLinkGlobalWallReactionCoeff(1.99)
+d.setBinLinkGlobalBulkReactionCoeff(2)
 LinksInfo=d.getBinLinksInfo;
 LinksInfo.BinLinkBulkReactionCoeff
 LinksInfo.BinLinkWallReactionCoeff
@@ -603,7 +615,7 @@ pause
 d.BinUpdateClass
 p=d.BinNodeInitialQuality;
 p(1)=1;
-errcode=d.setBinNodeInitialQuality(p)
+d.setBinNodeInitialQuality(p)
 d.getBinNodesInfo.BinNodeInitialQuality
 disp('Press any key to continue...')
 pause
@@ -612,17 +624,24 @@ pause
 %% GET, SET OPTIONS
 % SECTION [OPTIONS]
 d.getBinOptionsInfo.BinQualityType
-errcode=d.setBinQualityChem
+d.setBinQualityChem
 d.getBinOptionsInfo.BinQualityType
-errcode=d.setBinQualityAge
+d.setBinQualityAge
 d.getBinOptionsInfo.BinQualityType
-errcode=d.setBinQualityNone
+d.setBinQualityNone
 d.getBinOptionsInfo.BinQualityType
 traceID=d.BinQualityTraceNodeID;
 n=d.getBinNodeNameID;
-errcode=d.setBinQualityTrace(n.BinNodeJunctionNameID{2})
+d.setBinQualityTrace(n.BinNodeJunctionNameID{2})
 d.getBinOptionsInfo.BinQualityType
 d.getBinOptionsInfo.BinQualityTraceNodeID
+
+species = 'Chlorine'; 
+units = 'mg/L';
+d.setBinQualType(species,units);
+d.getBinOptionsInfo.BinQualityType
+d.getBinOptionsInfo.BinQualityUnits
+
 disp('Press any key to continue...')
 pause
 
@@ -641,18 +660,18 @@ d.BinTimeReportingStart
 d.BinTimeStatisticsIndex
 d.BinTimeStatistics
 
-errcode=d.setBinTimeSimulationDuration(48*3600);
-errcode=d.setBinTimeHydraulicStep(1000);
-errcode=d.setBinTimeQualityStep(1000);
-errcode=d.setBinTimePatternStep(1000);
-errcode=d.setBinTimePatternStart(1);
-errcode=d.setBinTimeReportingStep(1000);
-errcode=d.setBinTimeReportingStart(1);
-errcode=d.setBinTimeStatisticsAverage;
-errcode=d.setBinTimeStatisticsMaximum;
-errcode=d.setBinTimeStatisticsMinimum;
-errcode=d.setBinTimeStatisticsNone;
-errcode=d.setBinTimeStatisticsRange;
+d.setBinTimeSimulationDuration(48*3600);
+d.setBinTimeHydraulicStep(1000);
+d.setBinTimeQualityStep(1000);
+d.setBinTimePatternStep(1000);
+d.setBinTimePatternStart(1);
+d.setBinTimeReportingStep(1000);
+d.setBinTimeReportingStart(1);
+d.setBinTimeStatisticsAverage;
+d.setBinTimeStatisticsMaximum;
+d.setBinTimeStatisticsMinimum;
+d.setBinTimeStatisticsNone;
+d.setBinTimeStatisticsRange;
 P=d.getBinTimesInfo
 disp('Press any key to continue...')
 pause
@@ -661,22 +680,21 @@ pause
 
 %% ADD, GET, REMOVE CURVES
 d.getBinCurvesInfo
-errcode=d.removeBinCurveID('C-1');
-errcode=d.removeBinCurveID('C-2');
-errcode=d.addBinCurvePump('C-1',[1500 1800 2000],[250 200 0])%Flow-Head
-errcode=d.addBinCurveEfficiency('C-2',[1500 1800 2000],[250 200 0])%Flow-Efficiency
-errcode=d.addBinCurveVolume('C33',[1500 1800 2000],[250 200 0])%Heigh-Volume
-errcode=d.addBinCurveHeadloss('C44',[1500 1800 2000],[250 200 0])%Flow-Headloss
+d.removeBinCurveID('C-1');
+d.removeBinCurveID('C-2');
+d.addBinCurvePump('C-1n3',[1500 1800 2000],[250 200 0])%Flow-Head
+d.addBinCurveEfficiency('C-2n',[1500 1800 2000],[250 200 0])%Flow-Efficiency
+d.addBinCurveVolume('C33',[1500 1800 2000],[250 200 0])%Heigh-Volume
+d.addBinCurveHeadloss('C44',[1500 1800 2000],[250 200 0])%Flow-Headloss
 d.getBinCurvesInfo
-errcode=d.removeBinCurveID('C-1');
-errcode=d.removeBinLinkID('PU3');d.Binplot
-errcode=d.removeBinNodeID('T2');d.Binplot
+d.removeBinLinkID('PU3');d.Binplot
+d.removeBinNodeID('T2');d.Binplot
 d.getBinCurvesInfo
 % warning Flow & Heigh
-errcode=d.addBinCurvePump('C-11',[2000 1500 1800],[250 200 0])
-errcode=d.addBinCurveEfficiency('C-22',[1500 2000 1800],[250 200 0])%Flow-Efficiency
-errcode=d.addBinCurveVolume('C333',[1500 2000 1800],[250 200 0])%Heigh-Volume
-errcode=d.addBinCurveHeadloss('C244',[1500 2000 1800],[250 200 0])%Flow-Headloss
+d.addBinCurvePump('C-11',[2000 1500 1800],[250 200 0])
+d.addBinCurveEfficiency('C-22',[1500 2000 1800],[250 200 0])%Flow-Efficiency
+d.addBinCurveVolume('C333',[1500 2000 1800],[250 200 0])%Heigh-Volume
+d.addBinCurveHeadloss('C244',[1500 2000 1800],[250 200 0])%Flow-Headloss
 d.getBinCurvesInfo
 disp('Press any key to continue...')
 pause
@@ -698,7 +716,7 @@ v.BinNodeSourceQuality(2)=20;
 b=d.getBinPatternsInfo
 v.BinNodeSourcePatternNameID(2)=b.BinPatternNameID(1);
 v.BinNodeSourceType{2}='SETPOINT'; % {'CONCEN','MASS', 'SETPOINT', 'FLOWPACED'}
-errcode=d.setBinNodeSourceQuality(v)
+d.setBinNodeSourceQuality(v)
 
 v=d.getBinNodeSourceInfo
 v.BinNodeSourceQuality
@@ -708,50 +726,52 @@ v.BinNodeSourceQuality(3)=20;
 b=d.getBinPatternsInfo
 v.BinNodeSourcePatternNameID(3)=b.BinPatternNameID(1);
 v.BinNodeSourceType{3}='CONCEN'; % {'CONCEN','MASS', 'SETPOINT', 'FLOWPACED'}
-errcode=d.setBinNodeSourceQuality(v)
+d.setBinNodeSourceQuality(v)
 v=d.getBinNodeSourceInfo
 disp('Press any key to continue...')
 pause
 
 
 %% GET, SET VALVES
-if strcmp(inpname,'BWSN_Network_1.inp')
-    if d.BinLinkValveCount
-        index=1;
-        m=d.BinLinkValveMinorLoss; % CANYARS
-        m(index)=0.2;
-        dv=d.BinLinkValveDiameters;
-        dv(index)=180;
-        t=d.BinLinkValveType;
-        t{index}='TCV';
-        s=d.BinLinkValveSetting;
-        s(index)=0.1;
-        statuss=d.BinLinkValveStatus;
-        statuss{index}='closed';
-        errcode=d.setBinLinkValvesParameters('minorloss',m,'diameter',dv,'type',t,'setting',s,'status',statuss);
-        d.getBinLinksInfo
-        disp('Press any key to continue...')
-        pause
-    end
+if d.BinLinkValveCount
+    index=1;
+    m=d.BinLinkValveMinorLoss; % CANYARS
+    m(index)=0.2;
+    dv=d.BinLinkValveDiameters;
+    dv(index)=180;
+    t=d.BinLinkValveType;
+    t{index}='TCV';
+    s=d.BinLinkValveSetting;
+    s(index)=0.1;
+    statuss=d.BinLinkValveStatus;
+    statuss{index}='closed';
+    d.setBinLinkValvesParameters('minorloss',m,'diameter',dv,'type',t,'setting',s,'status',statuss);
+    v=d.getBinLinksInfo;
+    v.BinLinkValveMinorLoss
+    v.BinLinkValveDiameters
+    v.BinLinkValveType
+    v.BinLinkValveSetting
+    v.BinLinkValveStatus
+    disp('Press any key to continue...')
+    pause
 end
-
 
 
 %% ADD, SET, GET PATTERNS 
 % add pattern
-errcode=d.addBinPattern('new',1:0.1:2);
-errcode=d.addBinPattern('new3',1:0.1:2);
-d.getBinPatternsInfo
-
+d.addBinPattern('patn1',1:0.1:2);
+d.addBinPattern('patn2',1:0.1:2);
 % set pattern
-bb=d.getBinPatternsInfo
-idp=bb.BinPatternNameID;
-values=bb.BinPatternValue{2};
+pp=d.getBinPatternsInfo;
+idp=pp.BinPatternNameID;
+values=pp.BinPatternValue{2};
 values(1:end)=1;
-errcode=d.setBinPattern(idp{1},values);
+d.setBinPattern(idp{1},values);
 d.getBinPatternsInfo
-errcode=d.setBinPattern(idp{2},values);
-d.getBinPatternsInfo
+d.setBinPattern(idp{2},values);
+p=d.getBinPatternsInfo;
+p.BinPatternValue{1}
+p.BinPatternValue{2}
 disp('Press any key to continue...')
 pause
 
@@ -775,22 +795,22 @@ pause
 %% GET, ADD, REMOVE CONTROLS
 if strcmp(inpname,'Net1.inp')
     v=d.getBinControlsInfo;
-    errcode=d.removeBinControlLinkID(v.BinControlLinksID{1});
+    d.removeBinControlLinkID(v.BinControlLinksID{1});
     % LINK x status AT TIME t
     v=d.getBinControlsInfo
-    errcode=d.addBinControl('10','OPEN','10.00');
+    d.addBinControl('10','OPEN','10.00');
     % LINK x status AT CLOCKTIME c AM/PM
-    errcode=d.addBinControl('10','OPEN','12.00','AM');
+    d.addBinControl('10','OPEN','12.00','AM');
     v=d.getBinControlsInfo
     if ~errcode
-        errcode=d.removeBinControlLinkID(v.BinControlLinksID{1});
+        d.removeBinControlLinkID(v.BinControlLinksID{1});
     end
     v=d.getBinControlsInfo
     % LINK x status IF NODE y ABOVE/BELOW z
-    errcode=d.addBinControl('12','OPEN','12','ABOVE',100)
+    d.addBinControl('12','OPEN','12','ABOVE',100)
     v=d.getBinControlsInfo
     if ~errcode
-        errcode=d.removeBinControlNodeID(v.BinControlNodesID{1});
+        d.removeBinControlNodeID(v.BinControlNodesID{1});
     end
     v=d.getBinControlsInfo
     disp('Press any key to continue...')
@@ -926,7 +946,7 @@ d.BinNodeCount
 d.BinNodeNameID           
 d.BinNodeBaseDemands         
 d.BinNodeCoordinates          
-d.BinNodeDemandPatternNameID  
+d.BinNodeJunDemandPatternNameID  
 d.BinNodeElevations           
 d.BinNodeInitialQuality   
 d.BinNodeType               

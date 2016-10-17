@@ -787,7 +787,7 @@ if strcmp(inpname,'BWSN_Network_1.inp')
         LinkType(LinkValveIndex(index))
         d.getLinkMinorLossCoeff(LinkValveIndex)
         d.getLinkDiameter(LinkValveIndex)
-        d.getLinkInitialSetting(LinkValveIndex) % bug here! check
+        d.getLinkInitialSetting(LinkValveIndex)  %if write in [STATUS] section the values of setting in valves is diff! Check!
         d.getLinkInitialStatus(LinkValveIndex)
         disp('Press any key to continue...')
         pause

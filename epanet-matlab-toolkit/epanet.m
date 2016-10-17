@@ -297,7 +297,7 @@ classdef epanet <handle
         BinNodeBaseDemands;          % Base demands of nodes
         BinNodeCoordinates;          % Coordinates for each node (long/lat & intermediate pipe coordinates) - vertices
         BinNodeCount;                % Number of nodes
-        BinNodeDemandPatternNameID;  % ID of demand patterns
+        BinNodeJunDemandPatternNameID;% ID of demand patterns
         BinNodeElevations;           % Elevation of nodes
         BinNodeInitialQuality;       % Initial quality of nodes
         BinNodeJunctionCount;        % Number of junctions
@@ -3509,7 +3509,7 @@ classdef epanet <handle
                         obj.BinNodeType={};
                         obj.BinNodeJunctionsBaseDemands=[];
                         obj.BinNodeJunctionsBaseDemandsID={};
-                        obj.BinNodeDemandPatternNameID={};
+                        obj.BinNodeJunDemandPatternNameID={};
                         continue;
                         % [RESERVOIRS] section
                     elseif strcmpi(tok(1:5),'[RESE')
@@ -3743,12 +3743,12 @@ classdef epanet <handle
                             obj.BinNodeJunctionsBaseDemands(k)=str2num(atline{3});
                             if length(atline)>3
                                 if ~sum(atline{4}==';')
-                                    obj.BinNodeDemandPatternNameID{k}=atline{4};
+                                    obj.BinNodeJunDemandPatternNameID{k}=atline{4};
                                 else
-                                    obj.BinNodeDemandPatternNameID{k}='';
+                                    obj.BinNodeJunDemandPatternNameID{k}='';
                                 end
                             else
-                                obj.BinNodeDemandPatternNameID{k}='';
+                                obj.BinNodeJunDemandPatternNameID{k}='';
                             end
                         end
                     end
@@ -3867,15 +3867,15 @@ classdef epanet <handle
                     if length(atline)>2
                         if ~isempty(obj.BinNodeJunctionsBaseDemandsID)
                             if strcmp(obj.BinNodeJunctionsBaseDemandsID{end},atline{1})
-                                obj.BinNodeDemandPatternNameID{indd}=atline{3};
+                                obj.BinNodeJunDemandPatternNameID{indd}=atline{3};
                             else
-                                obj.BinNodeDemandPatternNameID{indd}=atline{3}; 
+                                obj.BinNodeJunDemandPatternNameID{indd}=atline{3}; 
                             end
                         else
-                            obj.BinNodeDemandPatternNameID{indd}=atline{3};
+                            obj.BinNodeJunDemandPatternNameID{indd}=atline{3};
                         end
                     else
-                        obj.BinNodeDemandPatternNameID{indd}='';
+                        obj.BinNodeJunDemandPatternNameID{indd}='';
                     end
                     obj.BinNodeJunctionsBaseDemandsID{d}=atline{1};                       
                     d=d+1;
@@ -4098,10 +4098,10 @@ classdef epanet <handle
             obj.BinLinkRoughnessCoeff = [obj.BinLinkPipeRoughness zeros(1,obj.BinLinkPumpCount) zeros(1,obj.BinLinkValveCount)];
 %             obj.BinNodeJunctionsBaseDemands(length(obj.BinNodeJunctionsBaseDemands):obj.BinNodeJunctionCount)=0;
             obj.BinNodeBaseDemands = single([obj.BinNodeJunctionsBaseDemands zeros(1,obj.BinNodeReservoirCount) zeros(1,obj.BinNodeTankCount)]);
-            obj.BinNodeDemandPatternNameID=[obj.BinNodeDemandPatternNameID obj.BinNodeResDemandPatternNameID];
-            for i=obj.BinNodeTankIndex
-               obj.BinNodeDemandPatternNameID{i}=''; 
-            end
+%             obj.BinNodeJunDemandPatternNameID=[obj.BinNodeJunDemandPatternNameID obj.BinNodeResDemandPatternNameID];
+%             for i=obj.BinNodeTankIndex
+%                obj.BinNodeDemandPatternNameID{i}=''; 
+%             end
             
             b={};
             for i=1:obj.BinLinkCount
@@ -4587,7 +4587,7 @@ classdef epanet <handle
             indexParameter=3;
             [Errcode]=setBinParam(obj,indexParameter,parameter,sections); 
         end
-        function [Errcode]=setBinNodeDemandPatternNameID(obj,varargin)
+        function [Errcode]=setBinNodeJunDemandPatternNameID(obj,varargin)
             parameter=varargin{1};
             sections={'[JUNCTIONS]','[RESERVOIRS]','[DEMANDS]','[STATUS]','[EMITTERS]'};
             indexParameter=4;
@@ -4699,10 +4699,10 @@ classdef epanet <handle
             % % /*Write [DEMANDS] section */
                fprintf(f,'\n[DEMANDS]');
                for u=1:obj.BinNodeJunctionCount
-                   if isempty(obj.BinNodeDemandPatternNameID{u})
+                   if isempty(obj.BinNodeJunDemandPatternNameID{u})
                        fprintf(f,'\n%s%s%f%s%s',obj.BinNodeNameID{u},sps,obj.BinNodeBaseDemands(u),sps,obj.BinPatternNameID{1});
                    else
-                       fprintf(f,'\n%s%s%f%s%s',obj.BinNodeNameID{u},sps,obj.BinNodeBaseDemands(u),sps,obj.BinNodeDemandPatternNameID{u});
+                       fprintf(f,'\n%s%s%f%s%s',obj.BinNodeNameID{u},sps,obj.BinNodeBaseDemands(u),sps,obj.BinNodeJunDemandPatternNameID{u});
                    end
                end
                % % /*Write [EMITTERS] section */
@@ -5922,18 +5922,18 @@ classdef epanet <handle
                 fread(fid1, 1, 'float');
                 
                 for i=1:value.BinNumberReportingPeriods
-                    value.BinnodeDemand(:,i)         = fread(fid1, value.BinNumberNodes, 'float')';
-                    value.BinnodeHead(:,i)           = fread(fid1, value.BinNumberNodes, 'float')';
-                    value.BinnodePressure(:,i)       = fread(fid1, value.BinNumberNodes, 'float')';
-                    value.BinnodeQuality(:,i)        = fread(fid1, value.BinNumberNodes, 'float')';
-                    value.BinlinkFlow(:,i)           = fread(fid1, value.BinNumberLinks, 'float')';
-                    value.BinlinkVelocity(:,i)       = fread(fid1, value.BinNumberLinks, 'float')';
-                    value.BinlinkHeadloss(:,i)       = fread(fid1, value.BinNumberLinks, 'float')';
-                    value.BinlinkQuality(:,i)        = fread(fid1, value.BinNumberLinks, 'float')';
-                    value.BinlinkStatus(:,i)         = fread(fid1, value.BinNumberLinks, 'float')';
-                    value.BinlinkSetting(:,i)        = fread(fid1, value.BinNumberLinks, 'float')';
-                    value.BinlinkReactionRate(:,i)   = fread(fid1, value.BinNumberLinks, 'float')';
-                    value.BinlinkFrictionFactor(:,i) = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinnodeDemand(i,:)         = fread(fid1, value.BinNumberNodes, 'float')';
+                    value.BinnodeHead(i,:)           = fread(fid1, value.BinNumberNodes, 'float')';
+                    value.BinnodePressure(i,:)       = fread(fid1, value.BinNumberNodes, 'float')';
+                    value.BinnodeQuality(i,:)        = fread(fid1, value.BinNumberNodes, 'float')';
+                    value.BinlinkFlow(i,:)           = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinlinkVelocity(i,:)       = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinlinkHeadloss(i,:)       = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinlinkQuality(i,:)        = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinlinkStatus(i,:)         = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinlinkSetting(i,:)        = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinlinkReactionRate(i,:)   = fread(fid1, value.BinNumberLinks, 'float')';
+                    value.BinlinkFrictionFactor(i,:) = fread(fid1, value.BinNumberLinks, 'float')';
                 end
                 value.BinAverageBulkReactionRate=fread(fid1, 1, 'float')';
                 value.BinAverageWallReactionRate=fread(fid1, 1, 'float')';
@@ -5979,7 +5979,7 @@ classdef epanet <handle
                         value.BinNodeJunctionIndex=[];
                         value.BinNodeJunctionElevation=[];
                         value.BinNodeJunctionsBaseDemands=[];
-                        value.BinNodeDemandPatternNameID={};
+                        value.BinNodeJunDemandPatternNameID={};
                         value.BinNodeJunctionsBaseDemandsID={};k=1;
                         continue;
                     elseif strcmpi(tok(1:5),'[RESE')
@@ -6018,7 +6018,7 @@ classdef epanet <handle
                         continue;
                     elseif strcmpi(tok(1:5),'[DEMA') %&& max(value.BinNodeJunctionsBaseDemands)==0
                         sect=8;d=1;
-%                         value.BinNodeDemandPatternNameID={};
+%                         value.BinNodeJunDemandPatternNameID={};
                         continue;
                         % [QUALITY] section
                     elseif strcmpi(tok(1:5),'[QUAL')
@@ -6072,12 +6072,12 @@ classdef epanet <handle
                             value.BinNodeJunctionsBaseDemands(k)=single(str2num(atline{3}));
                             if length(atline)>3
                                 if ~sum(atline{4}==';')
-                                    value.BinNodeDemandPatternNameID{k}=atline{4};
+                                    value.BinNodeJunDemandPatternNameID{k}=atline{4};
                                 else
-                                    value.BinNodeDemandPatternNameID{k}='';
+                                    value.BinNodeJunDemandPatternNameID{k}='';
                                 end
                             else
-                                value.BinNodeDemandPatternNameID{k}='';
+                                value.BinNodeJunDemandPatternNameID{k}='';
                             end
                         end
                     end
@@ -6121,10 +6121,10 @@ classdef epanet <handle
                         value.BinNodeJunctionsBaseDemands(indd)=single(str2num(atline{2}));
                     end
                     value.BinNodeJunctionsBaseDemandsID{d}=atline{1};
-                    if length(atline)>2
-                        value.BinNodeDemandPatternNameID{indd}=atline{3};
+                    if length(atline)>2 
+                        value.BinNodeJunDemandPatternNameID{indd}=atline{3};
                     else
-                        value.BinNodeDemandPatternNameID{indd}='';
+                        value.BinNodeJunDemandPatternNameID{indd}='';
                     end
                     d=d+1;   
                     % Quality
@@ -6166,10 +6166,10 @@ classdef epanet <handle
             value.BinNodeCoordinates{4} = verty;
             value.BinNodeElevations = single([value.BinNodeJunctionElevation value.BinNodeReservoirElevation value.BinNodeTankElevation]);
 %             value.BinNodeJunctionsBaseDemands(length(value.BinNodeJunctionsBaseDemands):value.BinNodeJunctionCount)=0;
-            value.BinNodeDemandPatternNameID=[value.BinNodeDemandPatternNameID value.BinNodeResDemandPatternNameID];
-            for i=value.BinNodeTankIndex
-               value.BinNodeDemandPatternNameID{i}=''; 
-            end
+%             value.BinNodeJunDemandPatternNameID=[value.BinNodeJunDemandPatternNameID value.BinNodeResDemandPatternNameID];
+%             for i=value.BinNodeTankIndex
+%                value.BinNodeDemandPatternNameID{i}=''; 
+%             end
             value.BinNodeBaseDemands = single([value.BinNodeJunctionsBaseDemands zeros(1,value.BinNodeReservoirCount) zeros(1,value.BinNodeTankCount)]);
             value.BinNodeIndex=obj.getBinNodeIndex;
         end
@@ -11127,54 +11127,54 @@ function value = getBinComputedTimeSeries(obj,indParam,varargin)
         end
         for i=1:NumberReportingPeriods
             if indParam==11
-                value(:,i) = fread(fid1, BinNodeCount, 'float')'; % nodeDemand
+                value(i,:) = fread(fid1, BinNodeCount, 'float')'; % nodeDemand
                 fread(fid1, BinNodeCount*3, 'float');
                 fread(fid1, BinLinkCount*8, 'float');
             elseif indParam==12
                 fread(fid1, BinNodeCount, 'float');
-                value(:,i) = fread(fid1, BinNodeCount, 'float')'; % nodeHead
+                value(i,:) = fread(fid1, BinNodeCount, 'float')'; % nodeHead
                 fread(fid1, BinNodeCount*2, 'float');
                 fread(fid1, BinLinkCount*8, 'float');
             elseif indParam==13
                 fread(fid1, BinNodeCount*2, 'float');
-                value(:,i) = fread(fid1, BinNodeCount, 'float')'; % nodePressure
+                value(i,:) = fread(fid1, BinNodeCount, 'float')'; % nodePressure
                 fread(fid1, BinNodeCount, 'float');
                 fread(fid1, BinLinkCount*8, 'float');
             elseif indParam==14
                 fread(fid1, BinNodeCount*3, 'float');
-                value(:,i) = fread(fid1, BinNodeCount, 'float')'; % nodeQuality
+                value(i,:) = fread(fid1, BinNodeCount, 'float')'; % nodeQuality
                 fread(fid1, BinLinkCount*8, 'float');
             elseif indParam==15
                 fread(fid1, BinNodeCount*4, 'float');
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkFlow
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkFlow
                 fread(fid1, BinLinkCount*7, 'float');
             elseif indParam==16
                 fread(fid1, BinNodeCount*4+BinLinkCount, 'float');
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkVelocity
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkVelocity
                 fread(fid1, BinLinkCount*6, 'float');
             elseif indParam==17
                 fread(fid1, BinNodeCount*4+BinLinkCount*2, 'float');
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkHeadloss
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkHeadloss
                 fread(fid1, BinLinkCount*5, 'float');
             elseif indParam==18
                 fread(fid1, BinNodeCount*4+BinLinkCount*3, 'float');
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkQuality
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkQuality
                 fread(fid1, BinLinkCount*4, 'float');
             elseif indParam==19
                 fread(fid1, BinNodeCount*4+BinLinkCount*4, 'float')
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkStatus
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkStatus
                 fread(fid1, BinLinkCount*3, 'float');
             elseif indParam==20
                 fread(fid1, BinNodeCount*4+BinLinkCount*5, 'float');
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkSetting
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkSetting
                 fread(fid1, BinLinkCount*2, 'float');
             elseif indParam==21
                 fread(fid1, BinNodeCount*4+BinLinkCount*6, 'float')
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkReactionRate
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkReactionRate
                 fread(fid1, BinLinkCount, 'float');
             elseif indParam==22
                 fread(fid1, BinNodeCount*4+BinLinkCount*7, 'float');
-                value(:,i) = fread(fid1, BinLinkCount, 'float')'; % linkFrictionFactor
+                value(i,:) = fread(fid1, BinLinkCount, 'float')'; % linkFrictionFactor
             elseif indParam>22
                 fread(fid1, BinNodeCount*4+BinLinkCount*8, 'float');
             end

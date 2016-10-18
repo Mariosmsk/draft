@@ -372,7 +372,7 @@ classdef epanet <handle
         BinUnits_US_Customary;       % Equal with 1 if is US-Customary 
     end
     properties (Constant = true)
-        classversion='2.1a';
+        classversion='2.1b';
         
         TYPECONTROL={'LOWLEVEL','HIGHLEVEL', 'TIMER', 'TIMEOFDAY'}; % Constants for control: 'LOWLEVEL','HILEVEL', 'TIMER', 'TIMEOFDAY'
         TYPECURVE={'PUMP','EFFICIENCY','VOLUME','HEADLOSS'}; % Constants for pump curves: 'PUMP','EFFICIENCY','VOLUME','HEADLOSS'
@@ -2124,7 +2124,7 @@ classdef epanet <handle
                 NodeNumDemandC=obj.getNodeDemandCategoriesNumber;
                 for i=1:obj.getNodeJunctionCount
                     for u=1:NodeNumDemandC(i)
-                        [obj.Errcode] = ENsetbasedemand(i, NodeNumDemandC(u), value{NodeNumDemandC(u)}(i),obj.LibEPANET);
+                        [obj.Errcode] = ENsetbasedemand(i, u, value{u}(i),obj.LibEPANET);
                     end
                 end
             else %version epanet20012

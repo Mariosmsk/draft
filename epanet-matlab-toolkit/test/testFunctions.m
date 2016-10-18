@@ -86,7 +86,7 @@ nodeCoords{2}(indexNode)=nodeCoords{2}(indexNode)+20;%Y
 d.setNodeCoordinates(nodeCoords)
 d.plot;
 
-% Qualyti Info
+% Quality Info
 d.getQualityInfo
 
 % Others

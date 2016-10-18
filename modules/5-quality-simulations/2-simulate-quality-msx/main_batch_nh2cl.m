@@ -25,7 +25,7 @@ results2 = output;
 % Plots
 figure;
 subplot(2,1,1);
-plot(results1.compQualNodes.Time/3600,results1.compQualNodes.Quality{1}{3}*1000);
+plot(results1.compQualNodes.Time/3600,results1.compQualNodes.Quality{1}(:,3)*1000);
 hold on;
 xlabel('Time(hour)');
 ylabel('NH2CL(mM)');
@@ -36,7 +36,7 @@ tmp=[{['EPANET-MSX at pH=',num2str(ph1)]},{['Matlab Results at pH=',num2str(ph1)
 legend(tmp);
 
 subplot(2,1,2);
-plot(results2.compQualNodes.Time/3600,results2.compQualNodes.Quality{2}{3}*1000);
+plot(results2.compQualNodes.Time/3600,results2.compQualNodes.Quality{2}(:,3)*1000);
 hold on;
 xlabel('Time(hour)');
 ylabel('NH2CL(mM)');

@@ -18,7 +18,7 @@ results = output;
 for u=1:length(results.nodeID)
     figure(settings.figure);subplot(2,2,u);cmap=hsv(5);
     for i=1:results.MSXSpeciesCount
-        plot(results.compQualNodes.Time,results.compQualNodes.Quality{settings.index(u)}{i},'Color',cmap(i,:));
+        plot(results.compQualNodes.Time,results.compQualNodes.Quality{settings.index(u)}(:,i),'Color',cmap(i,:));
         hold on; 
     end
     legend(results.MSXSpeciesNameID);
@@ -30,7 +30,7 @@ end
 for u=3:4
     figure(settings.figure);subplot(2,2,u);cmap=hsv(5);
     for i=1:results.MSXSpeciesCount
-        plot(results.compQualLinks.Time,results.compQualLinks.Quality{settings.index(u-2)}{i},'Color',cmap(i,:));
+        plot(results.compQualLinks.Time,results.compQualLinks.Quality{settings.index(u-2)}(:,i),'Color',cmap(i,:));
         hold on; 
     end
     legend(results.MSXSpeciesNameID)

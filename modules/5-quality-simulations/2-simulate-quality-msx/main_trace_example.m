@@ -15,7 +15,7 @@ results = output;
 u=ones(1,5); pp1n=[]; pp2n=[]; pp3n=[]; pp4n=[]; pp5n=[];
 ppNodesvalue=[];
 for i=1:length(results.nodeID)
-    ppNodesvalue(i) = mean(results.compQualNodes.Quality{i}{1});
+    ppNodesvalue(i) = mean(results.compQualNodes.Quality{i}(:,1));
     if ppNodesvalue(i)<0.2
         pp1n{u(1)}=results.nodeID{i}; u(1)=u(1)+1;
     end
@@ -42,7 +42,7 @@ c5n = cell(1,length(pp5n)); c5n(:) = {'r'};
 u=ones(1,5); pp1=[]; pp2=[]; pp3=[]; pp4=[]; pp5=[];
 ppLinksvalue=[];
 for i=1:length(results.linkID)
-    ppLinksvalue(i) = mean(results.compQualLinks.Quality{i}{1});
+    ppLinksvalue(i) = mean(results.compQualLinks.Quality{i}(:,1));
     if ppLinksvalue(i)<0.2
         pp1{u(1)}=results.linkID{i}; u(1)=u(1)+1;
     end

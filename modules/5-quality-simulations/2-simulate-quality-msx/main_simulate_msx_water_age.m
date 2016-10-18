@@ -17,10 +17,10 @@ compQualLinks=d.getMSXComputedQualityLink;
 compQualNodes=d.getMSXComputedQualityNode;
 WAnodes=[];WAlinks=[];
 for i=1:d.NodeCount
-    WAnodes(:,i) = compQualNodes.Quality{i}{1};
+    WAnodes(:,i) = compQualNodes.Quality{i}(:,1);
 end
 for i=1:d.LinkCount
-    WAlinks(:,i) = compQualLinks.Quality{i}{1};
+    WAlinks(:,i) = compQualLinks.Quality{i}(:,1);
 end
 delete(which(settings.msxfilename));
 d.unloadMSX;

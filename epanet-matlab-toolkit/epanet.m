@@ -4,10 +4,10 @@ classdef epanet <handle
     %
     %
     %   How to run: 
-    %   d=epanet('networks/Net1_Rossman2000.inp');
+    %   d=epanet('Net1_Rossman2000.inp');
     %   
     %   To select a different DLL version:  
-    %   d=epanet('networks/Net1_Rossman2000.inp','epanet2');
+    %   d=epanet('Net1_Rossman2000.inp','epanet2');
     %
     %   EPANET is software that models water distribution piping systems
     %   developed by the US EPA and provided under a public domain licence.

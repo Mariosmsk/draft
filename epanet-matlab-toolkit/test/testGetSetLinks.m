@@ -11,6 +11,7 @@ close all;
 inpname='Net1.inp';  
 % Net1 Net2 Net3 BWSN_Network_1 
 d=epanet(inpname);
+% d=epanet(inpname, 'epanet2');
 
 %% *Get Links Data (EXAMPLES)*
 all_diameters = d.getLinkDiameter;

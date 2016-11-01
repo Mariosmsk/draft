@@ -14,6 +14,7 @@ inpname='Net1.inp';
 % version='epanet2'; % version dev2.1
 % d=epanet(inpname,version);
 d=epanet(inpname);
+% d=epanet(inpname, 'epanet2');
 
 d.plot('nodes','yes','links','yes','highlightnode',{'10','11'},'highlightlink',{'10'},'fontsize',8);
 d.plot('line','no');
@@ -24,96 +25,111 @@ d.plot('nodesindex','yes','fontsize',14);
 d.getConnectivityMatrix
 d.getLibFunctions
 
+newFunctionsDev2_1 = {'ENgetpumptype' , 'ENgetheadcurveindex', 'ENsetcurvevalue',...
+            'ENsetcurve', 'ENaddcurve', 'ENgetcurvevalue', 'ENgetcurve',...
+            'ENgetcurvelen', 'ENgetcurveid', 'ENgetcurveindex', 'ENsetcoord',...
+            'ENgetcoord', 'ENgetstatistic', 'ENgetnumdemands', 'ENgetbasedemand',...	
+            'ENgetdemandpattern', 'ENsetbasedemand', 'ENgetaveragepatternvalue'};
+        
 %% New Functions 2.1
-d.getLinkPumpTypeCode   % returns type index of all pumps
-d.getLinkPumpType       % returns type name of all pumps: CONSTANT_HORSEPOWER, POWER_FUNCTION, CUSTOM
-d.getHeadCurveIndex     % returns index of all pump head curve
-d.getCurveNameID        % returns all curve IDs
-d.getCurveNameID(1)     % returns specific curve ID
-d.addCurve('NewCur1')   % add new curve with ID
-indexCurve=d.addCurve('NewCur2', [1800 200; 1500 400]); % add new curve with points
-d.getCurveNameID
-d.getCurveValue(indexCurve)     % returns all points for specific curve index
-d.getCurveValue(indexCurve,2)   % returns specific point for specific curve index
+nF=0; % old dll
+for i=1:length(newFunctionsDev2_1)
+    if sum(strcmp(d.libFunctions,newFunctionsDev2_1(i)))
+        nF=1; % new dll
+        break;
+    end
+end
+if nF==1
+    d.getLinkPumpTypeCode   % returns type index of all pumps
+    d.getLinkPumpType       % returns type name of all pumps: CONSTANT_HORSEPOWER, POWER_FUNCTION, CUSTOM
+    d.getHeadCurveIndex     % returns index of all pump head curve
+    d.getCurveNameID        % returns all curve IDs
+    d.getCurveNameID(1)     % returns specific curve ID
+    d.addCurve('NewCur1')   % add new curve with ID
+    indexCurve=d.addCurve('NewCur2', [1800 200; 1500 400]); % add new curve with points
+    d.getCurveNameID
+    d.getCurveValue(indexCurve)     % returns all points for specific curve index
+    d.getCurveValue(indexCurve,2)   % returns specific point for specific curve index
 
-d.setCurve(3,[1900 300; 1400 200]) % Change an existing curve 
-d.getCurveValue(indexCurve) 
+    d.setCurve(3,[1900 300; 1400 200]) % Change an existing curve 
+    d.getCurveValue(indexCurve) 
 
-d.getCurvesInfo
+    d.getCurvesInfo
 
-len=d.getCurveLengths
-d.getCurveLengths(3)
-d.getCurveLengths('NewCur2')
+    len=d.getCurveLengths
+    d.getCurveLengths(3)
+    d.getCurveLengths('NewCur2')
 
-d.getCurveIndex
-d.getCurveIndex('NewCur1')
+    d.getCurveIndex
+    d.getCurveIndex('NewCur1')
 
-pointindex=2
-tmppoints=d.getCurveValue(indexCurve,pointindex)
-d.setCurveValue(indexCurve,pointindex,tmppoints+100)
-d.getCurveValue(indexCurve,pointindex)
+    pointindex=2
+    tmppoints=d.getCurveValue(indexCurve,pointindex)
+    d.setCurveValue(indexCurve,pointindex,tmppoints+100)
+    d.getCurveValue(indexCurve,pointindex)
 
 
-bd1=d.getNodeBaseDemands % get an array of the base demands (some nodes may have multiple base demands for different patterns)
-bd1{1}
-node_index=5
-bd1{1}(node_index)= bd1{1}(node_index)+100
-d.setNodeBaseDemands(bd1)
-bd2=d.getNodeBaseDemands
-bd2{1}
+    bd1=d.getNodeBaseDemands % get an array of the base demands (some nodes may have multiple base demands for different patterns)
+    bd1{1}
+    node_index=5
+    bd1{1}(node_index)= bd1{1}(node_index)+100
+    d.setNodeBaseDemands(bd1)
+    bd2=d.getNodeBaseDemands
+    bd2{1}
 
-d.getNodeDemandCategoriesNumber
-d.getNodeDemandCategoriesNumber(end)
-d.getNodeDemandCategoriesNumber(5:end)
+    d.getNodeDemandCategoriesNumber
+    d.getNodeDemandCategoriesNumber(end)
+    d.getNodeDemandCategoriesNumber(5:end)
 
-% ENgetdemandpattern - Retrieves the index of a demand pattern for a specific demand category of a node
-d.getNodeDemandPatternNameID{1}
-d.getNodeDemandPatternIndex{1}
+    % ENgetdemandpattern - Retrieves the index of a demand pattern for a specific demand category of a node
+    d.getNodeDemandPatternNameID{1}
+    d.getNodeDemandPatternIndex{1}
 
-% ENgetaveragepatternvalue - Retrieves the average value of a pattern
-d.getPatternAverageValue
+    % ENgetaveragepatternvalue - Retrieves the average value of a pattern
+    d.getPatternAverageValue
 
-% ENgetstatistic - Retrieves hydraulic simulation statistic
-d.getStatistic
+    % ENgetstatistic - Retrieves hydraulic simulation statistic
+    d.getStatistic
 
-%[int32, singlePtr, singlePtr] ENgetcoord(int32, singlePtr, singlePtr)
+    %[int32, singlePtr, singlePtr] ENgetcoord(int32, singlePtr, singlePtr)
 
-d.plot;
-nodeCoords=d.getNodeCoordinates; 
-indexNode=1;
-nodeCoords{1}(indexNode)=nodeCoords{1}(indexNode)+10;%X
-nodeCoords{2}(indexNode)=nodeCoords{2}(indexNode)+20;%Y
-d.setNodeCoordinates(nodeCoords)
-d.plot;
+    d.plot;
+    nodeCoords=d.getNodeCoordinates; 
+    indexNode=1;
+    nodeCoords{1}(indexNode)=nodeCoords{1}(indexNode)+10;%X
+    nodeCoords{2}(indexNode)=nodeCoords{2}(indexNode)+20;%Y
+    d.setNodeCoordinates(nodeCoords)
+    d.plot;
 
-% Quality Info
-d.getQualityInfo
+    % Quality Info
+    d.getQualityInfo
 
-% Others
-n=d.getComputedHydraulicTimeSeries; % EN_TANKVOLUME - ENgetnodevalue
-n.TankVolume(:,d.NodeTankIndex)
+    % Others
+    n=d.getComputedHydraulicTimeSeries; % EN_TANKVOLUME - ENgetnodevalue
+    n.TankVolume(:,d.NodeTankIndex)
 
-% EN_STARTTIME  - ENgettimeparam
-d.getTimeStartTime
+    % EN_STARTTIME  - ENgettimeparam
+    d.getTimeStartTime
 
-% EN_HTIME - ENgettimeparam
-d.getTimeHTime 
+    % EN_HTIME - ENgettimeparam
+    d.getTimeHTime 
 
-% EN_HALTFLAG - ENgettimeparam
-d.getTimeHaltFlag
+    % EN_HALTFLAG - ENgettimeparam
+    d.getTimeHaltFlag
 
-%find the lesser of the hydraulic time step length, or the time to next fill/empty
-d.getTimeNextEvent
+    %find the lesser of the hydraulic time step length, or the time to next fill/empty
+    d.getTimeNextEvent
 
-% EN_MAXVOLUME - ENgetnodevalue
-d.getNodeTankMaximumWaterVolume 
+    % EN_MAXVOLUME - ENgetnodevalue
+    d.getNodeTankMaximumWaterVolume 
 
-% Curves Info
-d.getCurvesInfo
+    % Curves Info
+    d.getCurvesInfo
 
-% Pump pattern
-d.getLinkPumpPatternNameID % EN_LINKPATTERN - ENgetlinkvalue
-d.getLinkPumpPatternIndex
+    % Pump pattern
+    d.getLinkPumpPatternNameID % EN_LINKPATTERN - ENgetlinkvalue
+    d.getLinkPumpPatternIndex
+end
 
 %% Controls
 d.loadEPANETFile(d.BinTempfile);
@@ -305,10 +321,22 @@ values(end)=720;
 d.setNodeElevations(values)
 d.getNodeElevations
 
-values = d.getNodeBaseDemands
-values{1}(2)=160; %values(2)
-d.setNodeBaseDemands(values)
-d.getNodeBaseDemands{1}
+if nF==1
+    values = d.getNodeBaseDemands
+    values{1}(2)=160; 
+    d.setNodeBaseDemands(values)
+    d.getNodeBaseDemands{1}
+    
+    values = d.getNodeDemandPatternIndex
+    values{1}(1)=2;
+    d.setNodeDemandPatternIndex(values)
+    d.getNodePatternIndex
+else
+    values = d.getNodeBaseDemands
+    values(2)=160; 
+    d.setNodeBaseDemands(values)
+    d.getNodeBaseDemands
+end
 
 values = d.getNodePatternIndex
 values(2)=0;

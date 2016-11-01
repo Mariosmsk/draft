@@ -12,6 +12,7 @@ clear class;
 inpname='Net1.inp';
 %Net1 Net2 Net3 net2-cl2 BWSN_Network_1
 tic;d=epanet(inpname);toc
+% d=epanet(inpname, 'epanet2');
 d.addPattern('NewPat2', [0.8, 1.1, 1.4, 1.1, 0.8, 0.7]); 
 d.BinUpdateClass; % must be run if use Bin functions
 
@@ -186,7 +187,7 @@ d.getNodeElevations
 basedemands=d.BinNodeJunctionsBaseDemands;
 basedemands(end)=323;
 errcode=d.setBinNodeJunctionsBaseDemands(basedemands);
-d.getNodeBaseDemands{1}
+d.getNodeBaseDemands
 
 patterns=d.BinNodeJunDemandPatternNameID;
 % patternsid=d.BinPatternNameID;
@@ -209,7 +210,7 @@ errcode=d.addBinPattern('new1',1:0.1:2);
 patterns{2}='new1';
 d.setBinNodeJunctionsParameters('elevation',elevations,'basedemand',basedemands,'demandpattern',patterns);
 d.getNodeElevations
-d.getNodeBaseDemands{1}
+d.getNodeBaseDemands
 d.getPatternNameID(d.getNodePatternIndex)
 case2node=toc
 disp('Press any key to continue...')

@@ -66,6 +66,7 @@ classdef epanet <handle
         Iterations;                  % Iterations to reach solution
         LibEPANET;                   % EPANET library dll
         LibEPANETpath;               % EPANET library dll path
+        libFunctions;                % EPANET functions in dll
         LinkBulkReactionCoeff;       % Bulk reaction coefficient of each link
         LinkCount;                   % Number of links
         LinkDiameter;                % Diameter of each link
@@ -437,8 +438,8 @@ classdef epanet <handle
                 if ~isempty(find(obj.InputFile==' '))
                     warning(['File "', obj.InputFile, '" is not a valid']);return;
                 end
-                obj.LibEPANET=varargin{2}; % Get DLL LibEPANET (e.g. epanet20012x86 for 32-bit)
-                obj.LibEPANETpath = [pwd,'\'];
+                [pwdDLL,obj.LibEPANET] = fileparts(varargin{2}); % Get DLL LibEPANET (e.g. epanet20012x86 for 32-bit)
+                obj.LibEPANETpath = [pwdDLL,'/'];
                 warning off;
                 try  loadlibrary([obj.LibEPANETpath,obj.LibEPANET],[obj.LibEPANETpath,obj.LibEPANET,'.h']); 
                 catch e
@@ -558,10 +559,12 @@ classdef epanet <handle
             obj.QualityCode = obj.getQualityCode;
             obj.QualityTraceNodeIndex = obj.getQualityTraceNodeIndex;
 %             obj.QualityType = obj.getQualityType;
-            n = obj.getQualityInfo;
-            obj.QualityChemUnits = n.QualityChemUnits;
-            obj.QualityChemName= n.QualityChemName;
-            
+            obj.libFunctions = libfunctions(obj.LibEPANET);
+            if sum(strcmp(obj.libFunctions,'ENgetqualinfo'))
+                n = obj.getQualityInfo;
+                obj.QualityChemUnits = n.QualityChemUnits;
+                obj.QualityChemName= n.QualityChemName;
+            end
             %Get time parameters
             obj.TimeSimulationDuration = obj.getTimeSimulationDuration;
             obj.TimeHydraulicStep = obj.getTimeHydraulicStep;
@@ -1108,8 +1111,7 @@ classdef epanet <handle
         end
         function value = getNodeBaseDemands(obj, varargin)
             %New version dev2.1
-            chckfunctions=libfunctions(obj.LibEPANET);
-            if sum(strcmp(chckfunctions,'ENgetbasedemand'))
+            if sum(strcmp(obj.libFunctions,'ENgetbasedemand'))
                 numdemands = obj.getNodeDemandCategoriesNumber;
                 val=zeros(max(numdemands),obj.getNodeCount);
                 for i=obj.getNodeIndex
@@ -1824,7 +1826,7 @@ classdef epanet <handle
             value = unique(value)';
         end
         function value = getLibFunctions(obj)
-            value = libfunctions(obj.LibEPANET)'';
+            value = obj.libFunctions;
         end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%
         function value = getVersion(obj)
@@ -2159,11 +2161,23 @@ classdef epanet <handle
                 end
                 return;
             end
-            if iscell(value)
-                value=value{1};
-            end
-            for i=1:length(value)
-                [obj.Errcode] = ENsetnodevalue(i, 2, value(i),obj.LibEPANET);
+
+            chckfunctions=libfunctions(obj.LibEPANET);
+            if sum(strcmp(chckfunctions,'ENsetdemandpattern')) && iscell(value)
+                NodeNumDemandC=obj.getNodeDemandCategoriesNumber;
+                for i=1:obj.getNodeJunctionCount
+                    for u=1:NodeNumDemandC(i)
+                        [obj.Errcode] = ENsetdemandpattern(i, u, value{u}(i),obj.LibEPANET);
+                    end
+                end
+                warning('Can changes the demand pattern index based on the number of categories.');
+            else
+                if iscell(value)
+                    value=value{1};
+                end
+                for i=1:length(value)
+                    [obj.Errcode] = ENsetnodevalue(i, 2, value(i),obj.LibEPANET);
+                end
             end
         end
         function setNodeEmitterCoeff(obj, value, varargin)
@@ -5092,8 +5106,10 @@ classdef epanet <handle
                 [Errcode]=addNewControl(obj,x,status,y_t_c,param,z);
             elseif nargin==5
                 [Errcode]=addNewControl(obj,x,status,y_t_c,param);
-            else
+            elseif nargin==4
                 [Errcode]=addNewControl(obj,x,status,y_t_c);
+            else
+                [Errcode]=addNewControl(obj,x); % add many controls
             end
         end
         function [Errcode]=removeBinNodeID(obj,NodeID)
@@ -7607,6 +7623,13 @@ if Errcode
     ENgeterror(Errcode,LibEPANET);
 end
 end
+function [Errcode] = ENsetdemandpattern(index, demandIdx, patInd, LibEPANET)
+% New version 
+[Errcode]=calllib(LibEPANET,'ENsetdemandpattern',index, demandIdx, patInd);
+if Errcode
+    ENgeterror(Errcode,LibEPANET);
+end
+end
 function [Errcode,qualcode,chemname,chemunits,tracenode] = ENgetqualinfo(LibEPANET)
 chm=char(32*ones(1,31));
 [Errcode,qualcode,chemname,chemunits,tracenode]=calllib(LibEPANET,'ENgetqualinfo',0,chm,chm,0);
@@ -7615,6 +7638,13 @@ if Errcode
 end
 end
 function [obj] = MSXMatlabSetup(obj,msxname,varargin)
+pwdepanet=fileparts(which('epanet.m'));
+if strcmp(computer('arch'),'win64')
+    obj.MSXLibEPANETPath = [pwdepanet,'\64bit\'];
+elseif strcmp(computer('arch'),'win32')
+    obj.MSXLibEPANETPath = [pwdepanet,'\32bit\'];
+end
+            
 if ~isempty(varargin)
     if varargin{1}{1}~=1
         if nargin==3 
@@ -7625,8 +7655,6 @@ if ~isempty(varargin)
             end
         end
     end
-else
-    obj.MSXLibEPANETPath=obj.LibEPANETpath;
 end
 obj.MSXLibEPANET='epanetmsx'; % Get DLL LibEPANET (e.g. epanet20012x86 for 32-bit)
 if ~libisloaded(obj.MSXLibEPANET)
@@ -10064,11 +10092,11 @@ end
 function [Errcode]=addNewControl(obj,x,status,y_t_c,param,z,varargin)
 % syntax
 if (nargin==6)
-    syntax = sprintf('LINK     %s     %s     IF     NODE     %s     %s     %d',x,status,y_t_c,param,z);
+    syntax = ['LINK ',x,' ',status,' IF NODE ',y_t_c,' ',param,' ',num2str(z)];
 elseif (nargin==5)
-    syntax = sprintf('LINK     %s     %s     AT     CLOCKTIME     %s     %s',x,status,y_t_c,param);
+    syntax = ['LINK ',x,' ',status,' AT CLOCKTIME ',y_t_c,' ',param];
 elseif (nargin==4)
-    syntax = sprintf('LINK     %s     %s     AT     TIME     %s',x,status,y_t_c);
+    syntax = ['LINK ',x,' ',status,' AT TIME ',y_t_c];
 end
 if (nargin==6)
     % Check if id new already exists
@@ -10088,22 +10116,26 @@ if (nargin==6)
         return;
     end
 end
-% Check if id new already exists
-links = obj.getBinLinksInfo; Errcode=0;
-if length(char(links.BinLinkNameID))==0
-    s = sprintf('There is no such object in the network.');
-    warning(s);Errcode=-1;
-    return;
-end
-i=1;
-while i<length(char(links.BinLinkNameID))+1
-    exists(i) = strcmp(x,char(links.BinLinkNameID(i)));
-    i=i+1;
-end
-if (sum(exists)~=1)
-    s = sprintf('There is no such object in the network.');
-    warning(s);Errcode=-1;
-    return;
+if (nargin==2)
+   controls = x; 
+else
+    % Check if id new already exists
+    links = obj.getBinLinksInfo; Errcode=0;
+    if length(char(links.BinLinkNameID))==0
+        s = sprintf('There is no such object in the network.');
+        warning(s);Errcode=-1;
+        return;
+    end
+    i=1;
+    while i<length(char(links.BinLinkNameID))+1
+        exists(i) = strcmp(x,char(links.BinLinkNameID(i)));
+        i=i+1;
+    end
+    if (sum(exists)~=1)
+        s = sprintf('There is no such object in the network.');
+        warning(s);Errcode=-1;
+        return;
+    end
 end
 type_n='[CONTROLS]';
 [~,info] = obj.readInpFile;
@@ -10126,7 +10158,14 @@ for t = 1:length(info)
             ch1 = strcmp(check_brackets,'[');
             ch2 = strcmp(check_brackets,']');
             if (ch1(1)==1 && ch2(2)==1 && (s==1) && noo==0)
-                fprintf(fid2, '%s',syntax);
+                if (nargin==2)
+                    for i=1:length(controls)
+                        fprintf(fid2, controls(i,:));
+                        fprintf(fid2,'\r\n');
+                    end
+                else
+                    fprintf(fid2, '%s',syntax);
+                end
                 fprintf(fid2,'\r\n');
                 fprintf(fid2,'\r\n');
                 fprintf(fid2,'%s',a{u});

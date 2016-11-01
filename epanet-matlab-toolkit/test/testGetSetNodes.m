@@ -11,6 +11,7 @@ close all;
 inpname='Net1.inp';  
 % Net1 Net2 Net3 BWSN_Network_1 
 d=epanet(inpname);
+% d=epanet(inpname, 'epanet2');
 
 %% *Get Nodes Data (EXAMPLES)*
 all_elevations = d.getNodeElevations;
@@ -26,17 +27,33 @@ elevationsSp = d.getNodeElevations([1 5 10]);
 disp(elevationsSp);
 
 
-d.getNodeDemandCategoriesNumber
-d.getNodeDemandCategoriesNumber(2)
+newFunctionsDev2_1 = {'ENgetpumptype' , 'ENgetheadcurveindex', 'ENsetcurvevalue',...
+            'ENsetcurve', 'ENaddcurve', 'ENgetcurvevalue', 'ENgetcurve',...
+            'ENgetcurvelen', 'ENgetcurveid', 'ENgetcurveindex', 'ENsetcoord',...
+            'ENgetcoord', 'ENgetstatistic', 'ENgetnumdemands', 'ENgetbasedemand',...	
+            'ENgetdemandpattern', 'ENsetbasedemand', 'ENgetaveragepatternvalue'};
+        
+%% New Functions 2.1
+nF=0; % old dll
+for i=1:length(newFunctionsDev2_1)
+    if sum(strcmp(d.libFunctions,newFunctionsDev2_1(i)))
+        nF=1; % new dll
+        break;
+    end
+end
+if nF==1
+    d.getNodeDemandCategoriesNumber
+    d.getNodeDemandCategoriesNumber(2)
 
-numCategories=1;nodeindex=2;
-d.getNodeDemandPatternIndex{numCategories}
-d.getNodeDemandPatternIndex{numCategories}(nodeindex)
-d.getNodeDemandPatternNameID{numCategories}
-d.getNodeDemandPatternNameID{numCategories}(nodeindex)
-
-d.getNodeBaseDemands{numCategories}
-d.getNodeBaseDemands{numCategories}(nodeindex)
+    numCategories=1;nodeindex=2;
+    d.getNodeDemandPatternIndex{numCategories}
+    d.getNodeDemandPatternIndex{numCategories}(nodeindex)
+    d.getNodeDemandPatternNameID{numCategories}
+    d.getNodeDemandPatternNameID{numCategories}(nodeindex)
+    
+    d.getNodeBaseDemands{numCategories}
+    d.getNodeBaseDemands{numCategories}(nodeindex)
+end
 
 d.getNodePatternIndex
 d.getNodePatternIndex(2)
@@ -95,8 +112,10 @@ d.getNodeTankBulkReactionCoeff(tankInd)
 d.getNodeTankVolume
 d.getNodeTankVolume(tankInd)
 
-d.getNodeTankMaximumWaterVolume
-d.getNodeTankMaximumWaterVolume(tankInd)
+if nF==1
+    d.getNodeTankMaximumWaterVolume
+    d.getNodeTankMaximumWaterVolume(tankInd)
+end
 
 d.getNodeType
 d.getNodeType(tankInd)
@@ -107,8 +126,11 @@ d.getNodeNameID(tankInd)
 d.getNodeCoordinates
 d.getNodeCoordinates{1}
 d.getNodeCoordinates{2}
-d.getNodeCoordinates(2)
-% d.getNodeCoordinates(1:d.NodeCount)
+if nF==1
+    d.getNodeCoordinates(2)
+    % d.getNodeCoordinates(1:d.NodeCount)
+end
+
 % Runs hydraulics Step-by-step
 d.openHydraulicAnalysis;
 d.initializeHydraulicAnalysis;
@@ -151,17 +173,19 @@ d.getNodeInitialQuality(2)
 d.setNodeInitialQuality(2,1.5); %index, value
 d.getNodeInitialQuality(2)
 
-d.getNodeCoordinates(2)
-d.setNodeCoordinates(2,[10 10]);
-d.getNodeCoordinates(2)
+if nF==1
+    d.getNodeCoordinates(2)
+    d.setNodeCoordinates(2,[10 10]);
+    d.getNodeCoordinates(2)
 
-d.getNodeBaseDemands{1}
-d.setNodeBaseDemands(3,20);
-d.getNodeBaseDemands{1}
+    d.getNodeBaseDemands{1}
+    d.setNodeBaseDemands(3,20);
+    d.getNodeBaseDemands{1}
 
-d.getNodeDemandPatternIndex{1}
-d.setNodeDemandPatternIndex(3,0); %remove pattern..
-d.getNodeDemandPatternIndex{1}
+    d.getNodeDemandPatternIndex{1}
+    d.setNodeDemandPatternIndex(3,0); %remove pattern..
+    d.getNodeDemandPatternIndex{1}
+end
 
 d.getNodeSourceType
 d.setNodeSourceType(1,'MASS')

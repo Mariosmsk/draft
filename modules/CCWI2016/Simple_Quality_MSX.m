@@ -1,7 +1,7 @@
 clc
 clear
-path(path,strcat(pwd,'\toolkit\epanet'));
-path(path,strcat(pwd,'\toolkit\epanet-msx')); 
+%path(path,strcat(pwd,'\toolkit\epanet'));
+%path(path,strcat(pwd,'\toolkit\epanet-msx')); 
 
 ENopen('Network_1.inp')
 

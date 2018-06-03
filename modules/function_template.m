@@ -20,7 +20,7 @@ function [output1] = function_template(input1)
 % See also: none
 
 % Author        : Demetrios G. Eliades
-% Work address  : KIOS Research Center, University of Cyprus
+% Work address  : KIOS Research and Innovation Center of Excellence, University of Cyprus
 % email         : eldemet@ucy.ac.cy
 % Website       : http://www.kios.ucy.ac.cy
 % Last revision : September 2016

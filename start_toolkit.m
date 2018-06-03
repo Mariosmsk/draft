@@ -23,11 +23,14 @@ function start_toolkit()
 % Work address  : KIOS Research Center, University of Cyprus
 % email         : eldemet@ucy.ac.cy
 % Website       : http://www.kios.ucy.ac.cy
-% Last revision : September 2016
+% Last revision : 
 
 %------------- BEGIN CODE --------------
+clc
 addpath(genpath(pwd));
-disp('EPANET-MATLAB Toolkit Paths Loaded.');    
+disp('EPANET-MATLAB Toolkit paths been loaded.');
+disp('Benchmark netwrosk paths have been loaded.');
+disp('Move to ./modules/ folder to execute the functions'); 
 %------------- END OF CODE --------------
 
 

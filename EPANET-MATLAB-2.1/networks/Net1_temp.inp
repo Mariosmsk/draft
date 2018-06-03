@@ -1,7 +1,7 @@
 [TITLE]
- EPANET Example Network 1   
-A simple example of modeling chlorine decay. Both bulk and   
-wall reactions are included.    
+ EPANET Example Network 1 
+A simple example of modeling chlorine decay. Both bulk and 
+wall reactions are included.  
 
 [JUNCTIONS]
  10                                  710.0000
@@ -137,7 +137,7 @@ wall reactions are included.
  Demand              PRECISION 2
  Head                PRECISION 2
  Pressure            PRECISION 2
- Quality             NO
+ Quality             PRECISION 2
  Length              NO
  Diameter            NO
  Flow                PRECISION 2

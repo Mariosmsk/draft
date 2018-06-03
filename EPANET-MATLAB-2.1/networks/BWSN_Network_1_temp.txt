@@ -1,4 +1,4 @@
-  Page 1                                    Thu May 17 14:49:53 2018
+  Page 1                                    Thu May 17 14:50:55 2018
 
   ******************************************************************
   *                           E P A N E T                          *
@@ -7,4 +7,7 @@
   *                         Version 2.1                            *
   ******************************************************************
   
-  Analysis begun Thu May 17 14:49:53 2018
+  Analysis begun Thu May 17 14:50:55 2018
+
+  Processing MSX input file C:\Users\eldemet\Documents\GitHub\draft-code\modules\CCWI2016\Arsenite_temp.msx
+  

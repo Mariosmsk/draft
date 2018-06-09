@@ -1,7 +1,7 @@
 % Check Setup
 computerArchitecture = computer('arch');
 if strcmpi(computerArchitecture,'win64')
-    compilerName = compiler_Name();
+    compilerName = get_Compiler_Name();
     if ~strcmp(compilerName,'Microsoft Windows SDK 7.1 (C)')
         disp('You need to select the "Microsoft Windows SDK 7.1 (C)" compiler for the C language in MATLAB')
         disp('To do this, you need to download the "Microsoft Windows SDK 7.1 (C)" using this link:')

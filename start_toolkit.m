@@ -28,9 +28,23 @@ function start_toolkit()
 %------------- BEGIN CODE --------------
 clc
 addpath(genpath(pwd));
-disp('EPANET-MATLAB Toolkit paths been loaded.');
-disp('Benchmark netwrosk paths have been loaded.');
-disp('Move to ./modules/ folder to execute the functions'); 
+disp('Add toolkit directory to search path... OK')
+disp('Check system configuration...')
+check_configuration
+disp('Check EPANET Load/Unload functions...')
+ME.identifier='';
+try
+    warning off
+    tmp = epanet('Net1.inp');
+catch ME
+end
+if strcmp(ME.identifier, 'MATLAB:UndefinedFunction')
+    disp('Problem in loading EPANET')
+else
+    tmp.unload
+end
+
+disp('If all checks were successful, move to ./modules/ folder to execute the functions'); 
 %------------- END OF CODE --------------
 
 

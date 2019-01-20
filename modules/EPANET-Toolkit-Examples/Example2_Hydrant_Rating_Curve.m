@@ -9,7 +9,7 @@ MyNode = '32';
 
 %% Select number of iterations
 r = 1:0.5:10;
-N = length(D);
+
 
 %% Load EPANET Library
 libName = load_epanet_library();
@@ -28,6 +28,8 @@ EN_PRESSURE = 11;
 
 [err, B] = calllib(libName,'ENgetnodevalue',nodeIndex, EN_BASEDEMAND, 0);
 D = B.*r;
+
+N = length(D);
 
 %%
 for i = 1:N
